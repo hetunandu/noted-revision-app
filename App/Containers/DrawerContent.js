@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react'
-import { ScrollView, Image, BackAndroid } from 'react-native'
+import { ScrollView, Image, BackAndroid, Text, View } from 'react-native'
 import styles from './Styles/DrawerContentStyle'
 import { Images } from '../Themes'
 import DrawerButton from '../Components/DrawerButton'
@@ -52,11 +52,14 @@ class DrawerContent extends Component {
     return (
       <ScrollView style={styles.container}>
         <Image source={Images.logo} style={styles.logo} />
-        <DrawerButton text='Component Examples' onPress={this.handlePressComponents} />
-        <DrawerButton text='Usage Examples' onPress={this.handlePressUsage} />
-        <DrawerButton text='API Testing' onPress={this.handlePressAPI} />
-        <DrawerButton text='Themes' onPress={this.handlePressTheme} />
-        <DrawerButton text='Device Info' onPress={this.handlePressDevice} />
+        <Text style={styles.drawerHeader}>Subjects</Text>
+        <View style={styles.drawerSection}>
+          <DrawerButton text='Economics' onPress={this.handlePressComponents} />
+          <DrawerButton text='Maths Formulae' onPress={this.handlePressUsage} />
+          <DrawerButton text='OCM' onPress={this.handlePressAPI} />
+        </View>
+        <DrawerButton text='Coins' onPress={this.handlePressTheme} />
+        <DrawerButton text='Settings' onPress={this.handlePressDevice} />
       </ScrollView>
     )
   }

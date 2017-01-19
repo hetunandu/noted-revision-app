@@ -6,6 +6,7 @@ import NavigationRouter from '../Navigation/NavigationRouter'
 import { connect } from 'react-redux'
 import StartupActions from '../Redux/StartupRedux'
 import ReduxPersist from '../Config/ReduxPersist'
+import { Colors } from '../Themes'
 
 // Styles
 import styles from './Styles/RootContainerStyle'
@@ -16,12 +17,14 @@ class RootContainer extends Component {
     if (!ReduxPersist.active) {
       this.props.startup()
     }
+
+    // Set the status bar color
+    StatusBar.setBackgroundColor(Colors.notedRedDarker, true)
   }
 
   render () {
     return (
       <View style={styles.applicationView}>
-        <StatusBar barStyle='light-content' />
         <NavigationRouter />
       </View>
     )

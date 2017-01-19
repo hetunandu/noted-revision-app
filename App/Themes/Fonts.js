@@ -1,9 +1,9 @@
 // @flow
 
 const type = {
-  base: 'HelveticaNeue',
-  bold: 'HelveticaNeue-Bold',
-  emphasis: 'HelveticaNeue-Italic'
+  base: 'Roboto',
+  bold: 'Roboto-Bold',
+  emphasis: 'Roboto-Italic'
 }
 
 const size = {
