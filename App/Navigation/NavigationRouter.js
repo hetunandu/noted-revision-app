@@ -1,7 +1,7 @@
 // @flow
 
 import React, { Component } from 'react'
-import { Scene, Router } from 'react-native-router-flux'
+import { Scene, Router, ActionConst } from 'react-native-router-flux'
 import Styles from './Styles/NavigationContainerStyle'
 import NavigationDrawer from './NavigationDrawer'
 import NavItems from './NavItems'
@@ -32,7 +32,7 @@ class NavigationRouter extends Component {
         <Scene key='drawer' component={NavigationDrawer} open={false}>
           <Scene key='drawerChildrenWrapper' navigationBarStyle={Styles.navBar} titleStyle={Styles.title} leftButtonIconStyle={Styles.leftButton} rightButtonTextStyle={Styles.rightButton}>
             <Scene initial key='login' component={LoginScreen} title='Login' hideNavBar />
-            <Scene key='WelcomeScreen' component={WelcomeScreen} title='Welcome' renderLeftButton={NavItems.hamburgerButton} />
+            <Scene key='welcome' component={WelcomeScreen} title='Welcome' renderLeftButton={NavItems.hamburgerButton} type={ActionConst.REPLACE} hideNavBar={false} />
             <Scene key='componentExamples' component={AllComponentsScreen} title='Components' />
             <Scene key='usageExamples' component={UsageExamplesScreen} title='Usage' rightTitle='Example' onRight={() => window.alert('Example Pressed')} />
             <Scene key='listviewExample' component={ListviewExample} title='Listview Example' />
