@@ -12,7 +12,7 @@ export default {
   },
   drawerHeader: {
     fontSize: Fonts.size.h6,
-    color: Colors.snow
+    color: Colors.charcoal
   },
   drawerSection: {
     paddingLeft: 15

@@ -8,8 +8,8 @@ export default {
     elevation: 3
   },
   navBar: {
-    backgroundColor: Colors.notedRed,
-    borderBottomColor: Colors.notedRed
+    backgroundColor: Colors.notedBlue,
+    borderBottomWidth: 0
   },
   title: {
     color: Colors.snow,

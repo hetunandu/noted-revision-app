@@ -19,7 +19,7 @@ class RootContainer extends Component {
     }
 
     // Set the status bar color
-    StatusBar.setBackgroundColor(Colors.notedRedDarker, true)
+    StatusBar.setBackgroundColor(Colors.notedBlueDarker, true)
   }
 
   render () {

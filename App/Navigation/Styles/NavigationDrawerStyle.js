@@ -4,7 +4,7 @@ import {Colors} from '../../Themes/'
 
 export default {
   drawer: {
-    backgroundColor: Colors.notedBlue
+    backgroundColor: Colors.snow
   },
   main: {
     backgroundColor: Colors.clear

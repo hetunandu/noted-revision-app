@@ -21,7 +21,7 @@ class WelcomeScreen extends React.Component {
 
   render () {
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.mainContainer}>
         <KeyboardAvoidingView behavior='position'>
           <Text>WelcomeScreen Container</Text>
         </KeyboardAvoidingView>
