@@ -51,7 +51,7 @@ class DrawerContent extends Component {
   render () {
     return (
       <ScrollView style={styles.container}>
-        <Image source={Images.logo} style={styles.logo} />
+        <Image source={Images.logo} style={styles.logo} resizeMode="contain" />
         <Text style={styles.drawerHeader}>Subjects</Text>
         <View style={styles.drawerSection}>
           <DrawerButton text='Economics' onPress={this.handlePressComponents} />

@@ -8,6 +8,7 @@ export default {
     padding: 20
   },
   logo: {
+    height: 50,
     alignSelf: 'center'
   },
   drawerHeader: {
