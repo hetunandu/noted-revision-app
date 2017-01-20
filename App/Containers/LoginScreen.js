@@ -27,20 +27,9 @@ import styles from './Styles/LoginScreenStyle'
 class LoginScreen extends React.Component {
 
   componentDidMount(){
-    this.googleLoginInit()
+    this.props.loginInit()
   }
-
-  googleLoginInit(){
-    GoogleSignin.hasPlayServices({ autoResolve: true }).then(() => {
-        GoogleSignin.configure({
-          webClientId: '865864307125-gob0frva3ifb10ahm39nrj4e1hi74jeq.apps.googleusercontent.com'
-        })
-      })
-      .catch((err) => {
-        ToastAndroid.show(`Play services error: ${err.code} ${err.message}`, ToastAndroid.SHORT)
-      })
-  }
-
+  
   signInWithGoogle(){
     GoogleSignin.signIn()
       .then((user) => {
@@ -78,7 +67,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loginRequest: (accessToken) => dispatch(LoginActions.loginRequest(accessToken))
+    loginRequest: (accessToken) => dispatch(LoginActions.loginRequest(accessToken)),
+    loginInit: () => dispatch(LoginActions.loginInit())
   }
 }
 

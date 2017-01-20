@@ -23,7 +23,7 @@ class WelcomeScreen extends React.Component {
     return (
       <ScrollView style={styles.mainContainer}>
         <KeyboardAvoidingView behavior='position'>
-          <Text>WelcomeScreen Container</Text>
+          <Text>Welcome {this.props.login.user.name}</Text>
         </KeyboardAvoidingView>
       </ScrollView>
     )
@@ -33,6 +33,7 @@ class WelcomeScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    login: state.login
   }
 }
 

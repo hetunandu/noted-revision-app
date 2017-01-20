@@ -48,6 +48,7 @@ const create = (baseURL = 'https://noted-api.appspot.com/study') => {
   // way at this level.
   //
   const loginUser = (accessToken) => api.post('login', {id_token: accessToken})
+  const checkToken = (token) => api.get('user', {}, {headers:{'Authorization': token}})
   const getCity = (city) => api.get('weather', {q: city})
 
   // ------
@@ -65,6 +66,7 @@ const create = (baseURL = 'https://noted-api.appspot.com/study') => {
   return {
     // a list of the API functions from step 2
     loginUser,
+    checkToken,
     getCity
   }
 }

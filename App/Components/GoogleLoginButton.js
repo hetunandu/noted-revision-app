@@ -5,12 +5,11 @@ import { View, Text } from 'react-native'
 import {GoogleSigninButton} from 'react-native-google-signin';
 import styles from './Styles/GoogleLoginButtonStyle'
 
-type GoogleLoginButtonProps = {
-  onLoginPress: () => void
-}
 
 export default class GoogleLoginButton extends React.Component {
-  props: GoogleLoginButtonProps
+  propsTypes = {
+    onLoginPress: React.PropTypes.func.isRequired
+  }
 
   render () {
     return (
@@ -25,14 +24,3 @@ export default class GoogleLoginButton extends React.Component {
     )
   }
 }
-
-// // Prop type warnings
-// GoogleLoginButton.propTypes = {
-//   someProperty: React.PropTypes.object,
-//   someSetting: React.PropTypes.bool.isRequired
-// }
-//
-// // Defaults for props
-// GoogleLoginButton.defaultProps = {
-//   someSetting: false
-// }

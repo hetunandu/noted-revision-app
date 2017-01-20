@@ -7,7 +7,7 @@ import { LoginTypes } from '../Redux/LoginRedux'
 
 /* ------------- Sagas ------------- */
 
-import { login } from './LoginSagas'
+import { login, loginInit } from './LoginSagas'
 
 /* ------------- API ------------- */
 
@@ -19,6 +19,7 @@ const api = API.create()
 
 export default function * root () {
   yield [
+    takeLatest(LoginTypes.LOGIN_INIT, loginInit, api),
     takeLatest(LoginTypes.LOGIN_REQUEST, login, api)
   ]
 }
