@@ -10,6 +10,7 @@ import { Metrics } from '../Themes'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Animatable from 'react-native-animatable'
 import { Actions as NavigationActions } from 'react-native-router-flux'
+import SubjectActions from '../Redux/SubjectRedux';
 
 // Styles
 import styles from './Styles/WelcomeScreenStyle'
@@ -19,11 +20,16 @@ import I18n from 'react-native-i18n'
 
 class WelcomeScreen extends React.Component {
 
+  componentDidMount(){
+    this.props.fetchSubjectList()
+  }
+
   render () {
     return (
       <ScrollView style={styles.mainContainer}>
         <KeyboardAvoidingView behavior='position'>
-          <Text>Welcome {this.props.login.user.name}</Text>
+          <Text>Welcome </Text>
+
         </KeyboardAvoidingView>
       </ScrollView>
     )
@@ -33,12 +39,13 @@ class WelcomeScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    login: state.login
+    subjects: state.subjects
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    fetchSubjectList: () => dispatch(SubjectActions.subjectRequest())
   }
 }
 

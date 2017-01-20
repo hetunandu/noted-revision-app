@@ -22,7 +22,7 @@ class NavigationDrawer extends Component {
         open={state.open}
         onOpen={() => NavigationActions.refresh({key: state.key, open: true})}
         onClose={() => NavigationActions.refresh({key: state.key, open: false})}
-        content={<DrawerContent user={this.props.user} />}
+        content={<DrawerContent user={this.props.user} subjects={this.props.subjects} />}
         styles={Styles}
         tapToClose
         openDrawerOffset={0.2}
@@ -45,7 +45,8 @@ NavigationDrawer.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.login.user
+    user: state.login.user,
+    subjects: state.subjects
   }
 }
 

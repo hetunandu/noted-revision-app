@@ -23,9 +23,9 @@ class DrawerContent extends Component {
     this.context.drawer.toggle()
   }
 
-  handlePressComponents = () => {
+  handleSubjectPress(subject)  {
     this.toggleDrawer()
-    NavigationActions.componentExamples()
+    console.tron.log(subject)
   }
 
   handlePressUsage = () => {
@@ -49,6 +49,9 @@ class DrawerContent extends Component {
   }
 
   render () {
+  
+   // console.tron.log(this.props.subjects.list)
+
     return (
       <ScrollView style={styles.container}>
         {
@@ -70,11 +73,19 @@ class DrawerContent extends Component {
           ) : (null)
         }
         <Text style={styles.drawerHeader}>Subjects</Text>
-        <View style={styles.drawerSection}>
-          <DrawerButton text='Economics' onPress={this.handlePressComponents} />
-          <DrawerButton text='Maths Formulae' onPress={this.handlePressUsage} />
-          <DrawerButton text='OCM' onPress={this.handlePressAPI} />
-        </View>
+            <View style={styles.drawerSection}>
+            {this.props.subjects.fetching && <Text>Loading</Text>}
+            {this.props.subjects.list.map(subject => {
+              return(
+                <DrawerButton
+                  key={subject.key}
+                  text={`${subject.name} (${subject.views_available})`}
+                  onPress={() => this.handleSubjectPress(subject)}
+                />
+              )
+            })}
+            </View>
+        
         <DrawerButton text='Coins' onPress={this.handlePressTheme} />
         <DrawerButton text='Settings' onPress={this.handlePressDevice} />
       </ScrollView>
