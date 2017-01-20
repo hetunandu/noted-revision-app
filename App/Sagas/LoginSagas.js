@@ -2,13 +2,13 @@ import { call, put } from 'redux-saga/effects'
 import LoginActions from '../Redux/LoginRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import {GoogleSignin} from 'react-native-google-signin';
-import {AsyncStorage} from 'react-native';
+import {AsyncStorage, ToastAndroid} from 'react-native';
 
 // Check token, with token get user details, if error, configure google login
 export function * loginInit(api){
 
   try{
-    
+    yield call(googleLoginConfigure)
     // Check if the token exists in storage
     const token = yield call(AsyncStorage.getItem, 'login_token')
 
@@ -28,22 +28,26 @@ export function * loginInit(api){
       }
 
     }else{
-
       // set auth to false 
       yield put(LoginActions.loginFailure())
-      //configure google login
-      const hasPlayServices = yield call(GoogleSignin.hasPlayServices, {autoResolve: true})
-      if (hasPlayServices){
-        GoogleSignin.configure({
-          webClientId: '865864307125-gob0frva3ifb10ahm39nrj4e1hi74jeq.apps.googleusercontent.com'
-        })
-      }else{
-        yield put(LoginActions.loginFailure('Need google play services to login'))
-      }
+
     }
   }catch (err) {
+    
     yield put(LoginActions.loginFailure(err))
   }
+}
+
+function googleLoginConfigure(){
+  GoogleSignin.hasPlayServices({ autoResolve: true })
+    .then(() => {
+      GoogleSignin.configure({
+        webClientId: '865864307125-gob0frva3ifb10ahm39nrj4e1hi74jeq.apps.googleusercontent.com'
+      })
+    })
+    .catch((err) => {
+      ToastAndroid.show(`Play services error: ${err.code} ${err.message}`, ToastAndroid.SHORT)
+    })
 }
 
 // attempts to login
