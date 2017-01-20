@@ -51,7 +51,24 @@ class DrawerContent extends Component {
   render () {
     return (
       <ScrollView style={styles.container}>
-        <Image source={Images.logo} style={styles.logo} resizeMode="contain" />
+        {
+          this.props.user ? (
+            <View style={styles.profileContainer}>
+              <View>
+                <Image 
+                  source={{uri: this.props.user.picture_uri}}
+                  style={styles.profileImg}
+                />
+              </View>
+              <View>
+                <Text style={styles.userName}>
+                  {this.props.user.name}
+                </Text>
+                <Text>{this.props.user.points} coins</Text>
+              </View>
+            </View>
+          ) : (null)
+        }
         <Text style={styles.drawerHeader}>Subjects</Text>
         <View style={styles.drawerSection}>
           <DrawerButton text='Economics' onPress={this.handlePressComponents} />
