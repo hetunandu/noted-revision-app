@@ -25,7 +25,7 @@ class DrawerContent extends Component {
 
   handleSubjectPress(subject)  {
     this.toggleDrawer()
-    console.tron.log(subject)
+    NavigationActions.subject({title: subject.name})
   }
 
   handlePressUsage = () => {
