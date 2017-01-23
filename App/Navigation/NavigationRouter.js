@@ -8,7 +8,6 @@ import NavItems from './NavItems'
 import CustomNavBar from '../Navigation/CustomNavBar'
 
 // screens identified by the router
-import WelcomeScreen from '../Containers/WelcomeScreen'
 import LoginScreen from '../Containers/LoginScreen'
 import SubjectScreen from '../Containers/SubjectScreen'
 
@@ -20,13 +19,8 @@ class NavigationRouter extends Component {
   render () {
     return (
       <Router>
-        <Scene key='drawer' component={NavigationDrawer} open={false}>
-          <Scene key='drawerChildrenWrapper' navigationBarStyle={Styles.navBar} titleStyle={Styles.title} leftButtonIconStyle={Styles.leftButton} rightButtonTextStyle={Styles.rightButton}>
-            <Scene initial key='login' component={LoginScreen} title='Login' hideNavBar />
-            <Scene key='welcome' component={WelcomeScreen} title='Welcome' renderLeftButton={NavItems.hamburgerButton} type={ActionConst.REPLACE} hideNavBar={false} />
-            <Scene key='subject' component={SubjectScreen} renderLeftButton={NavItems.hamburgerButton} type={ActionConst.REPLACE} />
-          </Scene>
-        </Scene>
+        <Scene initial key='login' component={LoginScreen}  hideNavBar />
+        <Scene key='subjects' component={SubjectScreen} type="replace" hideNavBar  />
       </Router>
     )
   }

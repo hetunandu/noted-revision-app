@@ -9,7 +9,7 @@ import { SubjectTypes } from '../Redux/SubjectRedux';
 /* ------------- Sagas ------------- */
 
 import { login, loginInit } from './LoginSagas'
-import { getSubjects } from './SubjectSagas'
+import { getSubjects, changeIndex } from './SubjectSagas'
 
 /* ------------- API ------------- */
 
@@ -23,6 +23,7 @@ export default function * root () {
   yield [
     takeLatest(LoginTypes.LOGIN_INIT, loginInit, api),
     takeLatest(LoginTypes.LOGIN_REQUEST, login, api),
-    takeLatest(SubjectTypes.SUBJECT_REQUEST, getSubjects, api)
+    takeLatest(SubjectTypes.SUBJECT_REQUEST, getSubjects, api),
+    //takeLatest(SubjectTypes.CHANGE_SUBJECT_INDEX, changeIndex)
   ]
 }

@@ -6,10 +6,10 @@ export function * getSubjects (api) {
 
   try{
     const token = yield call(AsyncStorage.getItem, 'login_token')
-  
+
     // make the call to the api
     const response = yield call(api.getSubjects, token)
-    
+
     // success?
     if (response.ok && response.data.success) {
       yield put(SubjectActions.subjectSuccess(response.data.message.subjects))
@@ -19,5 +19,5 @@ export function * getSubjects (api) {
   }catch (err){
     yield put(SubjectActions.subjectFailure(err))
   }
-  
+
 }
