@@ -1,9 +1,11 @@
 // @flow
 
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
 import ResultActions from '../Redux/ResultRedux'
+import Loading from '../Components/Loading'
+
 import { Metrics } from '../Themes'
 // external libs
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -13,8 +15,6 @@ import { Actions as NavigationActions } from 'react-native-router-flux'
 // Styles
 import styles from './Styles/ResultScreenStyle'
 
-// I18n
-import I18n from 'react-native-i18n'
 
 class ResultScreen extends React.Component {
 
@@ -24,8 +24,34 @@ class ResultScreen extends React.Component {
 
   render () {
     return (
-      <View style={styles.container}>
-        <Text>ResultScreen Container</Text>
+      <View style={[styles.container, {paddingTop: 0}]}>
+        <View style={styles.summary}>
+          <Text>Result</Text>
+          <View style={styles.table}>
+            <View style={styles.row}>
+              <Text style={styles.rowHead}>Read</Text>
+              <Text style={styles.rowValue}>3</Text>
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.rowHead}>Skip</Text>
+              <Text style={styles.rowValue}>2</Text>
+            </View>
+          </View>
+        </View>
+        {this.props.result.fetching ? <Loading /> : (
+          <View style={styles.pointsContainer}>
+            <Text style={styles.pointsDisplay}>
+              {this.props.result.points} coins earned
+            </Text>
+            <TouchableHighlight
+              style={styles.moreBtn}
+              underlayColor="#333"
+              onPress={() => NavigationActions.pop()}
+            >
+              <Text style={{fontSize: 20, textAlign: 'center', color: 'white'}}>Study more!</Text>
+            </TouchableHighlight>
+          </View>
+        )}
       </View>
     )
   }

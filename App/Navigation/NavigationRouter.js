@@ -21,7 +21,7 @@ class NavigationRouter extends Component {
         <Scene initial key='login' component={LoginScreen}  />
         <Scene key='subjects' component={SubjectScreen} type="replace"  />
         <Scene key="concepts" component={ConceptScreen} direction="vertical"  />
-        <Scene key="result" component={ResultScreen} />
+        <Scene key="result" component={ResultScreen} type="replace" />
       </Router>
     )
   }
