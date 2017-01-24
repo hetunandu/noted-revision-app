@@ -16,7 +16,7 @@ export default class GoogleLoginButton extends React.Component {
       <View style={styles.container}>
         <GoogleSigninButton
           style={{width: 230, height: 48, alignSelf: 'center'}}
-          size={GoogleSigninButton.Size.Standard}
+          size={GoogleSigninButton.Size.Icon}
           color={GoogleSigninButton.Color.Dark}
           onPress={() => this.props.onLoginPress()}
         />

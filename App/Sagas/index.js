@@ -5,11 +5,16 @@ import { AsyncStorage } from 'react-native';
 /* ------------- Types ------------- */
 
 import { LoginTypes } from '../Redux/LoginRedux'
-import { SubjectTypes } from '../Redux/SubjectRedux';
+import { SubjectTypes } from '../Redux/SubjectRedux'
+import { ConceptTypes } from '../Redux/ConceptRedux'
+import { ResultTypes } from '../Redux/ResultRedux'
+
 /* ------------- Sagas ------------- */
 
 import { login, loginInit } from './LoginSagas'
-import { getSubjects, changeIndex } from './SubjectSagas'
+import { getSubjects } from './SubjectSagas'
+import { getConcepts } from './ConceptSagas'
+import { submitResult } from './ResultSagas'
 
 /* ------------- API ------------- */
 
@@ -24,6 +29,7 @@ export default function * root () {
     takeLatest(LoginTypes.LOGIN_INIT, loginInit, api),
     takeLatest(LoginTypes.LOGIN_REQUEST, login, api),
     takeLatest(SubjectTypes.SUBJECT_REQUEST, getSubjects, api),
-    //takeLatest(SubjectTypes.CHANGE_SUBJECT_INDEX, changeIndex)
+    takeLatest(ConceptTypes.CONCEPT_REQUEST, getConcepts, api),
+    takeLatest(ResultTypes.RESULT_REQUEST, submitResult, api)
   ]
 }

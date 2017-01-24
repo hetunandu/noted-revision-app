@@ -39,6 +39,7 @@
     "react-native-maps": "^0.11.0",
     "react-native-router-flux": "^3.37.0",
     "react-native-scrollable-tab-view": "^0.7.1",
+    "react-native-simple-markdown": "^1.0.60-rc.3",
     "react-native-vector-icons": "^3.0.0",
     "react-redux": "^4.4.6",
     "redux": "^3.6.0",

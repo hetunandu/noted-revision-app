@@ -10,6 +10,8 @@ import CustomNavBar from '../Navigation/CustomNavBar'
 // screens identified by the router
 import LoginScreen from '../Containers/LoginScreen'
 import SubjectScreen from '../Containers/SubjectScreen'
+import ConceptScreen from '../Containers/ConceptScreen'
+import ResultScreen from '../Containers/ResultScreen'
 
 /* **************************
 * Documentation: https://github.com/aksonov/react-native-router-flux
@@ -18,9 +20,11 @@ import SubjectScreen from '../Containers/SubjectScreen'
 class NavigationRouter extends Component {
   render () {
     return (
-      <Router>
-        <Scene initial key='login' component={LoginScreen}  hideNavBar />
-        <Scene key='subjects' component={SubjectScreen} type="replace" hideNavBar  />
+      <Router hideNavBar>
+        <Scene initial key='login' component={LoginScreen}  />
+        <Scene key='subjects' component={SubjectScreen} type="replace"  />
+        <Scene key="concepts" component={ConceptScreen} direction="vertical"  />
+        <Scene key="result" component={ResultScreen} />
       </Router>
     )
   }

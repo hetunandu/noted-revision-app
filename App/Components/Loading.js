@@ -14,6 +14,7 @@ export default class Loading extends React.Component {
         <ActivityIndicator
           animating={true}
           size="large"
+          color="red"
         />
       </View>
     )

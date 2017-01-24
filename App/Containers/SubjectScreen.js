@@ -2,17 +2,15 @@
 
 import React from 'react'
 import { ScrollView, Text, View, KeyboardAvoidingView } from 'react-native'
-import Loading from '../Components/Loading';
+import Loading from '../Components/Loading'
 import SubjectTab from '../Components/SubjectTab'
-import StatusBar from '../Components/StatusBar';
+import StatusBar from '../Components/StatusBar'
 import { connect } from 'react-redux'
-// Add Actions - replace 'Your' with whatever your reducer is called :)
 import SubjectActions from '../Redux/SubjectRedux'
+import ConceptActions from '../Redux/ConceptRedux'
+
 import { Metrics, Colors } from '../Themes'
 // external libs
-import Icon from 'react-native-vector-icons/FontAwesome'
-import Animatable from 'react-native-animatable'
-import { Actions as NavigationActions } from 'react-native-router-flux'
 import ScrollableTabView from 'react-native-scrollable-tab-view'
 
 // Styles
@@ -36,7 +34,7 @@ class SubjectScreen extends React.Component {
 
     return (
       <View style={[styles.container, {paddingTop: 0}]}>
-        <StatusBar coins={user.points} />
+        <StatusBar coins={user.points} session={user.session} />
         {subjects.fetching || subjects.list.length == 0 ? (
           <Loading />
           ):(
@@ -48,7 +46,12 @@ class SubjectScreen extends React.Component {
             >
               {subjects.list.map(subject => {
                 return(
-                  <SubjectTab key={subject.key} tabLabel={subject.name} subject={subject} />
+                  <SubjectTab
+                    key={subject.key}
+                    tabLabel={subject.name}
+                    subject={subject}
+                    onSubjectActionPress={(mode) => this.handleSubjectActionPress(subject.key, mode)}
+                  />
                 )
               })}
             </ScrollableTabView>
@@ -58,6 +61,9 @@ class SubjectScreen extends React.Component {
     )
   }
 
+  handleSubjectActionPress(subject_key, mode) {
+    this.props.fetchConcepts(subject_key, mode)
+  }
 }
 
 const mapStateToProps = (state) => {
@@ -70,8 +76,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchSubjectList: () => {dispatch(SubjectActions.subjectRequest())},
-    changeIndex: (index) => {dispatch(SubjectActions.changeSubjectIndex(index))}
-
+    fetchConcepts: (subject_key, mode) => {dispatch(ConceptActions.conceptRequest(subject_key, mode))}
   }
 }
 

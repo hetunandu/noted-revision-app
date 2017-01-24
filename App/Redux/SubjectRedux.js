@@ -6,8 +6,7 @@ import Immutable from 'seamless-immutable'
 const { Types, Creators } = createActions({
   subjectRequest: null,
   subjectSuccess: ['subjects'],
-  subjectFailure: ['error'],
-  changeSubjectIndex: ['index']
+  subjectFailure: ['error']
 })
 
 export const SubjectTypes = Types

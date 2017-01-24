@@ -10,7 +10,8 @@ const { Types, Creators } = createActions({
   loginRequest: ['accessToken'],
   loginSuccess: ['user'],
   loginFailure: ['error'],
-  logout: null
+  logout: null,
+  updateSession: ['session']
 })
 
 export const LoginTypes = Types
@@ -44,6 +45,9 @@ export const failure = (state: Object, { error }: Object) =>
 // we've logged out
 export const logout = (state: Object) => INITIAL_STATE
 
+// update the session views
+export const updateSession = (state, {session}) => state.merge({ user: {session: session}}, {deep: true})
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
@@ -51,7 +55,8 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.LOGIN_REQUEST]: request,
   [Types.LOGIN_SUCCESS]: success,
   [Types.LOGIN_FAILURE]: failure,
-  [Types.LOGOUT]: logout
+  [Types.LOGOUT]: logout,
+  [Types.UPDATE_SESSION]: updateSession
 })
 
 /* ------------- Selectors ------------- */

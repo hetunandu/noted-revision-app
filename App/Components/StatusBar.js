@@ -11,6 +11,9 @@ export default class StatusBar extends React.Component {
       <View
         style={styles.container}
       >
+        <Text style={styles.viewsCounterText}>
+          {this.props.session.views} views
+        </Text>
         <Text
           style={styles.coinsCounterText}
         >

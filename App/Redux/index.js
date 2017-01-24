@@ -8,7 +8,9 @@ export default () => {
   /* ------------- Assemble The Reducers ------------- */
   const rootReducer = combineReducers({
     login: require('./LoginRedux').reducer,
-    subjects: require('./SubjectRedux').reducer
+    subjects: require('./SubjectRedux').reducer,
+    concepts: require('./ConceptRedux').reducer,
+    result: require('./ResultRedux').reducer
   })
 
   return configureStore(rootReducer, rootSaga)

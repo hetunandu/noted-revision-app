@@ -2,7 +2,7 @@
 import apisauce from 'apisauce'
 
 // our "constructor"
-const create = (baseURL = 'https://noted-api.appspot.com/study') => {  
+const create = (baseURL = 'https://4-dot-noted-api.appspot.com/study') => {
   // ------
   // STEP 1
   // ------
@@ -17,8 +17,8 @@ const create = (baseURL = 'https://noted-api.appspot.com/study') => {
       'Cache-Control': 'no-cache',
       'Content-type': 'application/json'
     },
-    // 10 second timeout...
-    timeout: 10000
+    // 15 second timeout...
+    timeout: 15000
   })
 
   // const token = AsyncStorage.getItem('login_token', (token) => {
@@ -54,6 +54,12 @@ const create = (baseURL = 'https://noted-api.appspot.com/study') => {
   const loginUser = (accessToken) => api.post('login', {id_token: accessToken})
   const checkToken = (token) => api.get('user', {}, { headers: {'Authorization': token}})
   const getSubjects = (token) =>  api.get('subjects', {}, {headers: {'Authorization': token}})
+  const getConcepts = (token, subject_key, mode) => {
+    return api.get(`subjects/${subject_key}/${mode}`, {}, {headers: {'Authorization': token}})
+  }
+  const submitResult = (token, subject_key, mode, result) => {
+    return api.post(`subjects/${subject_key}/${mode}/result`, {result}, {headers: {'Authorization': token}})
+  }
 
   // ------
   // STEP 3
@@ -71,7 +77,9 @@ const create = (baseURL = 'https://noted-api.appspot.com/study') => {
     // a list of the API functions from step 2
     loginUser,
     checkToken,
-    getSubjects
+    getSubjects,
+    getConcepts,
+    submitResult
   }
 }
 
