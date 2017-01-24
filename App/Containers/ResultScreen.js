@@ -22,22 +22,30 @@ class ResultScreen extends React.Component {
     this.props.submitResult()
   }
 
-  render () {
-    return (
-      <View style={[styles.container, {paddingTop: 0}]}>
+  renderSummary(){
+    if(this.props.mode == 'revise'){
+      return(
         <View style={styles.summary}>
           <Text>Result</Text>
           <View style={styles.table}>
             <View style={styles.row}>
               <Text style={styles.rowHead}>Read</Text>
-              <Text style={styles.rowValue}>3</Text>
+              <Text style={styles.rowValue}>{this.getMarkedCount('read')}</Text>
             </View>
             <View style={styles.row}>
               <Text style={styles.rowHead}>Skip</Text>
-              <Text style={styles.rowValue}>2</Text>
+              <Text style={styles.rowValue}>{this.getMarkedCount('skip')}</Text>
             </View>
           </View>
         </View>
+      )
+    }
+  }
+
+  render() {
+    return (
+      <View style={[styles.container, {paddingTop: 0}]}>
+        { this.renderSummary() }
         {this.props.result.fetching ? <Loading /> : (
           <View style={styles.pointsContainer}>
             <Text style={styles.pointsDisplay}>
@@ -56,11 +64,22 @@ class ResultScreen extends React.Component {
     )
   }
 
+  getMarkedCount(marked) {
+    let counter = 0
+    this.props.result.data.map( concept => {
+      if (concept.marked == marked){
+        counter ++
+      }
+    })
+
+    return counter
+  }
 }
 
 const mapStateToProps = (state) => {
   return {
-    result: state.result
+    result: state.result,
+    mode: state.concepts.mode
   }
 }
 

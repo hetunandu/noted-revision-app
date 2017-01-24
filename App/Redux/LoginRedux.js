@@ -49,7 +49,7 @@ export const logout = (state: Object) => INITIAL_STATE
 // update the session views
 export const updateSession = (state, {session}) => state.merge({ user: {session: session}}, {deep: true})
 
-export const updateCoins = (state, {coins}) => state.merge({ user: {points: coins}}, {deep: true})
+export const updateCoins = (state, {coins}) => state.merge({ user: {points: state.user.points + coins}}, {deep: true})
 
 /* ------------- Hookup Reducers To Types ------------- */
 
