@@ -2,7 +2,7 @@ import { call, put } from 'redux-saga/effects'
 import LoginActions from '../Redux/LoginRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import {GoogleSignin} from 'react-native-google-signin';
-import {AsyncStorage, ToastAndroid} from 'react-native';
+import {AsyncStorage, ToastAndroid, NetInfo} from 'react-native';
 
 
 // Check token, with token get user details, if error, configure google login
@@ -10,29 +10,39 @@ export function * loginInit(api){
 
   try{
     yield call(googleLoginConfigure)
-    // Check if the token exists in storage
-    const token = yield call(AsyncStorage.getItem, 'login_token')
 
-    if (token){
-      // call server to check validiity of token
-      const response = yield call(api.checkToken, token)
-      // Was the server response a success
-      if (response.ok && response.data.success){
-        // run the success action
-        yield put(LoginActions.loginSuccess(response.data.message.user))
+    // Check if internet is there
+    const isConnected = yield call(NetInfo.isConnected.fetch)
 
-        // navigate to the subjects screen
-        yield call(NavigationActions.subjects)
-      }else{
-        // Server sent some error, need the user to login again
-        yield put(LoginActions.loginFailure(response.data.error))
-      }
-
+    if(!isConnected){
+      yield call(NavigationActions.game)
     }else{
-      // set auth to false
-      yield put(LoginActions.loginFailure())
 
+      // Check if the token exists in storage
+      const token = yield call(AsyncStorage.getItem, 'login_token')
+
+      if (token){
+        // call server to check validity of token
+        const response = yield call(api.checkToken, token)
+        // Was the server response a success
+        if (response.ok && response.data.success){
+          // run the success action
+          yield put(LoginActions.loginSuccess(response.data.message.user))
+
+          // navigate to the subjects screen
+          yield call(NavigationActions.subjects)
+        }else{
+          // Server sent some error, need the user to login again
+          yield put(LoginActions.loginFailure(response.data.error))
+        }
+
+      }else{
+        // set auth to false
+        yield put(LoginActions.loginFailure())
+
+      }
     }
+
   }catch (err) {
     console.warn(err)
     yield put(LoginActions.loginFailure(err))
