@@ -54,12 +54,17 @@ const create = (baseURL = 'https://4-dot-noted-api.appspot.com/study') => {
   const loginUser = (accessToken) => api.post('login', {id_token: accessToken})
   const checkToken = (token) => api.get('user', {}, { headers: {'Authorization': token}})
   const getSubjects = (token) =>  api.get('subjects', {}, {headers: {'Authorization': token}})
-  const getConcepts = (token, subject_key, mode) => {
-    return api.get(`subjects/${subject_key}/${mode}`, {}, {headers: {'Authorization': token}})
-  }
-  const submitResult = (token, subject_key, mode, result) => {
-    return api.post(`subjects/${subject_key}/${mode}/result`, {result}, {headers: {'Authorization': token}})
-  }
+  const getConcepts = (token, subject_key, mode) =>
+    api.get(`subjects/${subject_key}/${mode}`, {}, {headers: {'Authorization': token}})
+
+  const getSingleConcept = (token, concept_key) =>
+    api.get(`concepts/${concept_key}`, {}, { headers: { 'Authorization': token } })
+
+  const submitResult = (token, subject_key, mode, result) =>
+    api.post(`subjects/${subject_key}/${mode}/result`, {result}, {headers: {'Authorization': token}})
+
+  const getIndex = (token, subject_key) =>
+    api.get(`subjects/${subject_key}/index`, {}, { headers: { 'Authorization': token } })
 
   // ------
   // STEP 3
@@ -79,7 +84,9 @@ const create = (baseURL = 'https://4-dot-noted-api.appspot.com/study') => {
     checkToken,
     getSubjects,
     getConcepts,
-    submitResult
+    getSingleConcept,
+    submitResult,
+    getIndex
   }
 }
 

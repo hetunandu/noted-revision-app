@@ -8,13 +8,15 @@ import { LoginTypes } from '../Redux/LoginRedux'
 import { SubjectTypes } from '../Redux/SubjectRedux'
 import { ConceptTypes } from '../Redux/ConceptRedux'
 import { ResultTypes } from '../Redux/ResultRedux'
+import { IndexTypes } from '../Redux/IndexRedux'
 
 /* ------------- Sagas ------------- */
 
 import { login, loginInit } from './LoginSagas'
 import { getSubjects } from './SubjectSagas'
-import { getConcepts } from './ConceptSagas'
+import { getConcepts, getSingleConcept } from './ConceptSagas'
 import { submitResult } from './ResultSagas'
+import { getIndex } from './IndexSagas'
 
 /* ------------- API ------------- */
 
@@ -30,6 +32,8 @@ export default function * root () {
     takeLatest(LoginTypes.LOGIN_REQUEST, login, api),
     takeLatest(SubjectTypes.SUBJECT_REQUEST, getSubjects, api),
     takeLatest(ConceptTypes.CONCEPT_REQUEST, getConcepts, api),
-    takeLatest(ResultTypes.RESULT_REQUEST, submitResult, api)
+    takeLatest(ConceptTypes.SINGLE_REQUEST, getSingleConcept, api),
+    takeLatest(ResultTypes.RESULT_REQUEST, submitResult, api),
+    takeLatest(IndexTypes.INDEX_REQUEST, getIndex, api)
   ]
 }

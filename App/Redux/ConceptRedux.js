@@ -8,7 +8,8 @@ const { Types, Creators } = createActions({
   conceptSuccess: ['concepts'],
   conceptFailure: null,
   toggleReference: ['error'],
-  markConcept: ['concept_key']
+  markConcept: ['concept_key'],
+  singleRequest: ['subject', 'key']
 })
 
 export const ConceptTypes = Types
@@ -31,7 +32,7 @@ export const INITIAL_STATE = Immutable({
 export const request = (state, { subject, mode }) => state.merge({
     fetching: true,
     list: [],
-    mode,
+    mode: mode ? mode : 'revise',
     subject,
     showRef: false,
     error: null
@@ -49,12 +50,12 @@ export const markConcept = (state, {concept_key}) => state.merge({
   list: state.list.filter(concept => concept.key !== concept_key)
 })
 
-
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.MARK_CONCEPT]: markConcept,
   [Types.CONCEPT_REQUEST]: request,
+  [Types.SINGLE_REQUEST]: request,
   [Types.CONCEPT_SUCCESS]: success,
   [Types.CONCEPT_FAILURE]: failure,
   [Types.TOGGLE_REFERENCE]: toggleRef,

@@ -5,7 +5,7 @@ import Immutable from 'seamless-immutable'
 
 const { Types, Creators } = createActions({
   clearResult: null,
-  markConcept: ['concept_key', 'status'],
+  markConcept: ['subject_key', 'concept_key', 'status'],
   resultRequest: null,
   resultSuccess: ['points'],
   resultFailure: ['error']

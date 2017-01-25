@@ -9,15 +9,16 @@ export default StyleSheet.create({
     paddingTop: Metrics.titlePadding
   },
   statusContainer: {
+    padding: 10,
     flex: 1,
     backgroundColor: Colors.frost,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'space-around'
   },
   actionsContainer: {
     padding: 10,
-    flex: 3
+    flex: 5
   },
   readStatus: {
     fontSize: 30

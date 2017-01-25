@@ -31,3 +31,31 @@ export function * getConcepts (api, action) {
 
 }
 
+export function * getSingleConcept(api, action){
+  const { key } = action
+
+  try{
+    const token = yield call(AsyncStorage.getItem, 'login_token')
+
+    yield call(NavigationActions.concepts)
+
+    const response = yield call(api.getSingleConcept, token, key)
+
+    // success?
+    if (response.ok && response.data.success) {
+
+      yield put(ConceptActions.conceptSuccess([response.data.message.concept]))
+
+      yield put(LoginActions.updateSession(response.data.message.session_data))
+
+      yield put(ResultActions.clearResult())
+
+    } else {
+      yield put(ConceptActions.conceptFailure(response.data.error))
+    }
+
+  }catch (err){
+    console.warn(err)
+    yield put(ConceptActions.conceptFailure(err))
+  }
+}

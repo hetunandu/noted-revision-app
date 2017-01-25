@@ -17,7 +17,7 @@ export function * loginInit(api){
       // call server to check validiity of token
       const response = yield call(api.checkToken, token)
       // Was the server response a success
-      if (response.data.success){
+      if (response.ok && response.data.success){
         // run the success action
         yield put(LoginActions.loginSuccess(response.data.message.user))
 
@@ -35,7 +35,7 @@ export function * loginInit(api){
     }
   }catch (err) {
     console.warn(err)
-    //yield put(console.tron.log(err))
+    yield put(LoginActions.loginFailure(err))
   }
 }
 

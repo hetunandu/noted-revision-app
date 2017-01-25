@@ -17,11 +17,11 @@ import ResultScreen from '../Containers/ResultScreen'
 class NavigationRouter extends Component {
   render () {
     return (
-      <Router hideNavBar>
-        <Scene initial key='login' component={LoginScreen}  />
-        <Scene key='subjects' component={SubjectScreen} type="replace"  />
-        <Scene key="concepts" component={ConceptScreen} direction="vertical"  />
-        <Scene key="result" component={ResultScreen} type="replace" />
+      <Router hideNavBar panHandlers={null}>
+        <Scene initial key='login' component={LoginScreen} panHandlers={null}  />
+        <Scene key='subjects' component={SubjectScreen} type="replace" panHandlers={null}  />
+        <Scene key="concepts" component={ConceptScreen} direction="vertical" panHandlers={null} />
+        <Scene key="result" component={ResultScreen} type="replace" panHandlers={null} />
       </Router>
     )
   }

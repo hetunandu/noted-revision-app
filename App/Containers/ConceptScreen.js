@@ -22,9 +22,9 @@ class ConceptScreen extends React.Component {
 
   componentDidUpdate(){
     const {concepts, result} = this.props
-    // console.tron.log(concepts)
-    // console.tron.log(result)
-    if(concepts.list.length === 0 && result.data.length > 1 ){
+    //console.tron.log(concepts)
+    console.tron.log(result)
+    if(concepts.list.length === 0 && result.data.length > 0 ){
       NavigationActions.result()
     }
   }
@@ -61,7 +61,7 @@ class ConceptScreen extends React.Component {
   }
 
   handleMarkConcept(concept, status){
-    this.props.markConcept(concept, status)
+    this.props.markConcept(this.props.concepts.subject, concept, status)
   }
 }
 
@@ -75,7 +75,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     toggleRef: () => dispatch(ConceptActions.toggleReference()),
-    markConcept: (concept_key, status) => dispatch(ResultActions.markConcept(concept_key, status)),
+    markConcept: (subject_key, concept_key, status) => dispatch(ResultActions.markConcept(subject_key, concept_key, status)),
   }
 }
 

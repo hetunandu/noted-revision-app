@@ -10,7 +10,8 @@ export default () => {
     login: require('./LoginRedux').reducer,
     subjects: require('./SubjectRedux').reducer,
     concepts: require('./ConceptRedux').reducer,
-    result: require('./ResultRedux').reducer
+    result: require('./ResultRedux').reducer,
+    index: require('./IndexRedux').reducer
   })
 
   return configureStore(rootReducer, rootSaga)

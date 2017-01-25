@@ -20,6 +20,8 @@ export function * submitResult(api){
 
       yield put(LoginActions.updateCoins(response.data.message.new_points))
 
+
+
     } else {
       yield put(ResultActions.resultFailure(response.data.error))
     }
