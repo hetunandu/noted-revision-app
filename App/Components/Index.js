@@ -115,7 +115,6 @@ export default class Index extends React.Component {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.indexHeader}>Index</Text>
         <ListView
           dataSource={index}
           renderRow={(rowData) => this.renderRow(rowData)}

@@ -5,6 +5,7 @@ import { View, Text } from 'react-native'
 import styles from './Styles/SubjectTabStyle'
 import SubjectActionButton from '../Components/SubjectActionButton'
 import StatusCounter from '../Components/StatusCounter'
+import {Actions as NavigationActions} from 'react-native-router-flux'
 import Loading from '../Components/Loading'
 import Index from '../Components/Index'
 import { Colors } from '../Themes'
@@ -34,18 +35,10 @@ export default class SubjectTab extends React.Component {
             {/*btnText="Test"*/}
             {/*onBtnPress={() => this.handleTest()}*/}
           {/*/>*/}
-          {this.props.index.data ? (
-            <Index
-              index={this.props.index.data}
-              onConceptSelected={(concept) => this.handleConceptSelected(concept)}
-            />
-            ) : (
-            <SubjectActionButton
-              btnText="Index"
-              onBtnPress={() => this.handleIndex()}
-            />
-          )}
-          {this.props.index.fetching && <Loading />}
+          <SubjectActionButton
+            btnText="Index"
+            onBtnPress={() => this.handleIndex()}
+          />
 
         </View>
       </View>

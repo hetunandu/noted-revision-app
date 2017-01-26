@@ -49,8 +49,6 @@ class SubjectScreen extends React.Component {
                     key={subject.key}
                     tabLabel={subject.name}
                     subject={subject}
-                    index={{data: index.data[subject.key], fetching: index.fetching}}
-
 
                     onSubjectActionPress={(mode) => this.handleSubjectActionPress(subject.key, mode)}
                     onSubjectIndexPress={() => this.handleSubjectIndexPress(subject.key)}
@@ -73,9 +71,7 @@ class SubjectScreen extends React.Component {
     this.props.fetchIndex(subject_key)
   }
 
-  handleSingleConceptPress(subject_key, concept_key) {
-    this.props.fetchSingleConcept(subject_key, concept_key)
-  }
+
 }
 
 const mapStateToProps = (state) => {
@@ -91,8 +87,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchSubjectList: () => {dispatch(SubjectActions.subjectRequest())},
     fetchConcepts: (subject_key, mode) => {dispatch(ConceptActions.conceptRequest(subject_key, mode))},
     fetchIndex: (subject_key) => {dispatch(IndexActions.indexRequest(subject_key))},
-    fetchSingleConcept: (subject_key, concept_key) =>
-      dispatch(ConceptActions.singleRequest(subject_key, concept_key))
+
   }
 }
 

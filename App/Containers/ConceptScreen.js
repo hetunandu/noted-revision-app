@@ -22,8 +22,7 @@ class ConceptScreen extends React.Component {
 
   componentDidUpdate(){
     const {concepts, result} = this.props
-    //console.tron.log(concepts)
-    console.tron.log(result)
+
     if(concepts.list.length === 0 && result.data.length > 0 ){
       NavigationActions.result()
     }

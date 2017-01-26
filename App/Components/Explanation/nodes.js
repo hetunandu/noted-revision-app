@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import Markdown from 'react-native-simple-markdown';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Colors, Fonts } from '../../Themes';
 
 
 export class TitleNode extends React.Component{
@@ -27,7 +28,6 @@ export class TextNode extends React.Component{
         flexWrap: 'wrap'
       },
       strong: {
-        fontWeight: 'bold',
         color: 'red',
       }
     }
@@ -96,7 +96,7 @@ export class PointerNode extends React.Component{
 export class SubPointNode extends React.Component{
 	render(){
 		return (
-			<View>
+			<View style={{flex: 1}}>
 				{this.props.data.map((subPoint, i) => {
           return(
             <View key={`${i}-subpoint-${subPoint}`} style={styles.subPoint}>
@@ -104,8 +104,9 @@ export class SubPointNode extends React.Component{
                 name="label"
                 size={15}
                 color="#333"
-                style={{marginRight: 3, marginTop: 5}}/>
-              <TextNode data={subPoint}/>
+                style={{padding: 3}}
+              />
+              <TextNode data={subPoint} />
             </View>
           )
 					})}
@@ -119,7 +120,7 @@ const styles = StyleSheet.create({
 	title: {
 		marginTop: 5,
 		marginBottom: 10,
-		fontSize: 25,
+		fontSize: Fonts.size.h3,
 		color: '#000',
 		fontWeight: "100"
 	},
@@ -128,9 +129,10 @@ const styles = StyleSheet.create({
 		paddingLeft: 25,
 		fontSize: 20,
 		borderLeftWidth: 7,
-		borderLeftColor: "red",
-		color: "red",
+		borderLeftColor: Colors.notedRedDarker,
+    color: Colors.charcoal,
 		fontStyle: 'italic',
+    fontWeight: 'bold',
 		marginBottom: 10
 	},
 	pointer:{
@@ -141,7 +143,8 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: '#000',
     flex: 1,
-    fontWeight: "900"
+    fontWeight: "900",
+    textAlign: 'center'
   },
 	pointContent:{
 	  flex: 10
@@ -156,6 +159,7 @@ const styles = StyleSheet.create({
 	subPoint: {
 		flex: 1,
 		flexDirection: 'row',
-		alignItems: 'flex-start'
+    alignItems: 'center',
+    justifyContent: 'center'
 	}
 })
