@@ -7,6 +7,7 @@ import Reference from './Reference'
 import styles from './Styles/ConceptCardStyle'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import {Metrics} from '../Themes'
+import * as Animatable from 'react-native-animatable';
 
 export default class ConceptCard extends React.Component {
 
@@ -80,20 +81,10 @@ export default class ConceptCard extends React.Component {
 
   render () {
     return (
-      <Animated.View style={[
-        styles.container,
-        {
-          transform: [
-            { scale: this.state.scale },
-            { translateX: this.state.translateX }
-          ]
-        }
-        ]}
-      >
+      <Animatable.View animation="fadeIn" style={styles.container} ref="card">
         { this.renderContents() }
-
         { this.renderActions() }
-      </Animated.View>
+      </Animatable.View>
     )
   }
 
@@ -108,12 +99,18 @@ export default class ConceptCard extends React.Component {
 
 
   handleToggleRef() {
+    this.refs.card.flipInY()
     this.props.toggleRef()
   }
 
 
   handleReadConcept() {
-    this.props.markConcept(this.props.concept.key, 'read')
+    this.refs.card.slideOutUp()
+      .then((endState) => {
+        if(endState.finished){
+          this.props.markConcept(this.props.concept.key, 'read')
+        }
+      })
   }
 
 

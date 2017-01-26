@@ -3,12 +3,14 @@
 import React from 'react'
 import { View, Text, TouchableHighlight, Linking } from 'react-native'
 import styles from './Styles/ReferenceStyle'
+import * as Animatable from 'react-native-animatable';
+
 
 export default class Reference extends React.Component {
 
   render () {
     return (
-      <View style={styles.container}>
+      <View style={styles.container} >
         <Text style={styles.refTitle}>{this.props.conceptName}</Text>
         {
           this.props.references.length > 0 ? (

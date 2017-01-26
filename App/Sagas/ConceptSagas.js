@@ -11,6 +11,8 @@ export function * getConcepts (api, action) {
   try {
     const token = yield call(AsyncStorage.getItem, 'login_token')
 
+    yield put(ResultActions.clearResult())
+
     yield call(NavigationActions.concepts)
 
     const response = yield call(api.getConcepts, token, subject, mode)
@@ -19,7 +21,7 @@ export function * getConcepts (api, action) {
     if (response.ok && response.data.success) {
       yield put(ConceptActions.conceptSuccess(response.data.message.concepts))
       yield put(LoginActions.updateSession(response.data.message.session_data))
-      yield put(ResultActions.clearResult())
+
 
     } else {
       yield put(ConceptActions.conceptFailure(response.data.error))
@@ -37,6 +39,8 @@ export function * getSingleConcept(api, action){
   try{
     const token = yield call(AsyncStorage.getItem, 'login_token')
 
+    yield put(ResultActions.clearResult())
+
     yield call(NavigationActions.concepts)
 
     const response = yield call(api.getSingleConcept, token, key)
@@ -48,7 +52,6 @@ export function * getSingleConcept(api, action){
 
       yield put(LoginActions.updateSession(response.data.message.session_data))
 
-      yield put(ResultActions.clearResult())
 
     } else {
       yield put(ConceptActions.conceptFailure(response.data.error))
