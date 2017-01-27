@@ -31,11 +31,11 @@ class SubjectScreen extends React.Component {
   }
 
   render () {
-    const { subjects, user, session} = this.props
+    const { subjects, session, coins} = this.props
 
     return (
       <View style={[styles.container, {paddingTop: 0}]}>
-        <StatusBar coins={user.points} session={session} />
+        <StatusBar coins={coins} session={session} />
         {session.views === 0 ? (
           <Cooldown
             session={session}
@@ -60,7 +60,6 @@ class SubjectScreen extends React.Component {
 
                       onSubjectActionPress={(mode) => this.handleSubjectActionPress(subject.key, mode)}
                       onSubjectIndexPress={() => this.handleSubjectIndexPress(subject.key)}
-                      onSingleConceptPress={(concept_key) => this.handleSingleConceptPress(subject.key, concept_key)}
                     />
                   )
                 })}
@@ -88,8 +87,8 @@ class SubjectScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.login.user,
     session: state.session,
+    coins: state.coins,
     subjects: state.subjects,
     index: state.index
   }

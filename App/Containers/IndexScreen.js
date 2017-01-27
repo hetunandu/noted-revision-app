@@ -19,6 +19,7 @@ import styles from './Styles/IndexScreenStyle'
 
 class IndexScreen extends React.Component {
 
+
   render () {
     return (
       <View style={styles.mainContainer}>
@@ -47,7 +48,8 @@ IndexScreen.propTypes = {
 const mapStateToProps = (state) => {
 
   return {
-    index: state.index
+    index: state.index,
+    session: state.session
   }
 }
 

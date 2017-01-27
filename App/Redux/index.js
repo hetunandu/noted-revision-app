@@ -9,6 +9,7 @@ export default () => {
   const rootReducer = combineReducers({
     login: require('./LoginRedux').reducer,
     session: require('./SessionRedux').reducer,
+    coins: require('./CoinsRedux').reducer,
     subjects: require('./SubjectRedux').reducer,
     concepts: require('./ConceptRedux').reducer,
     result: require('./ResultRedux').reducer,

@@ -1,7 +1,7 @@
 
 import { call, put, select } from 'redux-saga/effects'
 import ResultActions from '../Redux/ResultRedux'
-import LoginActions from '../Redux/LoginRedux'
+import CoinsActions from '../Redux/CoinsRedux'
 import { AsyncStorage } from 'react-native'
 
 
@@ -16,14 +16,15 @@ export function * submitResult(api){
 
     // success?
     if (response.ok && response.data.success) {
+
       yield put(ResultActions.resultSuccess(response.data.message.new_points))
 
-      yield put(LoginActions.updateCoins(response.data.message.new_points))
-
-
+      yield put(CoinsActions.updateBalance(response.data.message.balance))
 
     } else {
+
       yield put(ResultActions.resultFailure(response.data.error))
+
     }
 
   }catch (err){

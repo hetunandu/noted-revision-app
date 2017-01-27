@@ -1,6 +1,7 @@
 import { call, put } from 'redux-saga/effects'
 import LoginActions from '../Redux/LoginRedux'
 import SessionActions from '../Redux/SessionRedux'
+import CoinsActions from '../Redux/CoinsRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import {GoogleSignin} from 'react-native-google-signin';
 import {AsyncStorage, ToastAndroid, NetInfo} from 'react-native';
@@ -35,6 +36,8 @@ export function * loginInit(api){
           yield put(LoginActions.loginSuccess(response.data.message.user))
 
           yield put(SessionActions.updateSession(response.data.message.user.session))
+
+          yield put(CoinsActions.updateBalance(response.data.message.user.points))
 
           // navigate to the subjects screen
           yield call(NavigationActions.subjects)
@@ -83,6 +86,11 @@ export function * login (api, action) {
       yield call(AsyncStorage.setItem, 'login_token', data.message.token)
       // run the success action
       yield put(LoginActions.loginSuccess(data.message.user))
+
+      yield put(SessionActions.updateSession(data.message.user.session))
+
+      yield put(CoinsActions.updateBalance(data.message.user.points))
+
       // navigate the welcome screen
       yield call(NavigationActions.subjects)
 

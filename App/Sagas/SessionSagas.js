@@ -1,5 +1,6 @@
 import { call, put } from 'redux-saga/effects'
 import SessionActions from '../Redux/SessionRedux'
+import CoinsActions from '../Redux/CoinsRedux'
 import { AsyncStorage } from 'react-native'
 
 export function * skipCooldown (api) {
@@ -14,6 +15,8 @@ export function * skipCooldown (api) {
     if (response.ok && response.data.success) {
 
       yield put(SessionActions.skipSuccess(response.data.message.session))
+
+      yield put(CoinsActions.updateBalance(response.data.message.balance))
 
     } else {
 
