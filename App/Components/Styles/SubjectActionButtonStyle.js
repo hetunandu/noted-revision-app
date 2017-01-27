@@ -5,7 +5,6 @@ import { Colors, Metrics, ApplicationStyles } from '../../Themes/'
 
 export default StyleSheet.create({
   container: {
-    marginBottom: 10,
     backgroundColor: Colors.notedRed,
   },
   btnContainer: {
@@ -16,7 +15,20 @@ export default StyleSheet.create({
 
   },
   btnText: {
-    fontSize: 20,
+    fontSize: 23,
+    color: 'white',
+    fontWeight: 'bold'
+  },
+  infoText: {
+    fontSize: 16,
+    color: 'white'
+  },
+  costContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  costText:{
+    fontSize: 18,
     color: 'white'
   }
 })

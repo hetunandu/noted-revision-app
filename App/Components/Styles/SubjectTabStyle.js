@@ -17,7 +17,6 @@ export default StyleSheet.create({
     justifyContent: 'space-around'
   },
   actionsContainer: {
-    padding: 10,
     flex: 5
   },
   readStatus: {

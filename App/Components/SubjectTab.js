@@ -28,7 +28,10 @@ export default class SubjectTab extends React.Component {
         </View>
         <View style={styles.actionsContainer}>
           <SubjectActionButton
-            btnText="Revise"
+            btnText="Quick Revise"
+            infoText="Got 5 minutes? Revise top 5 unread concepts"
+            cost="5"
+            bgColor={Colors.yellow}
             onBtnPress={() => this.handleRevision()}
           />
           {/*<SubjectActionButton*/}
@@ -37,6 +40,8 @@ export default class SubjectTab extends React.Component {
           {/*/>*/}
           <SubjectActionButton
             btnText="Index"
+            infoText="Check out all the concepts and select concepts you want to study"
+            cost="1"
             onBtnPress={() => this.handleIndex()}
           />
 
