@@ -70,6 +70,10 @@ const create = (baseURL = 'https://4-dot-noted-api.appspot.com/study') => {
 
   const redeemCode = (token, code) => api.post('users/code/redeem', {code}, {headers: {'Authorization': token}})
 
+  const requestPayment = (token) => api.get('payments/request', {}, {headers: {'Authorization': token}})
+
+  const paymentStatus = (token, key) => api.get(`payments/status/${key}`, {}, { headers: {'Authorization': token} })
+
   // ------
   // STEP 3
   // ------
@@ -92,7 +96,9 @@ const create = (baseURL = 'https://4-dot-noted-api.appspot.com/study') => {
     submitResult,
     getIndex,
     skipCooldown,
-    redeemCode
+    redeemCode,
+    requestPayment,
+    paymentStatus
   }
 }
 

@@ -11,6 +11,7 @@ import { ResultTypes } from '../Redux/ResultRedux'
 import { IndexTypes } from '../Redux/IndexRedux'
 import { SessionTypes } from '../Redux/SessionRedux'
 import { CoinsTypes } from '../Redux/CoinsRedux'
+import { PaymentTypes } from '../Redux/PaymentRedux'
 
 /* ------------- Sagas ------------- */
 
@@ -21,6 +22,7 @@ import { submitResult } from './ResultSagas'
 import { getIndex } from './IndexSagas'
 import { skipCooldown } from './SessionSagas'
 import { redeemCode } from './CoinsSagas'
+import { requestPayment, paymentStatus } from './PaymentSagas'
 
 /* ------------- API ------------- */
 
@@ -40,6 +42,8 @@ export default function * root () {
     takeLatest(ResultTypes.RESULT_REQUEST, submitResult, api),
     takeLatest(IndexTypes.INDEX_REQUEST, getIndex, api),
     takeLatest(SessionTypes.SKIP_REQUEST, skipCooldown, api),
-    takeLatest(CoinsTypes.REDEEM_REQUEST, redeemCode, api)
+    takeLatest(CoinsTypes.REDEEM_REQUEST, redeemCode, api),
+    takeLatest(PaymentTypes.PAYMENT_REQUEST, requestPayment, api),
+    takeLatest(PaymentTypes.STATUS_REQUEST, paymentStatus, api)
   ]
 }

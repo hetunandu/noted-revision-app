@@ -12,6 +12,8 @@ import ConceptScreen from '../Containers/ConceptScreen'
 import ResultScreen from '../Containers/ResultScreen'
 import IndexScreen from '../Containers/IndexScreen'
 import CoinsScreen from '../Containers/CoinsScreen'
+import PayOfflineScreen from '../Containers/PayOfflineScreen'
+import PayOnlineScreen from '../Containers/PayOnlineScreen'
 import Basketball from '../Components/Basketball'
 
 /* **************************
@@ -35,6 +37,8 @@ class NavigationRouter extends Component {
         <Scene key="concepts" component={ConceptScreen} direction="vertical" panHandlers={null} hideNavBar />
         <Scene key="result" component={ResultScreen} type="replace" panHandlers={null} hideNavBar />
         <Scene key="coins" component={CoinsScreen} panHandlers={null} title="Coins" hideNavBar={false} />
+        <Scene key="payOffline" component={PayOfflineScreen} panHandlers={null} title="Pay Offline" hideNavBar={false}/>
+        <Scene key="payOnline" component={PayOnlineScreen} panHandlers={null} title="Pay Online" hideNavBar={false}/>
         <Scene key="game" component={Basketball} type="replace" panHandlers={null} hideNavBar />
       </Router>
     )

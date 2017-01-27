@@ -98,11 +98,11 @@ class CoinsScreen extends React.Component {
   }
 
   payOnline() {
-
+    NavigationActions.payOnline()
   }
 
   offlineBuy() {
-
+    NavigationActions.payOffline()
   }
 }
 
