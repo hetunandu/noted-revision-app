@@ -9,6 +9,8 @@ import ConceptCard from '../Components/ConceptCard';
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 import ConceptActions from '../Redux/ConceptRedux'
 import ResultActions from '../Redux/ResultRedux'
+import IndexActions from '../Redux/IndexRedux'
+
 import { Metrics } from '../Themes'
 // external libs
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -47,7 +49,7 @@ class ConceptScreen extends React.Component {
 
               toggleRef={() => this.handleToggleRef()}
               markConcept={(concept, status) => this.handleMarkConcept(concept, status)}
-
+              starConcept={(concept) => this.handleStarConcept(concept)}
             />
           )}
         </View>
@@ -62,6 +64,10 @@ class ConceptScreen extends React.Component {
   handleMarkConcept(concept, status){
     this.props.markConcept(this.props.concepts.subject, concept, status)
   }
+
+  starConcept(concept){
+    this.props.starConcept(this.props.concepts.subject, concept)
+  }
 }
 
 const mapStateToProps = (state) => {
@@ -75,6 +81,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     toggleRef: () => dispatch(ConceptActions.toggleReference()),
     markConcept: (subject_key, concept_key, status) => dispatch(ResultActions.markConcept(subject_key, concept_key, status)),
+    starConcept: (subject_key, concept_key) => dispatch(IndexActions.starConcept(subject_key, concept_key))
   }
 }
 

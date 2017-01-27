@@ -7,7 +7,8 @@ const { Types, Creators } = createActions({
   indexRequest: ['subject_key'],
   indexSuccess: ['key', 'index'],
   indexFailure: ['error'],
-  markConcept: ['subject_key','concept_key', 'status']
+  markConcept: ['subject_key','concept_key', 'status'],
+  starSuccess: ['subject_key', 'concept_key'],
 })
 
 export const IndexTypes = Types
@@ -55,8 +56,27 @@ export const markConcept = (state, {subject_key, concept_key, status}) => {
   }else{
     return state
   }
+}
 
+export const starSuccess = (state, {subject_key, concept_key}) => {
+  if(state.data[`${subject_key}`]){
+    const index = state.data[`${subject_key}`].map(chapter => {
+      return chapter.merge({
+        concepts: chapter.concepts.map(concept => {
+          if (concept.key == concept_key) {
+            return concept.set("important", true)
+          } else {
+            return concept
+          }
+        })
+      })
+    })
 
+    return state.merge({ data: state.data.setIn([subject_key], index)})
+
+  }else{
+    return state
+  }
 }
 
 /* ------------- Hookup Reducers To Types ------------- */
@@ -65,5 +85,6 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.INDEX_REQUEST]: request,
   [Types.INDEX_SUCCESS]: success,
   [Types.INDEX_FAILURE]: failure,
-  [Types.MARK_CONCEPT]: markConcept
+  [Types.MARK_CONCEPT]: markConcept,
+  [Types.STAR_SUCCESS]: starSuccess
 })

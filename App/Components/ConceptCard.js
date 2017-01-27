@@ -94,6 +94,8 @@ export default class ConceptCard extends React.Component {
 
   handleStarConcept() {
 
+    this.props.starConcept(this.props.concept.key)
+
   }
 
   handleSpeakAloud() {
@@ -111,7 +113,8 @@ ConceptCard.propTypes = {
   mode: React.PropTypes.string,
   showRef: React.PropTypes.bool,
   toggleRef: React.PropTypes.func,
-  markConcept: React.PropTypes.func
+  markConcept: React.PropTypes.func,
+  starConcept: React.PropTypes.func
 }
 // Defaults for props
 ConceptCard.defaultProps = {

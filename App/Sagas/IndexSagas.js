@@ -28,3 +28,22 @@ export function * getIndex (api, action) {
   }
 
 }
+
+
+export function * starConcept(api, action){
+  const { key } = action
+
+  try{
+    const token = yield call(AsyncStorage.getItem, 'login_token')
+
+    const response = yield call(api.starConcept, token, key)
+
+    if (response.ok && response.data.success){
+      yield put(IndexActions.starConceptSuccess(key))
+    }
+
+  }catch (err){
+
+  }
+
+}

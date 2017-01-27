@@ -5,9 +5,6 @@ import { View, Text } from 'react-native'
 import styles from './Styles/SubjectTabStyle'
 import SubjectActionButton from '../Components/SubjectActionButton'
 import StatusCounter from '../Components/StatusCounter'
-import {Actions as NavigationActions} from 'react-native-router-flux'
-import Loading from '../Components/Loading'
-import Index from '../Components/Index'
 import { Colors } from '../Themes'
 
 
@@ -40,29 +37,16 @@ export default class SubjectTab extends React.Component {
           {/*/>*/}
           <SubjectActionButton
             btnText="Index"
-            infoText="Check out all the concepts and select concepts you want to study"
+            infoText="Check out all the concepts and select what you want to study"
             cost="1"
             onBtnPress={() => this.handleIndex()}
           />
-
         </View>
       </View>
     )
   }
 
-  calcPercentRead() {
-    const total = this.props.subject.total_concepts
-    const read = this.props.subject.read_concepts
 
-    return Math.round(read / total * 100)
-  }
-
-  calcPercenLeft() {
-    const total = this.props.subject.total_concepts
-    const read = this.props.subject.read_concepts
-
-    return Math.round(read / total * 100)
-  }
 
   handleRevision(){
     this.props.onSubjectActionPress('revise')
@@ -76,9 +60,6 @@ export default class SubjectTab extends React.Component {
     this.props.onSubjectIndexPress()
   }
 
-  handleConceptSelected(concept) {
-    this.props.onSingleConceptPress(concept.key)
-  }
 }
 
 // Prop type warnings
@@ -91,7 +72,6 @@ SubjectTab.propTypes = {
   }),
   onSubjectActionPress: React.PropTypes.func,
   onSubjectIndexPress: React.PropTypes.func,
-  onSingleConceptPress: React.PropTypes.func
 }
 //
 // // Defaults for props

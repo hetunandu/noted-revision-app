@@ -49,7 +49,7 @@ class SubjectScreen extends React.Component {
                 tabBarUnderlineStyle={{backgroundColor: Colors.snow}}
                 tabBarBackgroundColor={Colors.notedBlue}
                 tabBarActiveTextColor={Colors.snow}
-                tabBarInactiveTextColor={Colors.darkGrey}
+                tabBarInactiveTextColor={Colors.notedBlueDarker}
               >
                 {subjects.list.map(subject => {
                   return(

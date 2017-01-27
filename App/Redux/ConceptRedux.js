@@ -9,7 +9,10 @@ const { Types, Creators } = createActions({
   conceptFailure: null,
   toggleReference: ['error'],
   markConcept: ['concept_key'],
-  singleRequest: ['subject', 'key']
+  singleRequest: ['subject', 'key'],
+  starRequest: ['subject_key', 'concept_key'],
+  starSuccess: ['subject_key', 'concept_key'],
+  starFailure: ['error']
 })
 
 export const ConceptTypes = Types
@@ -49,6 +52,8 @@ export const toggleRef = state => state.merge({ showRef: !state.showRef })
 export const markConcept = (state, {concept_key}) => state.merge({
   list: state.list.filter(concept => concept.key !== concept_key)
 })
+
+//export const
 
 /* ------------- Hookup Reducers To Types ------------- */
 
