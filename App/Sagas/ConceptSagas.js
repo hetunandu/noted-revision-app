@@ -1,6 +1,6 @@
 import { call, put } from 'redux-saga/effects'
 import ConceptActions from '../Redux/ConceptRedux'
-import LoginActions from '../Redux/LoginRedux'
+import SessionActions from '../Redux/SessionRedux'
 import ResultActions from '../Redux/ResultRedux'
 import { AsyncStorage } from 'react-native'
 import { Actions as NavigationActions } from 'react-native-router-flux'
@@ -20,7 +20,7 @@ export function * getConcepts (api, action) {
     // success?
     if (response.ok && response.data.success) {
       yield put(ConceptActions.conceptSuccess(response.data.message.concepts))
-      yield put(LoginActions.updateSession(response.data.message.session_data))
+      yield put(SessionActions.updateSession(response.data.message.session_data))
 
 
     } else {
@@ -29,6 +29,7 @@ export function * getConcepts (api, action) {
 
   } catch (err){
     console.warn(err)
+    yield put(ConceptActions.conceptFailure(err))
   }
 
 }
@@ -50,7 +51,7 @@ export function * getSingleConcept(api, action){
 
       yield put(ConceptActions.conceptSuccess([response.data.message.concept]))
 
-      yield put(LoginActions.updateSession(response.data.message.session_data))
+      yield put(SessionActions.updateSession(response.data.message.session_data))
 
 
     } else {

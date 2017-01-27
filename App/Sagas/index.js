@@ -9,6 +9,7 @@ import { SubjectTypes } from '../Redux/SubjectRedux'
 import { ConceptTypes } from '../Redux/ConceptRedux'
 import { ResultTypes } from '../Redux/ResultRedux'
 import { IndexTypes } from '../Redux/IndexRedux'
+import { SessionTypes } from '../Redux/SessionRedux'
 
 /* ------------- Sagas ------------- */
 
@@ -17,6 +18,7 @@ import { getSubjects } from './SubjectSagas'
 import { getConcepts, getSingleConcept } from './ConceptSagas'
 import { submitResult } from './ResultSagas'
 import { getIndex } from './IndexSagas'
+import { skipCooldown } from './SessionSagas'
 
 /* ------------- API ------------- */
 
@@ -34,6 +36,7 @@ export default function * root () {
     takeLatest(ConceptTypes.CONCEPT_REQUEST, getConcepts, api),
     takeLatest(ConceptTypes.SINGLE_REQUEST, getSingleConcept, api),
     takeLatest(ResultTypes.RESULT_REQUEST, submitResult, api),
-    takeLatest(IndexTypes.INDEX_REQUEST, getIndex, api)
+    takeLatest(IndexTypes.INDEX_REQUEST, getIndex, api),
+    takeLatest(SessionTypes.SKIP_REQUEST, skipCooldown, api)
   ]
 }

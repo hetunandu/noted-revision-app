@@ -1,5 +1,6 @@
 import { call, put } from 'redux-saga/effects'
 import LoginActions from '../Redux/LoginRedux'
+import SessionActions from '../Redux/SessionRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import {GoogleSignin} from 'react-native-google-signin';
 import {AsyncStorage, ToastAndroid, NetInfo} from 'react-native';
@@ -15,7 +16,11 @@ export function * loginInit(api){
     const isConnected = yield call(NetInfo.isConnected.fetch)
 
     if(!isConnected){
+
+      yield put(LoginActions.loginFailure("No internet"))
+
       yield call(NavigationActions.game)
+
     }else{
 
       // Check if the token exists in storage
@@ -28,6 +33,8 @@ export function * loginInit(api){
         if (response.ok && response.data.success){
           // run the success action
           yield put(LoginActions.loginSuccess(response.data.message.user))
+
+          yield put(SessionActions.updateSession(response.data.message.user.session))
 
           // navigate to the subjects screen
           yield call(NavigationActions.subjects)
@@ -71,7 +78,7 @@ export function * login (api, action) {
     const response = yield call(api.loginUser, accessToken)
     const data = response.data
     // was the server able to login the user
-    if(data.success){
+    if(response.ok && data.success){
       // Save the token for next time use
       yield call(AsyncStorage.setItem, 'login_token', data.message.token)
       // run the success action

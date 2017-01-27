@@ -11,7 +11,6 @@ const { Types, Creators } = createActions({
   loginSuccess: ['user'],
   loginFailure: ['error'],
   logout: null,
-  updateSession: ['session'],
   updateCoins: ['coins']
 })
 
@@ -46,8 +45,6 @@ export const failure = (state: Object, { error }: Object) =>
 // we've logged out
 export const logout = (state: Object) => INITIAL_STATE
 
-// update the session views
-export const updateSession = (state, {session}) => state.merge({ user: {session: session}}, {deep: true})
 
 export const updateCoins = (state, {coins}) => state.merge({ user: {points: state.user.points + coins}}, {deep: true})
 
@@ -59,6 +56,5 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.LOGIN_SUCCESS]: success,
   [Types.LOGIN_FAILURE]: failure,
   [Types.LOGOUT]: logout,
-  [Types.UPDATE_SESSION]: updateSession,
   [Types.UPDATE_COINS]: updateCoins
 })

@@ -66,6 +66,8 @@ const create = (baseURL = 'https://4-dot-noted-api.appspot.com/study') => {
   const getIndex = (token, subject_key) =>
     api.get(`subjects/${subject_key}/index`, {}, { headers: { 'Authorization': token } })
 
+  const skipCooldown = (token) => api.get('session/reset', {}, {headers: { 'Authorization': token }})
+
   // ------
   // STEP 3
   // ------
@@ -86,7 +88,8 @@ const create = (baseURL = 'https://4-dot-noted-api.appspot.com/study') => {
     getConcepts,
     getSingleConcept,
     submitResult,
-    getIndex
+    getIndex,
+    skipCooldown
   }
 }
 

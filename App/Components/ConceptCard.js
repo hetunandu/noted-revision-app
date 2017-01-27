@@ -11,19 +11,6 @@ import * as Animatable from 'react-native-animatable';
 
 export default class ConceptCard extends React.Component {
 
-  constructor(props){
-    super(props)
-
-    this.state = {
-      scale: new Animated.Value(0),
-      translateX: new Animated.Value(0)
-    }
-  }
-
-  componentDidMount(){
-    this.animateCardIn()
-  }
-
   renderActions() {
     if (this.props.mode == 'revise'){
       return (
@@ -81,20 +68,11 @@ export default class ConceptCard extends React.Component {
 
   render () {
     return (
-      <Animatable.View animation="fadeIn" style={styles.container} ref="card">
+      <Animatable.View animation="fadeIn" style={styles.container} direction="alternate" ref="card">
         { this.renderContents() }
         { this.renderActions() }
       </Animatable.View>
     )
-  }
-
-  animateCardIn() {
-    this.state.translateX.setValue(Metrics.screenWidth)
-
-    Animated.spring(
-      this.state.translateX,
-      {toValue: 0, friction: 7}
-    ).start();
   }
 
 
