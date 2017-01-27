@@ -1,29 +1,29 @@
-/* ***********************************************************
-* A short word on how to use this automagically generated file.
-* We're often asked in the ignite gitter channel how to connect
-* to a to a third party api, so we thought we'd demonstrate - but
-* you should know you can use sagas for other flow control too.
-*
-* Other points:
-*  - You'll need to add this saga to Sagas/index.js
-*  - This template uses the api declared in Sagas/index.js, so
-*    you'll need to define a constant in that file.
-*************************************************************/
-
 import { call, put } from 'redux-saga/effects'
 import CoinsActions from '../Redux/CoinsRedux'
+import { AsyncStorage } from 'react-native'
 
-export function * getCoins (api, action) {
-  const { data } = action
-  // make the call to the api
-  const response = yield call(api.getCoins, data)
+export function * redeemCode (api, action) {
+  const { code } = action
 
-  // success?
-  if (response.ok) {
-    // You might need to change the response here - do this with a 'transform',
-    // located in ../Transforms/. Otherwise, just pass the data back from the api.
-    yield put(CoinsActions.coinsSuccess(response.data))
-  } else {
-    yield put(CoinsActions.coinsFailure())
+  try{
+    const token = yield call(AsyncStorage.getItem, 'login_token')
+
+    // make the call to the api
+    const response = yield call(api.redeemCode, token, code)
+
+    // success?
+    if (response.ok && response.data.success) {
+
+      yield put(CoinsActions.redeemSuccess(response.data.message))
+
+    } else {
+      yield put(CoinsActions.redeemFailure(response.data.error))
+    }
+  } catch (err){
+    console.warn(err)
+    yield put(CoinsActions.redeemFailure(err))
+
   }
+
+
 }

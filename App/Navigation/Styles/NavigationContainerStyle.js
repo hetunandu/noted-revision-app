@@ -1,6 +1,6 @@
 // @flow
 
-import {Colors} from '../../Themes/'
+import {Colors, Metrics} from '../../Themes/'
 
 export default {
   container: {
@@ -18,7 +18,7 @@ export default {
     marginLeft: 50
   },
   leftButton: {
-    tintColor: Colors.snow
+    tintColor: Colors.snow,
   },
   rightButton: {
     color: Colors.snow

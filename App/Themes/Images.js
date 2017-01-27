@@ -4,6 +4,8 @@
 const images = {
   wLogo: require('../Images/w_logo.png'),
   logo: require('../Images/logo.png'),
+  coin: require('../Images/coin.png'),
+  backIcon: require('../Images/backIcon.png')
 }
 
 export default images

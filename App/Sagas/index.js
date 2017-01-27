@@ -10,6 +10,7 @@ import { ConceptTypes } from '../Redux/ConceptRedux'
 import { ResultTypes } from '../Redux/ResultRedux'
 import { IndexTypes } from '../Redux/IndexRedux'
 import { SessionTypes } from '../Redux/SessionRedux'
+import { CoinsTypes } from '../Redux/CoinsRedux'
 
 /* ------------- Sagas ------------- */
 
@@ -19,6 +20,7 @@ import { getConcepts, getSingleConcept } from './ConceptSagas'
 import { submitResult } from './ResultSagas'
 import { getIndex } from './IndexSagas'
 import { skipCooldown } from './SessionSagas'
+import { redeemCode } from './CoinsSagas'
 
 /* ------------- API ------------- */
 
@@ -37,6 +39,7 @@ export default function * root () {
     takeLatest(ConceptTypes.SINGLE_REQUEST, getSingleConcept, api),
     takeLatest(ResultTypes.RESULT_REQUEST, submitResult, api),
     takeLatest(IndexTypes.INDEX_REQUEST, getIndex, api),
-    takeLatest(SessionTypes.SKIP_REQUEST, skipCooldown, api)
+    takeLatest(SessionTypes.SKIP_REQUEST, skipCooldown, api),
+    takeLatest(CoinsTypes.REDEEM_REQUEST, redeemCode, api)
   ]
 }

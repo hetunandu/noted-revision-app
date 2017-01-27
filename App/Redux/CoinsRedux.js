@@ -5,9 +5,9 @@ import Immutable from 'seamless-immutable'
 
 const { Types, Creators } = createActions({
   updateBalance: ['balance'],
-  coinsRequest: ['data'],
-  coinsSuccess: ['payload'],
-  coinsFailure: null
+  redeemRequest: ['code'],
+  redeemSuccess: ['data'],
+  redeemFailure: ['error']
 })
 
 export const CoinsTypes = Types
@@ -17,9 +17,8 @@ export default Creators
 
 export const INITIAL_STATE = Immutable({
   balance: 0,
-  data: null,
+  new_points: 0,
   fetching: null,
-  payload: null,
   error: null
 })
 
@@ -27,25 +26,17 @@ export const INITIAL_STATE = Immutable({
 
 export const updateBalance = (state, {balance}) => state.merge({balance})
 
-// request the data from an api
-export const request = (state, { data }) =>
-  state.merge({ fetching: true, data, payload: null })
+export const request = (state) => state.merge({ fetching: true})
 
-// successful api lookup
-export const success = (state, action) => {
-  const { payload } = action
-  return state.merge({ fetching: false, error: null, payload })
-}
+export const success = (state, {data: {new_points, balance}}) => state.merge({ fetching: false, new_points, balance })
 
-// Something went wrong somewhere.
-export const failure = state =>
-  state.merge({ fetching: false, error: true, payload: null })
+export const failure = (state, {error}) => state.merge({ fetching: false, error })
 
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.UPDATE_BALANCE]: updateBalance,
-  [Types.COINS_REQUEST]: request,
-  [Types.COINS_SUCCESS]: success,
-  [Types.COINS_FAILURE]: failure
+  [Types.REDEEM_REQUEST]: request,
+  [Types.REDEEM_SUCCESS]: success,
+  [Types.REDEEM_FAILURE]: failure
 })

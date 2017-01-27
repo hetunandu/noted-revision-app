@@ -68,6 +68,8 @@ const create = (baseURL = 'https://4-dot-noted-api.appspot.com/study') => {
 
   const skipCooldown = (token) => api.get('session/reset', {}, {headers: { 'Authorization': token }})
 
+  const redeemCode = (token, code) => api.post('users/code/redeem', {code}, {headers: {'Authorization': token}})
+
   // ------
   // STEP 3
   // ------
@@ -89,7 +91,8 @@ const create = (baseURL = 'https://4-dot-noted-api.appspot.com/study') => {
     getSingleConcept,
     submitResult,
     getIndex,
-    skipCooldown
+    skipCooldown,
+    redeemCode
   }
 }
 

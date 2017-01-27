@@ -5,17 +5,17 @@ import { Colors, Metrics, ApplicationStyles } from '../../Themes/'
 
 export default StyleSheet.create({
   container: {
-    padding: 10,
-    height: 40,
+    padding: Metrics.baseMargin,
+    height: Metrics.navBarHeight,
     backgroundColor: Colors.notedBlue,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-
   },
-  coinsCounterText: {
-    fontSize: 20,
-    color: '#fff'
+  viewsCounter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   viewsCounterText:{
     fontSize: 20,
