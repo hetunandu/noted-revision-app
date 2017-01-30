@@ -1,18 +1,36 @@
 // @flow
 
 import React from 'react'
-import { View, Text, ScrollView, Animated, TouchableHighlight, Easing } from 'react-native'
+import { View, Text, ScrollView, TouchableHighlight, Alert, ToastAndroid} from 'react-native'
 import Explanation from './Explanation'
 import Reference from './Reference'
 import styles from './Styles/ConceptCardStyle'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import {Metrics} from '../Themes'
 import * as Animatable from 'react-native-animatable';
+import tts from 'react-native-android-speech'
 
 export default class ConceptCard extends React.Component {
 
+
+  componentDidUpdate() {
+    if(this.props.isSpeaking){
+      tts.isSpeaking()
+        .then(isSpeaking => {
+          //Callback
+          if(!isSpeaking){
+            this.props.toggleSpeak()
+          }
+        })
+        .catch(error => {
+          //if it fails
+          console.tron.log(error)
+        });
+    }
+  }
+
   renderActions() {
-    if (this.props.mode == 'revise' && !this.props.showRef){
+    if (this.props.mode == 'revise' && !this.props.showRef && !this.props.isSpeaking ){
       return (
         <View style={styles.actions}>
           <TouchableHighlight
@@ -33,7 +51,7 @@ export default class ConceptCard extends React.Component {
           )}
           <TouchableHighlight
             underlayColor="#444"
-            onPress={() => this.handleSpeakAloud()}
+            onPress={() => this.toggleSpeakAloud()}
           >
             <Icon name="volume-up" size={35} color="white" />
           </TouchableHighlight>
@@ -62,6 +80,17 @@ export default class ConceptCard extends React.Component {
           </TouchableHighlight>
         </View>
       )
+    }else if(this.props.isSpeaking){
+      return(
+        <View style={styles.actions}>
+          <TouchableHighlight
+            underlayColor="#444"
+            onPress={() => this.toggleSpeakAloud()}
+          >
+            <Icon name="stop" size={35} color="white" />
+          </TouchableHighlight>
+        </View>
+      )
     }
   }
 
@@ -83,7 +112,7 @@ export default class ConceptCard extends React.Component {
 
   render () {
     return (
-      <Animatable.View animation="fadeIn" style={styles.container} direction="alternate" ref="card">
+      <Animatable.View animation="slideInLeft" style={styles.container} direction="alternate" duration={400} ref="card">
         { this.renderContents() }
         { this.renderActions() }
       </Animatable.View>
@@ -106,17 +135,93 @@ export default class ConceptCard extends React.Component {
 
 
   handleStarConcept() {
-
     this.props.starConcept(this.props.concept.key)
-
-  }
-
-  handleSpeakAloud() {
-
   }
 
   handleSkipConcept() {
-    this.props.markConcept(this.props.concept.key, 'skip')
+    this.refs.card.zoomOut(400)
+      .then((endState) => {
+        this.props.markConcept(this.props.concept.key, 'skip')
+      })
+  }
+
+  toggleSpeakAloud() {
+    if(this.props.isSpeaking){
+      this.props.toggleSpeak()
+    }else{
+      this.props.toggleSpeak()
+      this.readAloudConcept()
+    }
+  }
+
+  readAloudConcept() {
+
+    tts.getLocales().then(locales=>{
+      if(!locales){
+        Alert.alert('Text to speech not supported on this device')
+      }else{
+        ToastAndroid.show("Starting text to speech. Please wait....", ToastAndroid.SHORT)
+      }
+    });
+
+
+    const explanation = this.props.concept.explanation
+    let textToSpeak = '';
+    explanation.map((node, i) => {
+      switch (node.type) {
+        case 'title':
+          textToSpeak = textToSpeak.concat(node.data, '.');
+          break;
+        case 'text':
+          textToSpeak = textToSpeak.concat(node.data, '.');
+          break;
+        case 'image':
+          break;
+        case 'quote':
+          textToSpeak = textToSpeak.concat(node.data, '.');
+          break;
+        case 'pointers':
+          node.data.map((point, i) => {
+            textToSpeak = textToSpeak.concat(`Point ${i + 1}. ${point.title}`, '.');
+            point.nodes.map((node) => {
+              switch (node.type) {
+                case 'text':
+                  textToSpeak = textToSpeak.concat(node.data, '.');
+                  break;
+                case 'subPoint':
+                  node.data.map((subPoint) => textToSpeak = textToSpeak.concat(subPoint, '.'))
+                  break;
+                case 'image':
+                  break;
+                default:
+                  textToSpeak = textToSpeak.concat('unknown node type. cant speak');
+              }
+            });
+          });
+          break;
+        default:
+          textToSpeak = textToSpeak.concat('unknown explanation type. cant speak');
+      }
+    })
+
+    textToSpeak = textToSpeak.concat('. End of concept');
+
+    textToSpeak = textToSpeak.replace(/\*/g, '');
+
+    tts.speak({
+      text: textToSpeak,
+      pitch: 0.8,
+      forceStop : !this.props.isSpeaking,
+    }).then(isSpeaking=>{
+      //Success Callback
+      ToastAndroid.show("Speaking", ToastAndroid.SHORT)
+    }).catch(error=>{
+      //Error Callback
+      console.tron.log(error)
+      Alert.alert('Error', error)
+      this.props.toggleSpeak()
+    });
+
   }
 }
 
@@ -125,9 +230,11 @@ ConceptCard.propTypes = {
   concept: React.PropTypes.object.isRequired,
   mode: React.PropTypes.string,
   showRef: React.PropTypes.bool,
+  isSpeaking: React.PropTypes.bool,
   toggleRef: React.PropTypes.func,
   markConcept: React.PropTypes.func,
-  starConcept: React.PropTypes.func
+  starConcept: React.PropTypes.func,
+  toggleSpeak: React.PropTypes.func
 }
 // Defaults for props
 ConceptCard.defaultProps = {

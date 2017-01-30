@@ -12,7 +12,8 @@ const { Types, Creators } = createActions({
   singleRequest: ['subject', 'key'],
   starRequest: ['subject_key', 'concept_key'],
   starSuccess: ['subject_key', 'concept_key'],
-  starFailure: ['error']
+  starFailure: ['error'],
+  toggleSpeakConcept: null,
 })
 
 export const ConceptTypes = Types
@@ -25,6 +26,7 @@ export const INITIAL_STATE = Immutable({
   list: [],
   mode: null,
   showRef: false,
+  isSpeaking: false,
   fetching: null,
   error: null
 })
@@ -42,7 +44,12 @@ export const request = (state, { subject, mode }) => state.merge({
   })
 
 // successful api lookup
-export const success = (state, {concepts}) => state.merge({ fetching: false, error: null, list: concepts })
+export const success = (state, {concepts}) => state.merge({
+  fetching: false,
+  error: null,
+  isSpeaking: false,
+  list: concepts
+})
 
 // Something went wrong somewhere.
 export const failure = (state, {error}) => state.merge({ fetching: false, error })
@@ -63,6 +70,8 @@ export const starConcept = (state, {concept_key}) => state.merge({
   })
 })
 
+export const speakConcept = (state) => state.merge({isSpeaking: !state.isSpeaking})
+
 //export const
 
 /* ------------- Hookup Reducers To Types ------------- */
@@ -74,5 +83,6 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.CONCEPT_SUCCESS]: success,
   [Types.CONCEPT_FAILURE]: failure,
   [Types.TOGGLE_REFERENCE]: toggleRef,
-  [Types.STAR_SUCCESS]: starConcept
+  [Types.STAR_SUCCESS]: starConcept,
+  [Types.TOGGLE_SPEAK_CONCEPT]: speakConcept
 })

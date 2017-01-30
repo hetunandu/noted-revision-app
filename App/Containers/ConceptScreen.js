@@ -50,10 +50,12 @@ class ConceptScreen extends React.Component {
               concept={activeConcept}
               mode={concepts.mode}
               showRef={concepts.showRef}
+              isSpeaking={concepts.isSpeaking}
 
               toggleRef={() => this.handleToggleRef()}
               markConcept={(concept, status) => this.handleMarkConcept(concept, status)}
               starConcept={(concept) => this.handleStarConcept(concept)}
+              toggleSpeak={() => this.handleToggleSpeak()}
             />
           )}
         </View>
@@ -72,6 +74,10 @@ class ConceptScreen extends React.Component {
   handleStarConcept(concept){
     this.props.starConcept(this.props.concepts.subject, concept)
   }
+
+  handleToggleSpeak() {
+    this.props.toggleSpeak()
+  }
 }
 
 const mapStateToProps = (state) => {
@@ -85,7 +91,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     toggleRef: () => dispatch(ConceptActions.toggleReference()),
     markConcept: (subject_key, concept_key, status) => dispatch(ResultActions.markConcept(subject_key, concept_key, status)),
-    starConcept: (subject_key, concept_key) => dispatch(IndexActions.starConcept(subject_key, concept_key))
+    starConcept: (subject_key, concept_key) => dispatch(IndexActions.starConcept(subject_key, concept_key)),
+    toggleSpeak: () => dispatch(ConceptActions.toggleSpeakConcept())
   }
 }
 

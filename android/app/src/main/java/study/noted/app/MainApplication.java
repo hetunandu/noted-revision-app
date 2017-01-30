@@ -15,6 +15,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.mihir.react.tts.*;
 
 
 import java.util.Arrays;
@@ -37,7 +38,8 @@ public class MainApplication extends Application implements ReactApplication {
             new ReactNativeI18n(),
             new RNDeviceInfo(),
             new ReactNativeConfigPackage(),
-            new RNGoogleSigninPackage()
+            new RNGoogleSigninPackage(),
+            new RCTTextToSpeechModule()
       );
     }
   };

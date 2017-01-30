@@ -18,6 +18,6 @@ export default StyleSheet.create({
     borderBottomLeftRadius: 3,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-around'
   }
 })
