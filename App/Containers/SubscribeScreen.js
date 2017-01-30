@@ -14,10 +14,8 @@ import {
 import { connect } from 'react-redux'
 import LoginActions from '../Redux/LoginRedux'
 import Loading from '../Components/Loading'
-
-// Styles
 import styles from './Styles/SubscribeScreenStyle'
-
+import { tracker } from '../Lib/googleAnalytics'
 
 class SubscribeScreen extends React.Component {
 
@@ -27,6 +25,10 @@ class SubscribeScreen extends React.Component {
     this.state = {
       college: ''
     };
+  }
+
+  componentDidMount(){
+    tracker.trackScreenView('Subscribe Course');
   }
 
 
@@ -103,6 +105,7 @@ class SubscribeScreen extends React.Component {
       ToastAndroid.show('That does not look like a college name', ToastAndroid.LONG);
     }else{
       this.props.subscribeCourse(this.state.college)
+      tracker.trackEvent('Course', 'subscribe')
     }
   }
 }

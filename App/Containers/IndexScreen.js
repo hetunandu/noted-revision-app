@@ -4,21 +4,16 @@ import React from 'react'
 import { View } from 'react-native'
 import { connect } from 'react-redux'
 import ConceptActions from '../Redux/ConceptRedux'
-
-import { Metrics } from '../Themes'
-// external libs
-import Icon from 'react-native-vector-icons/FontAwesome'
-import Animatable from 'react-native-animatable'
-import { Actions as NavigationActions } from 'react-native-router-flux'
-
 import Index from '../Components/Index'
 import Loading from '../Components/Loading'
-
-// Styles
 import styles from './Styles/IndexScreenStyle'
+import {tracker} from '../Lib/googleAnalytics'
 
 class IndexScreen extends React.Component {
 
+  componentDidMount(){
+    tracker.trackScreenView('Index');
+  }
 
   render () {
     return (

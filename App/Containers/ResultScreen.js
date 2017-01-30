@@ -6,19 +6,18 @@ import { connect } from 'react-redux'
 import ResultActions from '../Redux/ResultRedux'
 import Loading from '../Components/Loading'
 import Coins from '../Components/Coins';
-import { Metrics } from '../Themes'
-// external libs
-import Icon from 'react-native-vector-icons/FontAwesome'
 import * as Animatable from 'react-native-animatable';
 import { Actions as NavigationActions } from 'react-native-router-flux'
-
-// Styles
 import styles from './Styles/ResultScreenStyle'
+import { tracker } from '../Lib/googleAnalytics'
 
 
 class ResultScreen extends React.Component {
 
   componentDidMount(){
+
+    tracker.trackScreenView('Result');
+
     this.props.submitResult()
 
     AsyncStorage.getItem('reviewed')
@@ -28,6 +27,7 @@ class ResultScreen extends React.Component {
             {text: "Sure!", onPress: () => {
               AsyncStorage.setItem('reviewed', "true")
                 .then(() => Linking.openURL("market://details?id=study.noted.app"))
+              tracker.trackEvent('Result', 'Reviewed')
             }},
             {text: "Ask me Later", onPress: () => console.tron.log('Later')},
             {text: "No, Don't as again", onPress: () => AsyncStorage.setItem('reviewed', "never")}

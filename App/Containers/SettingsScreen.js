@@ -5,19 +5,16 @@ import { ScrollView, Text, Share, Linking} from 'react-native'
 import { connect } from 'react-redux'
 import SettingRow from '../Components/SettingRow'
 import SettingsActions from '../Redux/SettingsRedux'
-import { Metrics } from '../Themes'
-// external libs
-import Icon from 'react-native-vector-icons/FontAwesome'
 import DeviceInfo from 'react-native-device-info'
-import Animatable from 'react-native-animatable'
-import { Actions as NavigationActions } from 'react-native-router-flux'
 import Communications from 'react-native-communications'
-
-
-// Styles
 import styles from './Styles/SettingsScreenStyle'
+import { tracker } from '../Lib/googleAnalytics'
 
 class SettingsScreen extends React.Component {
+
+  componentDidMount() {
+    tracker.trackScreenView('Settings');
+  }
 
   render () {
     return (
@@ -63,14 +60,20 @@ class SettingsScreen extends React.Component {
       },{
         dialogTitle: 'Share'
       })
+
+    tracker.trackEvent('Settings', 'Share app')
+
   }
 
   handleReview() {
     Linking.openURL("market://details?id=study.noted.app")
+    tracker.trackEvent('Settings', 'Review App')
   }
 
   handleReportIssue() {
     Communications.email("hetu.nandu@noted.study", null, null, "Issue with Noted", "Type your issue here....")
+    tracker.trackEvent('Settings', 'Report Issue')
+
   }
 }
 

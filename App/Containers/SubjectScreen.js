@@ -11,13 +11,11 @@ import ConceptActions from '../Redux/ConceptRedux'
 import IndexActions from '../Redux/IndexRedux'
 import SessionActions from '../Redux/SessionRedux'
 import Cooldown from '../Components/Cooldown'
-
 import { Metrics, Colors } from '../Themes'
-// external libs
 import ScrollableTabView from 'react-native-scrollable-tab-view'
-
-// Styles
 import styles from './Styles/SubjectScreenStyle'
+import { tracker } from '../Lib/googleAnalytics'
+
 
 class SubjectScreen extends React.Component {
 
@@ -27,6 +25,9 @@ class SubjectScreen extends React.Component {
   }
 
   componentDidMount(){
+
+    tracker.trackScreenView('Subjects');
+
     this.props.fetchSubjectList()
   }
 
@@ -75,17 +76,20 @@ class SubjectScreen extends React.Component {
       ToastAndroid.show(`You need minimum 5 views to ${mode}`, ToastAndroid.SHORT)
     }else{
       this.props.fetchConcepts(subject_key, mode)
+      tracker.trackEvent('Subject', mode)
     }
   }
 
   handleSubjectIndexPress(subject_key) {
     this.props.fetchIndex(subject_key)
+    tracker.trackEvent('Subject', 'Index')
   }
 
 
   handleCooldownSkip() {
+    // TODO: Alert to buy coins if not enough to skip
     this.props.skipCooldown()
-
+    tracker.trackEvent('Session', 'Skip Cooldown')
   }
 }
 

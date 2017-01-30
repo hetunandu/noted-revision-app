@@ -5,17 +5,16 @@ import { View, Text, WebView } from 'react-native'
 import { connect } from 'react-redux'
 import Loading from '../Components/Loading'
 import PaymentActions from '../Redux/PaymentRedux'
-// external libs
-import { Actions as NavigationActions } from 'react-native-router-flux'
 import reactMixin from 'react-mixin';
 import TimerMixin from 'react-timer-mixin';
-
-// Styles
 import styles from './Styles/PayOnlineScreenStyle'
+import { tracker } from '../Lib/googleAnalytics'
 
 class PayOnlineScreen extends React.Component {
 
   componentDidMount() {
+    tracker.trackScreenView('Pay Online');
+
     this.props.requestPayment()
 
     this.setInterval(this.checkStatus, 5000);

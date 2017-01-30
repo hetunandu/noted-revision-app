@@ -3,20 +3,10 @@
 import React from 'react'
 import { View, Text, ScrollView, TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
-// Add Actions - replace 'Your' with whatever your reducer is called :)
-// import YourActions from '../Redux/YourRedux'
-import { Metrics } from '../Themes'
-// external libs
 import Icon from 'react-native-vector-icons/MaterialIcons'
-import Animatable from 'react-native-animatable'
-import { Actions as NavigationActions } from 'react-native-router-flux'
 import Communications from 'react-native-communications'
-
-// Styles
 import styles from './Styles/PayOfflineScreenStyle'
-
-// I18n
-import I18n from 'react-native-i18n'
+import {tracker} from '../Lib/googleAnalytics'
 
 const reps = [
   {
@@ -103,6 +93,10 @@ const reps = [
 
 class PayOfflineScreen extends React.Component {
 
+  componentDidMount(){
+    tracker.trackScreenView('Pay Offline');
+  }
+
   render () {
     return (
       <View style={styles.mainContainer}>
@@ -149,10 +143,13 @@ class PayOfflineScreen extends React.Component {
 
   callRep(number){
     Communications.phonecall(number, true)
+    tracker.trackEvent('Offline Buy', 'call', {name: 'Rep', label: rep.name})
+
   }
 
   textRep(rep){
     Communications.text(rep.number, `Hey ${rep.name}! I want to buy Noted coins.`)
+    tracker.trackEvent('Offline Buy', 'text', {name: 'Rep', label: rep.name})
   }
 
 }

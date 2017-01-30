@@ -6,15 +6,9 @@ import { connect } from 'react-redux'
 import Loading from '../Components/Loading'
 import Coins from '../Components/Coins'
 import CoinsActions from '../Redux/CoinsRedux'
-
-import { Metrics } from '../Themes'
-// external libs
-import Icon from 'react-native-vector-icons/FontAwesome'
-import Animatable from 'react-native-animatable'
 import { Actions as NavigationActions } from 'react-native-router-flux'
-
-// Styles
 import styles from './Styles/CoinsScreenStyle'
+import { tracker } from '../Lib/googleAnalytics'
 
 
 class CoinsScreen extends React.Component {
@@ -25,6 +19,10 @@ class CoinsScreen extends React.Component {
     this.state = {
       code: ""
     }
+  }
+
+  componentDidMount(){
+    tracker.trackScreenView('Coins');
   }
 
   render () {
@@ -95,6 +93,7 @@ class CoinsScreen extends React.Component {
         code: ""
       })
     }
+    tracker.trackEvent('Coins', 'Submit code')
   }
 
   payOnline() {

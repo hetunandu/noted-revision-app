@@ -1,5 +1,4 @@
 // @flow
-// Basic imports
 import React from 'react'
 import {
   ScrollView,
@@ -10,26 +9,21 @@ import {
   ToastAndroid
 } from 'react-native'
 import { connect } from 'react-redux'
-// Components
 import LoginHeader from '../Components/LoginHeader';
 import GoogleLoginButton from '../Components/GoogleLoginButton';
 import Loading from '../Components/Loading';
-
-// Actions
 import LoginActions from '../Redux/LoginRedux'
-// external libs
-import { Actions as NavigationActions } from 'react-native-router-flux'
 import {GoogleSignin, GoogleSigninButton} from 'react-native-google-signin';
-
-// Styles
 import styles from './Styles/LoginScreenStyle'
+import { tracker } from '../Lib/googleAnalytics';
 
 class LoginScreen extends React.Component {
 
   componentDidMount(){
+    tracker.trackScreenView('Login');
     this.props.loginInit()
   }
-  
+
   signInWithGoogle(){
     GoogleSignin.signIn()
       .then((user) => {

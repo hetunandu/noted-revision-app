@@ -5,6 +5,7 @@ import CoinsActions from '../Redux/CoinsRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import {GoogleSignin} from 'react-native-google-signin';
 import {AsyncStorage, ToastAndroid, NetInfo} from 'react-native';
+import { tracker } from '../Lib/googleAnalytics'
 
 
 // Check token, with token get user details, if error, configure google login
@@ -34,6 +35,8 @@ export function * loginInit(api){
         if (response.ok && response.data.success){
           // run the success action
           yield put(LoginActions.loginSuccess(response.data.message.user))
+
+          yield put(tracker.setUser(response.data.message.user.key))
 
           yield put(SessionActions.updateSession(response.data.message.user.session))
 
@@ -93,6 +96,8 @@ export function * login (api, action) {
       yield call(AsyncStorage.setItem, 'login_token', data.message.token)
       // run the success action
       yield put(LoginActions.loginSuccess(data.message.user))
+      yield put(tracker.setUser(data.message.user.key))
+
 
       yield put(SessionActions.updateSession(data.message.user.session))
 
