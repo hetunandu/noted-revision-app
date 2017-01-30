@@ -14,6 +14,7 @@ import IndexScreen from '../Containers/IndexScreen'
 import CoinsScreen from '../Containers/CoinsScreen'
 import PayOfflineScreen from '../Containers/PayOfflineScreen'
 import PayOnlineScreen from '../Containers/PayOnlineScreen'
+import SettingsScreen from '../Containers/SettingsScreen'
 import Basketball from '../Components/Basketball'
 
 /* **************************
@@ -39,6 +40,7 @@ class NavigationRouter extends Component {
         <Scene key="coins" component={CoinsScreen} panHandlers={null} title="Coins" hideNavBar={false} />
         <Scene key="payOffline" component={PayOfflineScreen} panHandlers={null} title="Pay Offline" hideNavBar={false}/>
         <Scene key="payOnline" component={PayOnlineScreen} panHandlers={null} title="Pay Online" hideNavBar={false}/>
+        <Scene key="settings" component={SettingsScreen} panHandlers={null} title="Settings" hideNavBar={false} />
         <Scene key="game" component={Basketball} type="replace" panHandlers={null} hideNavBar />
       </Router>
     )

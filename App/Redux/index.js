@@ -14,7 +14,8 @@ export default () => {
     concepts: require('./ConceptRedux').reducer,
     result: require('./ResultRedux').reducer,
     index: require('./IndexRedux').reducer,
-    payment: require('./PaymentRedux').reducer
+    payment: require('./PaymentRedux').reducer,
+    settings: require('./SettingsRedux').reducer
   })
 
   return configureStore(rootReducer, rootSaga)

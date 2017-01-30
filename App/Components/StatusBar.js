@@ -29,7 +29,10 @@ export default class StatusBar extends React.Component {
           </View>
         </TouchableHighlight>
 
-        <TouchableHighlight>
+        <TouchableHighlight
+          underlayColor={Colors.notedBlueDarker}
+          onPress={() => this.handleSettingsPress()}
+        >
           <Icon name="settings" color="#fff" size={25}/>
         </TouchableHighlight>
 
@@ -39,6 +42,10 @@ export default class StatusBar extends React.Component {
 
   handleCoinBalancePress() {
     NavigationActions.coins()
+  }
+
+  handleSettingsPress() {
+    NavigationActions.settings()
   }
 }
 
