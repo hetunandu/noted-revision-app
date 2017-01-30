@@ -60,7 +60,7 @@ export default class Cooldown extends React.Component {
           <Text style={styles.timeLeftText}>{this.state.timeLeft}</Text>
         </View>
         <View style={{flex: 3, alignItems: 'center', justifyContent:'center'}}>
-          {this.props.session.fetching ? <Loading /> : (
+          {this.props.session.fetching ? <Loading light/> : (
             <TouchableHighlight
               underlayColor="#555"
               style={styles.skipButton}

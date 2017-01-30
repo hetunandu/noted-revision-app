@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import StartupActions from '../Redux/StartupRedux'
 import ReduxPersist from '../Config/ReduxPersist'
 import { Colors } from '../Themes'
+import '../Lib/googleAnalytics'
 
 // Styles
 import styles from './Styles/RootContainerStyle'

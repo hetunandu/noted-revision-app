@@ -14,18 +14,17 @@ export default class Loading extends React.Component {
         <ActivityIndicator
           animating={true}
           size="large"
-          color="red"
+          color={this.props.light ? 'white' : 'red'}
         />
       </View>
     )
   }
 }
 
-// // Prop type warnings
-// Loading.propTypes = {
-//   someProperty: React.PropTypes.object,
-//   someSetting: React.PropTypes.bool.isRequired
-// }
+// Prop type warnings
+Loading.propTypes = {
+  light: React.PropTypes.bool
+}
 //
 // // Defaults for props
 // Loading.defaultProps = {

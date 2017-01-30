@@ -19,12 +19,12 @@ class SettingsScreen extends React.Component {
   render () {
     return (
       <ScrollView style={styles.mainContainer}>
-        <SettingRow
-          name="Night mode"
-          value={this.props.settings.nightMode}
-          onValueChange={(value) => this.handleNightModeValueChange(value)}
-          type="toggle"
-        />
+        {/*<SettingRow*/}
+          {/*name="Night mode"*/}
+          {/*value={this.props.settings.nightMode}*/}
+          {/*onValueChange={(value) => this.handleNightModeValueChange(value)}*/}
+          {/*type="toggle"*/}
+        {/*/>*/}
         <SettingRow
           onPress={() => this.handleShare()}
           name="Share with friends"

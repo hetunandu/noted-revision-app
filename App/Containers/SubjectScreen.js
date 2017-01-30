@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import { ScrollView, Text, View, KeyboardAvoidingView, ToastAndroid } from 'react-native'
+import { ScrollView, Text, View, KeyboardAvoidingView, ToastAndroid, Alert } from 'react-native'
 import Loading from '../Components/Loading'
 import SubjectTab from '../Components/SubjectTab'
 import StatusBar from '../Components/StatusBar'
@@ -11,10 +11,11 @@ import ConceptActions from '../Redux/ConceptRedux'
 import IndexActions from '../Redux/IndexRedux'
 import SessionActions from '../Redux/SessionRedux'
 import Cooldown from '../Components/Cooldown'
-import { Metrics, Colors } from '../Themes'
+import { Colors } from '../Themes'
 import ScrollableTabView from 'react-native-scrollable-tab-view'
 import styles from './Styles/SubjectScreenStyle'
 import { tracker } from '../Lib/googleAnalytics'
+import { Actions as NavigationActions } from 'react-native-router-flux'
 
 
 class SubjectScreen extends React.Component {
@@ -87,9 +88,17 @@ class SubjectScreen extends React.Component {
 
 
   handleCooldownSkip() {
-    // TODO: Alert to buy coins if not enough to skip
-    this.props.skipCooldown()
-    tracker.trackEvent('Session', 'Skip Cooldown')
+
+    if(this.props.coins.balance > 24){
+      this.props.skipCooldown()
+      tracker.trackEvent('Session', 'Skip Cooldown')
+    }else{
+      Alert.alert('Not enough coins', 'You can buy 500 coins now for only Rs.50/-!', [
+        {text: 'Yes!', onPress: () => NavigationActions.coins()},
+        {text: 'No', onPress: () => tracker.trackEvent('Session', 'Dismissed coin buy alert')}
+      ])
+    }
+
   }
 }
 

@@ -36,7 +36,7 @@ export function * loginInit(api){
           // run the success action
           yield put(LoginActions.loginSuccess(response.data.message.user))
 
-          yield put(tracker.setUser(response.data.message.user.key))
+          //yield put(tracker.setUser(response.data.message.user.key))
 
           yield put(SessionActions.updateSession(response.data.message.user.session))
 
@@ -96,7 +96,7 @@ export function * login (api, action) {
       yield call(AsyncStorage.setItem, 'login_token', data.message.token)
       // run the success action
       yield put(LoginActions.loginSuccess(data.message.user))
-      yield put(tracker.setUser(data.message.user.key))
+     // yield put(tracker.setUser(data.message.user.key))
 
 
       yield put(SessionActions.updateSession(data.message.user.session))
