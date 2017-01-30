@@ -56,6 +56,10 @@ export function * getSingleConcept(api, action){
 
     } else {
       yield put(ConceptActions.conceptFailure(response.data.error))
+      // No views left. Take them to subject screen where cooldown timer is active
+      if(response.status == 420){
+        yield call(NavigationActions.subjects)
+      }
     }
 
   }catch (err){

@@ -74,6 +74,9 @@ const create = (baseURL = 'https://4-dot-noted-api.appspot.com/study') => {
 
   const paymentStatus = (token, key) => api.get(`payments/status/${key}`, {}, { headers: {'Authorization': token} })
 
+  const starConcept = (token, concept_key) =>
+    api.get(`concepts/${concept_key}/important`, {}, { headers: {'Authorization': token} })
+
   // ------
   // STEP 3
   // ------
@@ -98,7 +101,8 @@ const create = (baseURL = 'https://4-dot-noted-api.appspot.com/study') => {
     skipCooldown,
     redeemCode,
     requestPayment,
-    paymentStatus
+    paymentStatus,
+    starConcept
   }
 }
 

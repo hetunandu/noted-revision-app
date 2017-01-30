@@ -8,7 +8,9 @@ const { Types, Creators } = createActions({
   indexSuccess: ['key', 'index'],
   indexFailure: ['error'],
   markConcept: ['subject_key','concept_key', 'status'],
+  starConcept: ['subject_key', 'concept_key'],
   starSuccess: ['subject_key', 'concept_key'],
+  starFailure: ['error']
 })
 
 export const IndexTypes = Types
@@ -43,6 +45,8 @@ export const markConcept = (state, {subject_key, concept_key, status}) => {
           if (concept.key == concept_key) {
             if (status == 'read') {
               return concept.set("read", concept.read ? concept.read + 1 : 1)
+            }else{
+              return concept
             }
           } else {
             return concept

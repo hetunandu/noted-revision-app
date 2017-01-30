@@ -37,12 +37,20 @@ export default StyleSheet.create({
     justifyContent: 'space-around'
   },
   pointsDisplay: {
-    textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  pointsDisplayHeader:{
     fontSize: Fonts.size.h2
   },
   moreBtn: {
     margin: 10,
     backgroundColor: Colors.charcoal,
     padding: 10
+  },
+  header: {
+    fontSize: Fonts.size.h4,
+    textAlign: 'center',
+    color: 'white'
   }
 })

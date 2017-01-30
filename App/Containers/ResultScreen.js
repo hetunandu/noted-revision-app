@@ -1,15 +1,15 @@
 // @flow
 
 import React from 'react'
-import { View, Text, TouchableHighlight } from 'react-native'
+import { View, Text, TouchableHighlight, AsyncStorage, Alert, Linking } from 'react-native'
 import { connect } from 'react-redux'
 import ResultActions from '../Redux/ResultRedux'
 import Loading from '../Components/Loading'
-
+import Coins from '../Components/Coins';
 import { Metrics } from '../Themes'
 // external libs
 import Icon from 'react-native-vector-icons/FontAwesome'
-import Animatable from 'react-native-animatable'
+import * as Animatable from 'react-native-animatable';
 import { Actions as NavigationActions } from 'react-native-router-flux'
 
 // Styles
@@ -20,13 +20,28 @@ class ResultScreen extends React.Component {
 
   componentDidMount(){
     this.props.submitResult()
+
+    AsyncStorage.getItem('reviewed')
+      .then((reviewed) => {
+        if(!reviewed){
+          Alert.alert("Liked Noted?", "Rate us on the Playstore", [
+            {text: "Sure!", onPress: () => {
+              AsyncStorage.setItem('reviewed', "true")
+                .then(() => Linking.openURL("market://details?id=study.noted.app"))
+            }},
+            {text: "Ask me Later", onPress: () => console.tron.log('Later')},
+            {text: "No, Don't as again", onPress: () => AsyncStorage.setItem('reviewed', "never")}
+          ])
+        }
+      })
+
   }
 
   renderSummary(){
     if(this.props.mode == 'revise'){
       return(
         <View style={styles.summary}>
-          <Text>Result</Text>
+          <Text style={styles.header}>Result</Text>
           <View style={styles.table}>
             <View style={styles.row}>
               <Text style={styles.rowHead}>Read</Text>
@@ -48,9 +63,17 @@ class ResultScreen extends React.Component {
         { this.renderSummary() }
         {this.props.result.fetching ? <Loading /> : (
           <View style={styles.pointsContainer}>
-            <Text style={styles.pointsDisplay}>
-              {this.props.result.points} coins earned
-            </Text>
+            <Animatable.View
+              style={styles.pointsDisplay}
+              animation="pulse"
+              easing="ease-out"
+              iterationCount="infinite"
+            >
+              <Text style={styles.pointsDisplayHeader}>
+                You got
+              </Text>
+              <Coins value={this.props.result.points} dark/>
+            </Animatable.View>
             <TouchableHighlight
               style={styles.moreBtn}
               underlayColor="#333"

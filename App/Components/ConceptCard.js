@@ -12,38 +12,53 @@ import * as Animatable from 'react-native-animatable';
 export default class ConceptCard extends React.Component {
 
   renderActions() {
-    if (this.props.mode == 'revise'){
+    if (this.props.mode == 'revise' && !this.props.showRef){
       return (
         <View style={styles.actions}>
           <TouchableHighlight
-            underlayColor="#f1f1f1"
+            underlayColor="#444"
             onPress={() => this.handleToggleRef()}
           >
-            <Icon name="info" size={35} color="grey" />
+            <Icon name="info" size={35} color="white" />
           </TouchableHighlight>
+          {this.props.concept.important ? (
+              <Icon name="star" size={35} color="gold" />
+            ): (
+              <TouchableHighlight
+                underlayColor="#444"
+                onPress={() => this.handleStarConcept()}
+              >
+                <Icon name="star-border" size={35} color="white" />
+              </TouchableHighlight>
+          )}
           <TouchableHighlight
-            underlayColor="#f1f1f1"
-            onPress={() => this.handleStarConcept()}
-          >
-            <Icon name="star-border" size={35} color="grey" />
-          </TouchableHighlight>
-          <TouchableHighlight
-            underlayColor="#f1f1f1"
+            underlayColor="#444"
             onPress={() => this.handleSpeakAloud()}
           >
-            <Icon name="volume-up" size={35} color="grey" />
+            <Icon name="volume-up" size={35} color="white" />
           </TouchableHighlight>
           <TouchableHighlight
-            underlayColor="#f1f1f1"
+            underlayColor="#444"
             onPress={() => this.handleSkipConcept()}
           >
-            <Icon name="skip-next" size={35} color="grey" />
+            <Icon name="skip-next" size={35} color="white" />
           </TouchableHighlight>
           <TouchableHighlight
-            underlayColor="#f1f1f1"
+            underlayColor="#444"
             onPress={() => this.handleReadConcept()}
           >
-            <Icon name="done" size={35} color="green" />
+            <Icon name="done" size={35} color="white" />
+          </TouchableHighlight>
+        </View>
+      )
+    }else if(this.props.showRef){
+      return(
+        <View style={styles.actions}>
+          <TouchableHighlight
+            underlayColor="#444"
+            onPress={() => this.handleToggleRef()}
+          >
+            <Icon name="short-text" size={35} color="white" />
           </TouchableHighlight>
         </View>
       )
@@ -77,17 +92,15 @@ export default class ConceptCard extends React.Component {
 
 
   handleToggleRef() {
-    this.refs.card.flipInY()
+    this.refs.card.flipInY(300)
     this.props.toggleRef()
   }
 
 
   handleReadConcept() {
-    this.refs.card.slideOutUp()
+    this.refs.card.slideOutUp(400)
       .then((endState) => {
-        if(endState.finished){
-          this.props.markConcept(this.props.concept.key, 'read')
-        }
+        this.props.markConcept(this.props.concept.key, 'read')
       })
   }
 

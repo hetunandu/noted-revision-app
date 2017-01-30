@@ -38,6 +38,10 @@ class ConceptScreen extends React.Component {
 
     return (
       <View style={styles.container}>
+        <StatusBar
+          hidden={true}
+          animated={true}
+        />
         {this.props.concepts.fetching && <Loading />}
         <View style={styles.cardContainer}>
           {activeConcept && (
@@ -65,7 +69,7 @@ class ConceptScreen extends React.Component {
     this.props.markConcept(this.props.concepts.subject, concept, status)
   }
 
-  starConcept(concept){
+  handleStarConcept(concept){
     this.props.starConcept(this.props.concepts.subject, concept)
   }
 }

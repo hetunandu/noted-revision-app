@@ -10,7 +10,6 @@ export default StyleSheet.create({
     padding: 10
   },
   cardContainer: {
-    flex: 1,
-    position: 'relative'
+    flex: 1
   }
 })

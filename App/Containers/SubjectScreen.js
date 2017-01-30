@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import { ScrollView, Text, View, KeyboardAvoidingView } from 'react-native'
+import { ScrollView, Text, View, KeyboardAvoidingView, ToastAndroid } from 'react-native'
 import Loading from '../Components/Loading'
 import SubjectTab from '../Components/SubjectTab'
 import StatusBar from '../Components/StatusBar'
@@ -71,7 +71,11 @@ class SubjectScreen extends React.Component {
   }
 
   handleSubjectActionPress(subject_key, mode) {
-    this.props.fetchConcepts(subject_key, mode)
+    if(this.props.session.views < 5){
+      ToastAndroid.show(`You need minimum 5 views to ${mode}`, ToastAndroid.SHORT)
+    }else{
+      this.props.fetchConcepts(subject_key, mode)
+    }
   }
 
   handleSubjectIndexPress(subject_key) {

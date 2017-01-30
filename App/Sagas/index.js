@@ -19,7 +19,7 @@ import { login, loginInit } from './LoginSagas'
 import { getSubjects } from './SubjectSagas'
 import { getConcepts, getSingleConcept } from './ConceptSagas'
 import { submitResult } from './ResultSagas'
-import { getIndex } from './IndexSagas'
+import { getIndex, starConcept } from './IndexSagas'
 import { skipCooldown } from './SessionSagas'
 import { redeemCode } from './CoinsSagas'
 import { requestPayment, paymentStatus } from './PaymentSagas'
@@ -44,6 +44,7 @@ export default function * root () {
     takeLatest(SessionTypes.SKIP_REQUEST, skipCooldown, api),
     takeLatest(CoinsTypes.REDEEM_REQUEST, redeemCode, api),
     takeLatest(PaymentTypes.PAYMENT_REQUEST, requestPayment, api),
-    takeLatest(PaymentTypes.STATUS_REQUEST, paymentStatus, api)
+    takeLatest(PaymentTypes.STATUS_REQUEST, paymentStatus, api),
+    takeLatest(IndexTypes.STAR_CONCEPT, starConcept, api)
   ]
 }

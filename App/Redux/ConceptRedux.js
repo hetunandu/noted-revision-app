@@ -53,6 +53,16 @@ export const markConcept = (state, {concept_key}) => state.merge({
   list: state.list.filter(concept => concept.key !== concept_key)
 })
 
+export const starConcept = (state, {concept_key}) => state.merge({
+  list: state.list.map(concept => {
+    if(concept.key == concept_key){
+      return concept.merge({important: true})
+    }else{
+      return concept
+    }
+  })
+})
+
 //export const
 
 /* ------------- Hookup Reducers To Types ------------- */
@@ -64,4 +74,5 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.CONCEPT_SUCCESS]: success,
   [Types.CONCEPT_FAILURE]: failure,
   [Types.TOGGLE_REFERENCE]: toggleRef,
+  [Types.STAR_SUCCESS]: starConcept
 })

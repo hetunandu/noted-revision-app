@@ -157,9 +157,9 @@ const styles = StyleSheet.create({
 	pointNodes: {
 	},
 	subPoint: {
+	  padding: 5,
 		flex: 1,
 		flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'flex-start'
 	}
 })
