@@ -7,6 +7,7 @@ import { Images } from '../Themes'
 
 // screens identified by the router
 import LoginScreen from '../Containers/LoginScreen'
+import SubscribeScreen from '../Containers/SubscribeScreen'
 import SubjectScreen from '../Containers/SubjectScreen'
 import ConceptScreen from '../Containers/ConceptScreen'
 import ResultScreen from '../Containers/ResultScreen'
@@ -33,6 +34,7 @@ class NavigationRouter extends Component {
         backButtonImage={Images.backIcon}
       >
         <Scene key='login' component={LoginScreen} panHandlers={null} initial />
+        <Scene key="subscribe" component={SubscribeScreen} panHandlers={null} title="Complete Login" hideNavBar={false}/>
         <Scene key='subjects' component={SubjectScreen} type="replace" panHandlers={null} hideNavBar />
         <Scene key="index" component={IndexScreen} title="Index" panHandlers={null} hideNavBar={false} />
         <Scene key="concepts" component={ConceptScreen} direction="vertical" panHandlers={null} hideNavBar />

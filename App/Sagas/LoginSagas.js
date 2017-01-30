@@ -39,8 +39,15 @@ export function * loginInit(api){
 
           yield put(CoinsActions.updateBalance(response.data.message.user.points))
 
-          // navigate to the subjects screen
-          yield call(NavigationActions.subjects)
+          if(!response.data.message.user.course){
+
+            yield call(NavigationActions.subscribe)
+
+          }else{
+            // navigate the welcome screen
+            yield call(NavigationActions.subjects)
+          }
+
         }else{
           // Server sent some error, need the user to login again
           yield put(LoginActions.loginFailure(response.data.error))
@@ -91,8 +98,15 @@ export function * login (api, action) {
 
       yield put(CoinsActions.updateBalance(data.message.user.points))
 
-      // navigate the welcome screen
-      yield call(NavigationActions.subjects)
+      if(!response.data.course){
+
+        yield call(NavigationActions.subscribe)
+      }else{
+        // navigate the welcome screen
+        yield call(NavigationActions.subjects)
+      }
+
+
 
     }else{
       // Error in login
@@ -102,6 +116,37 @@ export function * login (api, action) {
   } catch (err){
     yield put(LoginActions.loginFailure())
     console.warn(err)
+  }
+
+}
+
+
+export function * subscribeCourse(api, action) {
+
+  const {college} = action
+
+  const course = 'agtzfm5vdGVkLWFwaXITCxIGQ291cnNlGICAgIDAtZsKDA'
+
+  try{
+    const token = yield call(AsyncStorage.getItem, 'login_token')
+
+    const response = yield call(api.subscribeCourse, token, course, college)
+
+    if(response.ok && response.data.success){
+
+      yield put(LoginActions.subscribeSuccess())
+
+      yield call(NavigationActions.subjects)
+
+    }else{
+      yield put(LoginActions.subscribeFailure(response.data.error))
+    }
+
+  }catch (err){
+    console.warn(err)
+
+    yield put(LoginActions.subscribeFailure(err))
+
   }
 
 }

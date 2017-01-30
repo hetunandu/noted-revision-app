@@ -9,7 +9,9 @@ export default {
   },
   navBar: {
     backgroundColor: Colors.notedBlue,
-    borderBottomWidth: 0
+    borderBottomWidth: 0,
+    elevation: 3
+
   },
   title: {
     color: Colors.snow,

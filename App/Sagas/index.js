@@ -15,7 +15,7 @@ import { PaymentTypes } from '../Redux/PaymentRedux'
 
 /* ------------- Sagas ------------- */
 
-import { login, loginInit } from './LoginSagas'
+import { login, loginInit, subscribeCourse } from './LoginSagas'
 import { getSubjects } from './SubjectSagas'
 import { getConcepts, getSingleConcept } from './ConceptSagas'
 import { submitResult } from './ResultSagas'
@@ -36,6 +36,7 @@ export default function * root () {
   yield [
     takeLatest(LoginTypes.LOGIN_INIT, loginInit, api),
     takeLatest(LoginTypes.LOGIN_REQUEST, login, api),
+    takeLatest(LoginTypes.SUBSCRIBE_REQUEST, subscribeCourse, api),
     takeLatest(SubjectTypes.SUBJECT_REQUEST, getSubjects, api),
     takeLatest(ConceptTypes.CONCEPT_REQUEST, getConcepts, api),
     takeLatest(ConceptTypes.SINGLE_REQUEST, getSingleConcept, api),

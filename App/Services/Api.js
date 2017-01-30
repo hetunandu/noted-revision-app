@@ -52,8 +52,14 @@ const create = (baseURL = 'https://4-dot-noted-api.appspot.com/study') => {
   // way at this level.
   //
   const loginUser = (accessToken) => api.post('login', {id_token: accessToken})
+
   const checkToken = (token) => api.get('user', {}, { headers: {'Authorization': token}})
+
+  const subscribeCourse = (token, course, college) =>
+    api.post(`courses/${course}/subscribe`, {college}, {headers: {'Authorization': token}})
+
   const getSubjects = (token) =>  api.get('subjects', {}, {headers: {'Authorization': token}})
+
   const getConcepts = (token, subject_key, mode) =>
     api.get(`subjects/${subject_key}/${mode}`, {}, {headers: {'Authorization': token}})
 
@@ -93,6 +99,7 @@ const create = (baseURL = 'https://4-dot-noted-api.appspot.com/study') => {
     // a list of the API functions from step 2
     loginUser,
     checkToken,
+    subscribeCourse,
     getSubjects,
     getConcepts,
     getSingleConcept,
