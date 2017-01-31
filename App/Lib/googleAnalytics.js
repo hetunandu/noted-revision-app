@@ -4,6 +4,7 @@ import {
   GoogleAnalyticsSettings
 } from 'react-native-google-analytics-bridge';
 
+
 if (__DEV__) {
   GoogleAnalyticsSettings.setDryRun(true);
 }

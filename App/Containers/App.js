@@ -6,6 +6,8 @@ import '../I18n/I18n' // keep before root container
 import RootContainer from './RootContainer'
 import createStore from '../Redux'
 import applyConfigSettings from '../Config'
+import '../Lib/googleAnalytics'
+
 
 // Apply config overrides
 applyConfigSettings()
