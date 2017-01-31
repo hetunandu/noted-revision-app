@@ -71,9 +71,8 @@ class SettingsScreen extends React.Component {
   }
 
   handleReportIssue() {
-    Communications.email("hetu.nandu@noted.study", null, null, "Issue with Noted", "Type your issue here....")
+    Communications.email(["hetu.nandu@noted.study"], null, null, "Issue with Noted", "Type your issue here....")
     tracker.trackEvent('Settings', 'Report Issue')
-
   }
 }
 
