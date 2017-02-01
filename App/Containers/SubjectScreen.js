@@ -128,7 +128,7 @@ class SubjectScreen extends React.Component {
       // TODO Activate Pro
 
       Alert.alert('Not implemented yet')
-      
+
     }else{
       Alert.alert('Not enough coins', 'You can buy 750 coins now for Rs.100/- only!', [
         {text: 'Yes!', onPress: () => NavigationActions.coins()},

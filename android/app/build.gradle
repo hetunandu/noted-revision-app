@@ -90,8 +90,8 @@ android {
         applicationId "study.noted.app"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 31
-        versionName "1.3.3"
+        versionCode 32
+        versionName "1.3.4"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
