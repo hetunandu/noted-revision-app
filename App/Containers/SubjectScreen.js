@@ -46,8 +46,6 @@ class SubjectScreen extends React.Component {
 
     return (
       <SubjectTab
-        key={subject.key}
-        tabLabel={subject.name}
         subject={subject}
 
         onSubjectActionPress={(mode) => this.handleSubjectActionPress(subject.key, mode)}

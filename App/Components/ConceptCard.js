@@ -34,6 +34,7 @@ export default class ConceptCard extends React.Component {
       return (
         <View style={styles.actions}>
           <TouchableHighlight
+            style={styles.actionBtn}
             underlayColor="#444"
             onPress={() => this.handleToggleRef()}
           >
@@ -43,6 +44,7 @@ export default class ConceptCard extends React.Component {
               <Icon name="star" size={35} color="gold" />
             ): (
               <TouchableHighlight
+                style={styles.actionBtn}
                 underlayColor="#444"
                 onPress={() => this.handleStarConcept()}
               >
@@ -51,18 +53,21 @@ export default class ConceptCard extends React.Component {
           )}
           <TouchableHighlight
             underlayColor="#444"
+            style={styles.actionBtn}
             onPress={() => this.toggleSpeakAloud()}
           >
             <Icon name="volume-up" size={35} color="white" />
           </TouchableHighlight>
           <TouchableHighlight
             underlayColor="#444"
+            style={styles.actionBtn}
             onPress={() => this.handleSkipConcept()}
           >
             <Icon name="skip-next" size={35} color="white" />
           </TouchableHighlight>
           <TouchableHighlight
             underlayColor="#444"
+            style={styles.actionBtn}
             onPress={() => this.handleReadConcept()}
           >
             <Icon name="done" size={35} color="white" />
@@ -74,6 +79,7 @@ export default class ConceptCard extends React.Component {
         <View style={styles.actions}>
           <TouchableHighlight
             underlayColor="#444"
+            style={styles.actionBtn}
             onPress={() => this.handleToggleRef()}
           >
             <Icon name="short-text" size={35} color="white" />
@@ -85,6 +91,7 @@ export default class ConceptCard extends React.Component {
         <View style={styles.actions}>
           <TouchableHighlight
             underlayColor="#444"
+            style={styles.actionBtn}
             onPress={() => this.toggleSpeakAloud()}
           >
             <Icon name="stop" size={35} color="white" />

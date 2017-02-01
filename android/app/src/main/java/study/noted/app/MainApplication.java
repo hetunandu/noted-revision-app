@@ -17,6 +17,8 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.mihir.react.tts.*;
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
+
 
 
 import java.util.Arrays;
@@ -34,14 +36,15 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new GoogleAnalyticsBridgePackage(),
-            new VectorIconsPackage(),
-            new MapsPackage(),
-            new ReactNativeI18n(),
-            new RNDeviceInfo(),
-            new ReactNativeConfigPackage(),
-            new RNGoogleSigninPackage(),
-            new RCTTextToSpeechModule()
+          new GoogleAnalyticsBridgePackage(),
+          new VectorIconsPackage(),
+          new MapsPackage(),
+          new ReactNativeI18n(),
+          new RNDeviceInfo(),
+          new ReactNativeConfigPackage(),
+          new RNGoogleSigninPackage(),
+          new RCTTextToSpeechModule(),
+          new ReactNativePushNotificationPackage()
       );
     }
   };

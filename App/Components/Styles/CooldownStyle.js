@@ -6,10 +6,12 @@ import { Colors, Metrics, ApplicationStyles, Fonts } from '../../Themes/'
 export default StyleSheet.create({
   container: {
     flex: 1,
+  },
+  cooldownCounter:{
     backgroundColor: Colors.notedRedDarker,
-    opacity: 0.9,
+    flex: 2,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent:'center'
   },
   cooldownText:{
     ...Fonts.style.h2,
@@ -25,14 +27,23 @@ export default StyleSheet.create({
     color: 'white'
   },
   skipButton: {
+    width: Metrics.screenWidth - 20,
     padding: 15,
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: Colors.darkGrey,
-    elevation: 2
+    elevation: 2,
+    marginBottom: 20
   },
   skipBtnText: {
     ...Fonts.style.h5,
     color: 'white'
+  },
+  notifyContainer: {
+    flexDirection: 'row',
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  notifyText: {
+    fontSize: Fonts.size.h6,
   }
 })

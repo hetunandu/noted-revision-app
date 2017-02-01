@@ -1,11 +1,13 @@
 // @flow
 
 import React from 'react'
-import { View, Text, TouchableHighlight } from 'react-native'
+import { View, Text, TouchableHighlight, Switch } from 'react-native'
 import styles from './Styles/CooldownStyle'
 import reactMixin from 'react-mixin';
 import TimerMixin from 'react-timer-mixin';
 import Loading from './Loading'
+import Coins from './Coins'
+import PushNotification from 'react-native-push-notification'
 
 
 export default class Cooldown extends React.Component {
@@ -14,7 +16,8 @@ export default class Cooldown extends React.Component {
     super(props)
 
     this.state = {
-      timeLeft: "calculating..."
+      timeLeft: "calculating...",
+      notify: false
     }
   }
 
@@ -54,22 +57,50 @@ export default class Cooldown extends React.Component {
   render () {
     return (
       <View style={styles.container}>
-        <View style={{flex: 2, alignItems: 'center', justifyContent:'center'}}>
+        <View style={styles.cooldownCounter}>
           <Text style={styles.cooldownText}>Cooldown</Text>
           <Text style={styles.moreViewsText}>More views in</Text>
           <Text style={styles.timeLeftText}>{this.state.timeLeft}</Text>
         </View>
         <View style={{flex: 3, alignItems: 'center', justifyContent:'center'}}>
           {this.props.session.fetching ? <Loading light/> : (
-            <TouchableHighlight
-              underlayColor="#555"
-              style={styles.skipButton}
-              onPress={() => this.handleSkipPress()}
-            >
-              <Text style={styles.skipBtnText}>
-                Skip cooldown for {this.props.session.reset_cost} coins
-              </Text>
-            </TouchableHighlight>
+            <View>
+              <View style={styles.notifyContainer}>
+                <Text style={styles.notifyText}>
+                  Notify when cooldown completes?
+                </Text>
+                <Switch
+                  tintColor="#fff"
+                  onTintColor="#fff"
+                  value={this.state.notify}
+                  onValueChange={(value) => this.handleNotifyOptionChanged(value)}
+                />
+              </View>
+              <TouchableHighlight
+                underlayColor="#555"
+                style={styles.skipButton}
+                onPress={() => this.handleSkipPress()}
+              >
+                <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                  <Text style={styles.skipBtnText}>
+                    Skip cooldown
+                  </Text>
+                  <Coins value={this.props.session.reset_cost}/>
+                </View>
+              </TouchableHighlight>
+              <TouchableHighlight
+                underlayColor="#555"
+                style={styles.skipButton}
+                onPress={() => this.handleProPress()}
+              >
+                <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                  <Text style={styles.skipBtnText}>
+                    Buy pro
+                  </Text>
+                  <Coins value={500}/>
+                </View>
+              </TouchableHighlight>
+            </View>
           )}
         </View>
       </View>
@@ -79,6 +110,34 @@ export default class Cooldown extends React.Component {
 
   handleSkipPress() {
     this.props.onCooldownSkipPress()
+  }
+
+  handleProPress() {
+
+  }
+
+  handleNotifyOptionChanged(value) {
+    if(value === true){
+      const sessionStart = new Date(this.props.session.created_at)
+
+      const sessionEnd = sessionStart.setSeconds(sessionStart.getSeconds() + this.props.session.session_seconds)
+
+      PushNotification.localNotificationSchedule({
+        message: "Cooldown complete",
+        bigText: "Time to start revising again",
+        color: "red",
+        date: new Date(sessionEnd),
+        repeatType: 'day', // repeat every day,
+        group: "cooldown"
+      });
+    }else{
+      PushNotification.cancelLocalNotifications({group: "cooldown"});
+    }
+
+    this.setState({
+      notify: value
+    })
+
   }
 }
 

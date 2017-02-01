@@ -19,5 +19,9 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around'
+  },
+  actionBtn: {
+    borderRadius: 50,
+    padding: 3
   }
 })

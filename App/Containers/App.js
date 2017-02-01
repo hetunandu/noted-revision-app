@@ -7,6 +7,7 @@ import RootContainer from './RootContainer'
 import createStore from '../Redux'
 import applyConfigSettings from '../Config'
 import '../Lib/googleAnalytics'
+import '../Lib/notifications'
 
 
 // Apply config overrides
