@@ -75,6 +75,7 @@ class SubjectScreen extends React.Component {
           <Cooldown
             session={session}
             onCooldownSkipPress={() => this.handleCooldownSkip()}
+            onBuyProPressed={() => this.handleBuyPro()}
           />
           ): (
           subjects.fetching ? (
@@ -110,16 +111,30 @@ class SubjectScreen extends React.Component {
 
   handleCooldownSkip() {
 
-    if(this.props.coins.balance > 24){
+    if(this.props.coins.balance >= this.props.session.reset_cost ){
       this.props.skipCooldown()
       tracker.trackEvent('Session', 'Skip Cooldown')
     }else{
-      Alert.alert('Not enough coins', 'You can buy 500 coins now for only Rs.50/-!', [
+      Alert.alert('Not enough coins', 'You can buy 750 coins now for Rs.100/- only!', [
         {text: 'Yes!', onPress: () => NavigationActions.coins()},
         {text: 'No', onPress: () => tracker.trackEvent('Session', 'Dismissed coin buy alert')}
       ])
     }
 
+  }
+
+  handleBuyPro() {
+    if(this.props.coins.balance >= this.props.session.pro_cost){
+      // TODO Activate Pro
+
+      Alert.alert('Not implemented yet')
+      
+    }else{
+      Alert.alert('Not enough coins', 'You can buy 750 coins now for Rs.100/- only!', [
+        {text: 'Yes!', onPress: () => NavigationActions.coins()},
+        {text: 'No', onPress: () => tracker.trackEvent('Session', 'Dismissed coin buy alert')}
+      ])
+    }
   }
 }
 

@@ -63,15 +63,13 @@ export default class Cooldown extends React.Component {
           <Text style={styles.timeLeftText}>{this.state.timeLeft}</Text>
         </View>
         <View style={{flex: 3, alignItems: 'center', justifyContent:'center'}}>
-          {this.props.session.fetching ? <Loading light/> : (
+          {this.props.session.fetching ? <Loading /> : (
             <View>
               <View style={styles.notifyContainer}>
                 <Text style={styles.notifyText}>
                   Notify when cooldown completes?
                 </Text>
                 <Switch
-                  tintColor="#fff"
-                  onTintColor="#fff"
                   value={this.state.notify}
                   onValueChange={(value) => this.handleNotifyOptionChanged(value)}
                 />
@@ -97,7 +95,7 @@ export default class Cooldown extends React.Component {
                   <Text style={styles.skipBtnText}>
                     Buy pro
                   </Text>
-                  <Coins value={500}/>
+                  <Coins value={this.props.session.pro_cost}/>
                 </View>
               </TouchableHighlight>
             </View>
@@ -113,7 +111,7 @@ export default class Cooldown extends React.Component {
   }
 
   handleProPress() {
-
+    this.props.onBuyProPressed()
   }
 
   handleNotifyOptionChanged(value) {
@@ -149,11 +147,13 @@ Cooldown.propTypes = {
   session: React.PropTypes.shape({
     views: React.PropTypes.number,
     reset_cost: React.PropTypes.number,
+    pro_cost: React.PropTypes.number,
     session_seconds: React.PropTypes.number,
     created_at: React.PropTypes.string,
     updated_at: React.PropTypes.string
   }),
-  onCooldownSkipPress: React.PropTypes.func
+  onCooldownSkipPress: React.PropTypes.func,
+  onBuyProPressed: React.PropTypes.func
 }
 //
 // // Defaults for props
