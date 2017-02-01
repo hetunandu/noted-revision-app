@@ -4,20 +4,20 @@ import { Actions as NavigationActions } from 'react-native-router-flux'
 import { AsyncStorage } from 'react-native'
 
 export function * getIndex (api, action) {
-  const { subject_key } = action
+  const { subject } = action
 
   try{
 
-    yield call(NavigationActions.index, {subject_key})
+    yield call(NavigationActions.index, {subject_key: subject.key, title: subject.name})
 
     const token = yield call(AsyncStorage.getItem, 'login_token')
 
     // make the call to the api
-    const response = yield call(api.getIndex, token, subject_key)
+    const response = yield call(api.getIndex, token, subject.key)
 
     // success?
     if (response.ok) {
-      yield put(IndexActions.indexSuccess(subject_key, response.data.message.index))
+      yield put(IndexActions.indexSuccess(subject.key, response.data.message.index))
 
     } else {
       yield put(IndexActions.indexFailure(response.data.error))

@@ -1,4 +1,5 @@
 import { call, put } from 'redux-saga/effects'
+import SubjectActions from '../Redux/SubjectRedux'
 import LoginActions from '../Redux/LoginRedux'
 import SessionActions from '../Redux/SessionRedux'
 import CoinsActions from '../Redux/CoinsRedux'
@@ -36,7 +37,7 @@ export function * loginInit(api){
           // run the success action
           yield put(LoginActions.loginSuccess(response.data.message.user))
 
-          //yield put(tracker.setUser(response.data.message.user.key))
+          // yield put(tracker.setUser(response.data.message.user.key))
 
           yield put(SessionActions.updateSession(response.data.message.user.session))
 
@@ -47,7 +48,8 @@ export function * loginInit(api){
             yield call(NavigationActions.subscribe)
 
           }else{
-            // navigate the welcome screen
+            // navigate the subject screen
+            yield put(SubjectActions.subjectRequest())
             yield call(NavigationActions.subjects)
           }
 
@@ -108,6 +110,7 @@ export function * login (api, action) {
         yield call(NavigationActions.subscribe)
       }else{
         // navigate the welcome screen
+        yield put(SubjectActions.subjectRequest())
         yield call(NavigationActions.subjects)
       }
 
@@ -140,6 +143,8 @@ export function * subscribeCourse(api, action) {
     if(response.ok && response.data.success){
 
       yield put(LoginActions.subscribeSuccess())
+
+      yield put(SubjectActions.subjectRequest())
 
       yield call(NavigationActions.subjects)
 

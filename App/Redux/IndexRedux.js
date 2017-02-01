@@ -4,7 +4,7 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  indexRequest: ['subject_key'],
+  indexRequest: ['subject'],
   indexSuccess: ['key', 'index'],
   indexFailure: ['error'],
   markConcept: ['subject_key','concept_key', 'status'],

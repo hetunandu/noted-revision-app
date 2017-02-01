@@ -6,16 +6,15 @@ import Loading from '../Components/Loading'
 import SubjectTab from '../Components/SubjectTab'
 import StatusBar from '../Components/StatusBar'
 import { connect } from 'react-redux'
-import SubjectActions from '../Redux/SubjectRedux'
 import ConceptActions from '../Redux/ConceptRedux'
 import IndexActions from '../Redux/IndexRedux'
 import SessionActions from '../Redux/SessionRedux'
 import Cooldown from '../Components/Cooldown'
 import { Colors } from '../Themes'
-import ScrollableTabView from 'react-native-scrollable-tab-view'
 import styles from './Styles/SubjectScreenStyle'
 import { tracker } from '../Lib/googleAnalytics'
 import { Actions as NavigationActions } from 'react-native-router-flux'
+import { TabViewAnimated, TabBar } from 'react-native-tab-view';
 
 
 class SubjectScreen extends React.Component {
@@ -23,17 +22,53 @@ class SubjectScreen extends React.Component {
   constructor(props){
     super(props)
 
+    this.state = {
+      index: 0
+    };
   }
 
+  _handleChangeTab = (index) => {
+    this.setState({ index });
+  };
+
+  _renderHeader = (props) => {
+    return <TabBar
+      {...props}
+      scrollEnabled
+      indicatorStyle={{backgroundColor: Colors.snow}}
+      style={{backgroundColor: Colors.notedBlue}}
+    />;
+  };
+
+  _renderScene = ({ route }) => {
+
+    const subject = route
+
+    return (
+      <SubjectTab
+        key={subject.key}
+        tabLabel={subject.name}
+        subject={subject}
+
+        onSubjectActionPress={(mode) => this.handleSubjectActionPress(subject.key, mode)}
+        onSubjectIndexPress={() => this.handleSubjectIndexPress(subject)}
+      />
+    )
+
+  };
+
   componentDidMount(){
-
     tracker.trackScreenView('Subjects');
-
-    this.props.fetchSubjectList()
   }
 
   render () {
     const { subjects, session, coins} = this.props
+
+    const routes = subjects.list.map(subject => {
+      return Object.assign({}, subject, {
+        title: subject.name
+      })
+    })
 
     return (
       <View style={[styles.container, {paddingTop: 0}]}>
@@ -44,28 +79,16 @@ class SubjectScreen extends React.Component {
             onCooldownSkipPress={() => this.handleCooldownSkip()}
           />
           ): (
-          subjects.fetching || subjects.list.length == 0 ? (
+          subjects.fetching ? (
               <Loading />
             ):(
-              <ScrollableTabView
-                tabBarUnderlineStyle={{backgroundColor: Colors.snow}}
-                tabBarBackgroundColor={Colors.notedBlue}
-                tabBarActiveTextColor={Colors.snow}
-                tabBarInactiveTextColor={Colors.notedBlueDarker}
-              >
-                {subjects.list.map(subject => {
-                  return(
-                    <SubjectTab
-                      key={subject.key}
-                      tabLabel={subject.name}
-                      subject={subject}
-
-                      onSubjectActionPress={(mode) => this.handleSubjectActionPress(subject.key, mode)}
-                      onSubjectIndexPress={() => this.handleSubjectIndexPress(subject.key)}
-                    />
-                  )
-                })}
-              </ScrollableTabView>
+              <TabViewAnimated
+                style={[styles.container, {paddingTop: 0}]}
+                navigationState={{index: this.state.index, routes}}
+                renderScene={this._renderScene}
+                renderHeader={this._renderHeader}
+                onRequestChangeTab={this._handleChangeTab}
+              />
             )
         )}
       </View>
@@ -81,8 +104,8 @@ class SubjectScreen extends React.Component {
     }
   }
 
-  handleSubjectIndexPress(subject_key) {
-    this.props.fetchIndex(subject_key)
+  handleSubjectIndexPress(subject) {
+    this.props.fetchIndex(subject)
     tracker.trackEvent('Subject', 'Index')
   }
 
@@ -113,11 +136,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchSubjectList: () => {dispatch(SubjectActions.subjectRequest())},
     fetchConcepts: (subject_key, mode) => {dispatch(ConceptActions.conceptRequest(subject_key, mode))},
-    fetchIndex: (subject_key) => {dispatch(IndexActions.indexRequest(subject_key))},
+    fetchIndex: (subject) => {dispatch(IndexActions.indexRequest(subject))},
     skipCooldown: () => dispatch(SessionActions.skipRequest())
-
   }
 }
 
