@@ -28,6 +28,10 @@ class SubjectScreen extends React.Component {
     };
   }
 
+  componentDidMount(){
+    tracker.trackScreenView('Subjects');
+  }
+
   _handleChangeTab = (index) => {
     this.setState({ index });
   };
@@ -59,9 +63,7 @@ class SubjectScreen extends React.Component {
 
   };
 
-  componentDidMount(){
-    tracker.trackScreenView('Subjects');
-  }
+
 
   render () {
     const { subjects, session, coins, pro} = this.props

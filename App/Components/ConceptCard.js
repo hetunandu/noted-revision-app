@@ -14,19 +14,19 @@ export default class ConceptCard extends React.Component {
 
 
   componentDidUpdate() {
-    if(this.props.isSpeaking){
-      tts.isSpeaking()
-        .then(isSpeaking => {
-          //Callback
-          if(!isSpeaking){
-            this.props.toggleSpeak()
-          }
-        })
-        .catch(error => {
-          //if it fails
-          console.tron.log(error)
-        });
-    }
+    // if(this.props.isSpeaking){
+    //   tts.isSpeaking()
+    //     .then(isSpeaking => {
+    //       //Callback
+    //       if(!isSpeaking){
+    //         this.props.toggleSpeak()
+    //       }
+    //     })
+    //     .catch(error => {
+    //       //if it fails
+    //       console.tron.log(error)
+    //     });
+    // }
   }
 
   renderActions() {
