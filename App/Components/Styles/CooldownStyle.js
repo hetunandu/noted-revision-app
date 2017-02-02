@@ -37,6 +37,10 @@ export default StyleSheet.create({
     ...Fonts.style.h5,
     color: 'white'
   },
+  btnInfoText:{
+    fontSize: Fonts.size.medium,
+    color: 'grey'
+  },
   notifyContainer: {
     flexDirection: 'row',
     padding: 10,
@@ -45,5 +49,40 @@ export default StyleSheet.create({
   },
   notifyText: {
     fontSize: Fonts.size.h6,
+  },
+  modal: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    left: 0,
+    backgroundColor: Colors.snow,
+    padding: 10,
+    elevation: 3,
+  },
+  closeBtn:{
+    alignSelf: 'flex-end',
+    justifyContent: 'flex-end',
+    borderRadius: 50
+  },
+  modalHeader: {
+    flex: 1,
+    textAlign: 'center',
+    fontSize: Fonts.size.h4,
+    fontWeight: 'bold',
+    color: Colors.charcoal
+  },
+  point: {
+    flexDirection: 'row',
+    padding: 5,
+    alignItems: 'center'
+  },
+  pointText: {
+    fontSize: Fonts.size.regular,
+    fontWeight: 'bold',
+    color: Colors.coal,
+    marginLeft: 5
+  },
+  modalBtn: {
+    padding: 10
   }
 })

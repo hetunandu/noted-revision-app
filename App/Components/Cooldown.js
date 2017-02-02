@@ -1,13 +1,14 @@
 // @flow
 
 import React from 'react'
-import { View, Text, TouchableHighlight, Switch } from 'react-native'
+import { View, Text, TouchableHighlight, Switch, Modal } from 'react-native'
 import styles from './Styles/CooldownStyle'
 import reactMixin from 'react-mixin';
 import TimerMixin from 'react-timer-mixin';
 import Loading from './Loading'
 import Coins from './Coins'
 import PushNotification from 'react-native-push-notification'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
 
 export default class Cooldown extends React.Component {
@@ -17,7 +18,8 @@ export default class Cooldown extends React.Component {
 
     this.state = {
       timeLeft: "calculating...",
-      notify: false
+      notify: false,
+      modalVisible: false
     }
   }
 
@@ -53,10 +55,82 @@ export default class Cooldown extends React.Component {
     }
   }
 
+  renderModal() {
+    return (
+      <Modal
+        visible={this.state.modalVisible}
+        transparent={true}
+        animationType={"slide"}
+        onRequestClose={() => this.handleModalClose()}
+      >
+        <View style={styles.modal}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+            <Text style={styles.modalHeader}>Noted Pro Student</Text>
+            <TouchableHighlight
+              style={styles.closeBtn}
+              underlayColor="grey"
+              onPress={() => this.setState({modalVisible: false})}
+            >
+              <Icon name='close' size={30} color="#333"/>
+            </TouchableHighlight>
+          </View>
+          <View style={styles.point}>
+            <Icon name="label" size={10} color="#333"/>
+            <Text style={styles.pointText}>No Cooldown</Text>
+          </View>
+          <View style={styles.point}>
+            <Icon name="label" size={10} color="#333"/>
+            <Text style={styles.pointText}>No coins</Text>
+          </View>
+          <View style={styles.point}>
+            <Icon name="label" size={10} color="#333"/>
+            <Text style={styles.pointText}>Download concepts</Text>
+          </View>
+          <View style={styles.point}>
+            <Icon name="label" size={10} color="#333"/>
+            <Text style={styles.pointText}>Serious studying</Text>
+          </View>
+          <Text>
+            Noted Pro students are ones who take their studies seriously.
+            Need to study for an important upcoming exam and can't wait
+            around for the cooldown to complete? Become a pro and never bother
+            about views and coins again.
+          </Text>
+          <Text>
+            Additionally, you have an option of downloading all the concepts for all subjects
+            at once so you can study even without an internet connection
+          </Text>
+          <View style={styles.point}>
+            <Icon name="info" size={20} color="#333"/>
+            <Text style={styles.pointText}>
+              Pro usage is activated on per device basis. You wont be able to access Noted on any other
+              device once pro is activated.
+            </Text>
+          </View>
+          <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+            <TouchableHighlight
+              style={styles.modalBtn}
+              onPress={() => this.setState({modalVisible: false})}
+            >
+              <Text>Maybe Later</Text>
+            </TouchableHighlight>
+            <TouchableHighlight
+              style={styles.modalBtn}
+              onPress={() => this.handleProPress()}
+            >
+              <Text>Activate Pro Now</Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+      </Modal>
+    )
+  }
+
 
   render () {
     return (
       <View style={styles.container}>
+        {this.renderModal()}
         <View style={styles.cooldownCounter}>
           <Text style={styles.cooldownText}>Cooldown</Text>
           <Text style={styles.moreViewsText}>More views in</Text>
@@ -89,12 +163,17 @@ export default class Cooldown extends React.Component {
               <TouchableHighlight
                 underlayColor="#555"
                 style={styles.skipButton}
-                onPress={() => this.handleProPress()}
+                onPress={() =>  this.setState({modalVisible: true})}
               >
                 <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                  <Text style={styles.skipBtnText}>
-                    Buy pro
-                  </Text>
+                  <View>
+                    <Text style={styles.skipBtnText}>
+                      Become Pro
+                    </Text>
+                    <Text style={styles.btnInfoText}>
+                      Tap for more info
+                    </Text>
+                  </View>
                   <Coins value={this.props.session.pro_cost}/>
                 </View>
               </TouchableHighlight>
@@ -137,6 +216,13 @@ export default class Cooldown extends React.Component {
     })
 
   }
+
+  handleModalClose() {
+    this.setState({
+      modalVisible: false
+    })
+  }
+
 }
 
 reactMixin(Cooldown.prototype, TimerMixin)
