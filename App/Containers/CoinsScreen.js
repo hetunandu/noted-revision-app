@@ -62,8 +62,8 @@ class CoinsScreen extends React.Component {
         <View style={styles.section}>
           <Text style={styles.sectionHeader}>Buy coins</Text>
           <View style={styles.cost}>
-            <Coins value={500} dark/>
-            <Text style={{fontSize: 20}}> for &#8377;50</Text>
+            <Coins value={750} dark/>
+            <Text style={{fontSize: 20}}> for &#8377;100</Text>
           </View>
 
           <TouchableHighlight

@@ -9,6 +9,7 @@ import { connect } from 'react-redux'
 import ConceptActions from '../Redux/ConceptRedux'
 import IndexActions from '../Redux/IndexRedux'
 import SessionActions from '../Redux/SessionRedux'
+import LoginActions from '../Redux/LoginRedux'
 import Cooldown from '../Components/Cooldown'
 import { Colors } from '../Themes'
 import styles from './Styles/SubjectScreenStyle'
@@ -60,7 +61,7 @@ class SubjectScreen extends React.Component {
   }
 
   render () {
-    const { subjects, session, coins} = this.props
+    const { subjects, session, coins, pro} = this.props
 
     const routes = subjects.list.map(subject => {
       return Object.assign({}, subject, {
@@ -70,12 +71,13 @@ class SubjectScreen extends React.Component {
 
     return (
       <View style={[styles.container, {paddingTop: 0}]}>
-        <StatusBar coins={coins} session={session} />
-        {session.views === 0 ? (
+        <StatusBar coins={coins} session={session} pro={pro} />
+        {session.views === 0 && !pro ? (
           <Cooldown
             session={session}
             onCooldownSkipPress={() => this.handleCooldownSkip()}
             onBuyProPressed={() => this.handleBuyPro()}
+            onCooldownComplete={() => this.handleCoolDownComplete()}
           />
           ): (
           subjects.fetching ? (
@@ -125,10 +127,7 @@ class SubjectScreen extends React.Component {
 
   handleBuyPro() {
     if(this.props.coins.balance >= this.props.session.pro_cost){
-      // TODO Activate Pro
-
-      Alert.alert('Not implemented yet')
-
+      this.props.activatePro()
     }else{
       Alert.alert('Not enough coins', 'You can buy 750 coins now for Rs.100/- only!', [
         {text: 'Yes!', onPress: () => NavigationActions.coins()},
@@ -136,10 +135,15 @@ class SubjectScreen extends React.Component {
       ])
     }
   }
+
+  handleCoolDownComplete() {
+    // TODO Refresh the session
+  }
 }
 
 const mapStateToProps = (state) => {
   return {
+    pro: state.login.user.pro,
     session: state.session,
     coins: state.coins,
     subjects: state.subjects,
@@ -151,7 +155,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchConcepts: (subject_key, mode) => {dispatch(ConceptActions.conceptRequest(subject_key, mode))},
     fetchIndex: (subject) => {dispatch(IndexActions.indexRequest(subject))},
-    skipCooldown: () => dispatch(SessionActions.skipRequest())
+    skipCooldown: () => dispatch(SessionActions.skipRequest()),
+    activatePro: () => dispatch(LoginActions.proRequest())
   }
 }
 

@@ -21,7 +21,6 @@ class LoginScreen extends React.Component {
 
   componentDidMount(){
     tracker.trackScreenView('Login');
-    this.props.loginInit()
   }
 
   signInWithGoogle(){
@@ -46,6 +45,7 @@ class LoginScreen extends React.Component {
               <GoogleLoginButton onLoginPress={() => this.signInWithGoogle()}/>
             )
         }
+        {this.props.login.error && <Text style={{color: 'red'}}>{this.props.login.error}</Text>}
       </View>
     )
   }
@@ -62,7 +62,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     loginRequest: (accessToken) => dispatch(LoginActions.loginRequest(accessToken)),
-    loginInit: () => dispatch(LoginActions.loginInit())
   }
 }
 

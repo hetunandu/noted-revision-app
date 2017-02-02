@@ -7,6 +7,8 @@ import { Actions as NavigationActions } from 'react-native-router-flux'
 import {GoogleSignin} from 'react-native-google-signin';
 import {AsyncStorage, ToastAndroid, NetInfo} from 'react-native';
 import { tracker } from '../Lib/googleAnalytics'
+import DeviceInfo from 'react-native-device-info'
+
 
 
 // Check token, with token get user details, if error, configure google login
@@ -43,7 +45,7 @@ export function * loginInit(api){
 
           yield put(CoinsActions.updateBalance(response.data.message.user.points))
 
-          if(!response.data.message.user.course){
+          if(response.data.message.user.course == null){
 
             yield call(NavigationActions.subscribe)
 
@@ -98,23 +100,22 @@ export function * login (api, action) {
       yield call(AsyncStorage.setItem, 'login_token', data.message.token)
       // run the success action
       yield put(LoginActions.loginSuccess(data.message.user))
-     // yield put(tracker.setUser(data.message.user.key))
 
+      // yield put(tracker.setUser(data.message.user.key))
 
       yield put(SessionActions.updateSession(data.message.user.session))
 
       yield put(CoinsActions.updateBalance(data.message.user.points))
 
-      if(!response.data.course){
+      if(data.message.user.course == null){
 
         yield call(NavigationActions.subscribe)
+
       }else{
         // navigate the welcome screen
         yield put(SubjectActions.subjectRequest())
         yield call(NavigationActions.subjects)
       }
-
-
 
     }else{
       // Error in login
@@ -158,5 +159,31 @@ export function * subscribeCourse(api, action) {
     yield put(LoginActions.subscribeFailure(err))
 
   }
+
+}
+
+export function * activatePro(api, action){
+
+  try{
+    yield call(NavigationActions.login)
+
+    const token = yield call(AsyncStorage.getItem, 'login_token')
+
+    const deviceId =  yield call(DeviceInfo.getUniqueID)
+
+    const response = yield call(api.activatePro, token, deviceId)
+
+    if(response.ok && response.data.success){
+      yield put(LoginActions.proSuccess())
+      yield call(NavigationActions.subjects)
+    }else{
+      yield put(LoginActions.proFailure(response.data.error))
+    }
+
+  }catch (err){
+    console.tron.err(err)
+  }
+
+
 
 }

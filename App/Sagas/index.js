@@ -4,6 +4,7 @@ import { AsyncStorage } from 'react-native';
 
 /* ------------- Types ------------- */
 
+import { StartupTypes } from '../Redux/StartupRedux'
 import { LoginTypes } from '../Redux/LoginRedux'
 import { SubjectTypes } from '../Redux/SubjectRedux'
 import { ConceptTypes } from '../Redux/ConceptRedux'
@@ -15,7 +16,8 @@ import { PaymentTypes } from '../Redux/PaymentRedux'
 
 /* ------------- Sagas ------------- */
 
-import { login, loginInit, subscribeCourse } from './LoginSagas'
+import { startup } from './StartupSagas'
+import { login, loginInit, subscribeCourse, activatePro } from './LoginSagas'
 import { getSubjects } from './SubjectSagas'
 import { getConcepts, getSingleConcept } from './ConceptSagas'
 import { submitResult } from './ResultSagas'
@@ -34,6 +36,7 @@ const api = API.create()
 
 export default function * root () {
   yield [
+    takeLatest(StartupTypes.STARTUP, startup),
     takeLatest(LoginTypes.LOGIN_INIT, loginInit, api),
     takeLatest(LoginTypes.LOGIN_REQUEST, login, api),
     takeLatest(LoginTypes.SUBSCRIBE_REQUEST, subscribeCourse, api),
@@ -46,6 +49,7 @@ export default function * root () {
     takeLatest(CoinsTypes.REDEEM_REQUEST, redeemCode, api),
     takeLatest(PaymentTypes.PAYMENT_REQUEST, requestPayment, api),
     takeLatest(PaymentTypes.STATUS_REQUEST, paymentStatus, api),
-    takeLatest(IndexTypes.STAR_CONCEPT, starConcept, api)
+    takeLatest(IndexTypes.STAR_CONCEPT, starConcept, api),
+    takeLatest(LoginTypes.PRO_REQUEST, activatePro, api)
   ]
 }

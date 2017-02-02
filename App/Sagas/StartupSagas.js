@@ -1,10 +1,16 @@
-import { put, select } from 'redux-saga/effects'
+import { put, call, select } from 'redux-saga/effects'
 import { is } from 'ramda'
+import LoginActions from '../Redux/LoginRedux'
 
-// exported to make available for tests
-export const selectTemperature = (state) => state.temperature.temperature
 
 // process STARTUP actions
 export function * startup (action) {
+  try{
+
+    yield put(LoginActions.loginInit())
+
+  } catch (err){
+    console.tron.error(err)
+  }
 
 }

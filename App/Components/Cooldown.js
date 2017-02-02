@@ -38,7 +38,9 @@ export default class Cooldown extends React.Component {
     const time_left = sessionEnd - new Date()
 
     if (time_left < 0){
-      this.clearInterval()
+
+      this.props.onCooldownComplete()
+
     }else {
       const _second = 1000;
       const _minute = _second * 60;
@@ -190,6 +192,7 @@ export default class Cooldown extends React.Component {
   }
 
   handleProPress() {
+    this.handleModalClose()
     this.props.onBuyProPressed()
   }
 
@@ -239,7 +242,8 @@ Cooldown.propTypes = {
     updated_at: React.PropTypes.string
   }),
   onCooldownSkipPress: React.PropTypes.func,
-  onBuyProPressed: React.PropTypes.func
+  onBuyProPressed: React.PropTypes.func,
+  onCooldownComplete: React.PropTypes.func
 }
 //
 // // Defaults for props

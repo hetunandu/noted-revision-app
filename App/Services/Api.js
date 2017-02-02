@@ -83,6 +83,8 @@ const create = (baseURL = 'https://4-dot-noted-api.appspot.com/study') => {
   const starConcept = (token, concept_key) =>
     api.get(`concepts/${concept_key}/important`, {}, { headers: {'Authorization': token} })
 
+  const activatePro = (token, device) => api.post('/users/pro', { device }, { headers: {'Authorization': token} })
+
   // ------
   // STEP 3
   // ------
@@ -109,7 +111,8 @@ const create = (baseURL = 'https://4-dot-noted-api.appspot.com/study') => {
     redeemCode,
     requestPayment,
     paymentStatus,
-    starConcept
+    starConcept,
+    activatePro
   }
 }
 

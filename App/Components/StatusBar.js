@@ -13,21 +13,29 @@ export default class StatusBar extends React.Component {
   render () {
     return (
       <View style={styles.container}>
-        <View style={styles.viewsCounter}>
-          <Icon name="visibility" color="#fff" size={20} style={{padding: 5}}/>
-          <Text style={styles.viewsCounterText}>
-            {this.props.session.views}
-          </Text>
-        </View>
-
-        <TouchableHighlight
-          underlayColor={Colors.notedBlueDarker}
-          onPress={() => this.handleCoinBalancePress()}
-        >
+        {this.props.pro === true ? (
           <View>
-            <Coins value={this.props.coins.balance} />
+            <Text style={styles.viewsCounterText}>PRO Student</Text>
           </View>
-        </TouchableHighlight>
+        ):(
+            <View style={styles.viewsCounter}>
+              <Icon name="visibility" color="#fff" size={20} style={{padding: 5}}/>
+              <Text style={styles.viewsCounterText}>
+                {this.props.session.views}
+              </Text>
+            </View>
+        )}
+
+        {!this.props.pro && (
+          <TouchableHighlight
+            underlayColor={Colors.notedBlueDarker}
+            onPress={() => this.handleCoinBalancePress()}
+          >
+            <View>
+              <Coins value={this.props.coins.balance} />
+            </View>
+          </TouchableHighlight>
+        )}
 
         <TouchableHighlight
           underlayColor={Colors.notedBlueDarker}
@@ -51,8 +59,9 @@ export default class StatusBar extends React.Component {
 
 // Prop type warnings
 StatusBar.propTypes = {
-  session: React.PropTypes.object.isRequired,
-  coins: React.PropTypes.object.isRequired
+  session: React.PropTypes.object,
+  coins: React.PropTypes.object,
+  pro: React.PropTypes.bool
 }
 //
 // // Defaults for props

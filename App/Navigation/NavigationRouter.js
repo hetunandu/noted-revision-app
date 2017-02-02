@@ -33,7 +33,7 @@ class NavigationRouter extends Component {
         leftButtonIconStyle={Styles.leftButton}
         backButtonImage={Images.backIcon}
       >
-        <Scene key='login' component={LoginScreen} panHandlers={null} initial />
+        <Scene key='login' component={LoginScreen} panHandlers={null} initial type="replace" />
         <Scene key="subscribe" component={SubscribeScreen} panHandlers={null} title="Complete Login" hideNavBar={false}/>
         <Scene key='subjects' component={SubjectScreen} type="replace" panHandlers={null} hideNavBar />
         <Scene key="index" component={IndexScreen} title="Index" panHandlers={null} hideNavBar={false} />
