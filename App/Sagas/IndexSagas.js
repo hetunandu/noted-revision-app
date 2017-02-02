@@ -51,3 +51,23 @@ export function * starConcept(api, action){
   }
 
 }
+
+export function * downloadIndex(api, action) {
+  const {key} = action
+
+  try{
+    const token = yield call(AsyncStorage.getItem, 'login_token')
+
+    const response = yield call(api.downloadIndex, token, key)
+
+    if (response.ok && response.data.success){
+      yield put(IndexActions.downloadSuccess(key, response.data.message))
+    }else{
+      yield put(IndexActions.downloadFailure(response.data.error))
+    }
+
+  }catch (err){
+    console.tron.error(err)
+  }
+
+}

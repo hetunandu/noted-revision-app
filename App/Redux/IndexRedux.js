@@ -10,7 +10,10 @@ const { Types, Creators } = createActions({
   markConcept: ['subject_key','concept_key', 'status'],
   starConcept: ['subject_key', 'concept_key'],
   starSuccess: ['subject_key', 'concept_key'],
-  starFailure: ['error']
+  starFailure: ['error'],
+  downloadRequest: ['key'],
+  downloadSuccess: ['key', 'index'],
+  downloadFailure: ['error']
 })
 
 export const IndexTypes = Types
@@ -83,6 +86,13 @@ export const starSuccess = (state, {subject_key, concept_key}) => {
   }
 }
 
+export const downloadRequest = state => state.merge({fetching: true})
+
+export const downloadSuccess = (state, {key, index}) =>
+  state.merge({ fetching: false, error: null, data: state.data.setIn([`${key}`], index)})
+
+export const downloadFailure = (state, {error}) => state.merge({ fetching: false, error })
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
@@ -90,5 +100,8 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.INDEX_SUCCESS]: success,
   [Types.INDEX_FAILURE]: failure,
   [Types.MARK_CONCEPT]: markConcept,
-  [Types.STAR_SUCCESS]: starSuccess
+  [Types.STAR_SUCCESS]: starSuccess,
+  [Types.DOWNLOAD_REQUEST]: downloadRequest,
+  [Types.DOWNLOAD_SUCCESS]: downloadSuccess,
+  [Types.DOWNLOAD_FAILURE]: downloadFailure
 })

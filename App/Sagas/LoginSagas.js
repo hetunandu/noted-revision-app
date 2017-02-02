@@ -114,6 +114,7 @@ export function * login (api, action) {
       }else{
         // navigate the welcome screen
         yield put(SubjectActions.subjectRequest())
+
         yield call(NavigationActions.subjects)
       }
 
@@ -175,6 +176,7 @@ export function * activatePro(api, action){
 
     if(response.ok && response.data.success){
       yield put(LoginActions.proSuccess())
+
       yield call(NavigationActions.subjects)
     }else{
       yield put(LoginActions.proFailure(response.data.error))

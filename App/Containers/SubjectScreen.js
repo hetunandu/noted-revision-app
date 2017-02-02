@@ -48,9 +48,12 @@ class SubjectScreen extends React.Component {
     return (
       <SubjectTab
         subject={subject}
+        pro={this.props.pro}
+        index={this.props.index[subject.key]}
 
         onSubjectActionPress={(mode) => this.handleSubjectActionPress(subject.key, mode)}
         onSubjectIndexPress={() => this.handleSubjectIndexPress(subject)}
+        onIndexDownload={() => this.handleIndexDownload(subject.key)}
       />
     )
 
@@ -80,7 +83,7 @@ class SubjectScreen extends React.Component {
             onCooldownComplete={() => this.handleCoolDownComplete()}
           />
           ): (
-          subjects.fetching ? (
+          subjects.fetching || this.props.index.fetching ? (
               <Loading />
             ):(
               <TabViewAnimated
@@ -139,6 +142,10 @@ class SubjectScreen extends React.Component {
   handleCoolDownComplete() {
     // TODO Refresh the session
   }
+
+  handleIndexDownload(key) {
+    this.props.indexDownload(key)
+  }
 }
 
 const mapStateToProps = (state) => {
@@ -156,7 +163,8 @@ const mapDispatchToProps = (dispatch) => {
     fetchConcepts: (subject_key, mode) => {dispatch(ConceptActions.conceptRequest(subject_key, mode))},
     fetchIndex: (subject) => {dispatch(IndexActions.indexRequest(subject))},
     skipCooldown: () => dispatch(SessionActions.skipRequest()),
-    activatePro: () => dispatch(LoginActions.proRequest())
+    activatePro: () => dispatch(LoginActions.proRequest()),
+    indexDownload: (key) => dispatch(IndexActions.downloadRequest(key))
   }
 }
 
