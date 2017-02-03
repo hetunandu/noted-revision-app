@@ -8,7 +8,7 @@ export function * getIndex (api, action) {
 
   try{
 
-    yield call(NavigationActions.index, {subject_key: subject.key, title: subject.name})
+    //yield call(NavigationActions.index, {subject_key: subject.key, title: subject.name})
 
     const token = yield call(AsyncStorage.getItem, 'login_token')
 
@@ -47,7 +47,6 @@ export function * starConcept(api, action){
   }catch (err){
     console.warn(err)
     yield put(IndexActions.starFailure(err))
-
   }
 
 }

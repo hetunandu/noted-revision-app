@@ -7,12 +7,12 @@ import { AsyncStorage } from 'react-native'
 
 export function * submitResult(api){
 
-  const {concepts, result} = yield select()
+  const {result} = yield select()
 
   try{
     const token = yield call(AsyncStorage.getItem, 'login_token')
 
-    const response = yield call(api.submitResult, token, concepts.subject, concepts.mode, result.data)
+    const response = yield call(api.submitResult, token, result.data)
 
     // success?
     if (response.ok && response.data.success) {

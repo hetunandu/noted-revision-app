@@ -9,7 +9,7 @@ export default class Index extends React.Component {
 
 
 
-  formatData(index){
+  formatData(index, concept_data){
 
     // Need somewhere to store our data
     const dataBlob = {};
@@ -44,6 +44,7 @@ export default class Index extends React.Component {
         rowIds[rowIds.length - 1].push(rowId);
 
         // Store the data we care about for this row
+
         dataBlob[rowId] = concepts[i];
       }
     }
@@ -52,7 +53,7 @@ export default class Index extends React.Component {
   }
 
   handleConceptPressed(concept){
-    this.props.onConceptSelected(concept)
+    this.props.onConceptSelected(concept.key)
   }
 
 
@@ -108,7 +109,7 @@ export default class Index extends React.Component {
     });
 
     // Formatting the index data for the listview
-    const { dataBlob, sectionIds, rowIds } = this.formatData(this.props.index);
+    const { dataBlob, sectionIds, rowIds } = this.formatData(this.props.index, this.props.concept_data);
 
     // finally cloning the data with all the formatted data
     const index = ds.cloneWithRowsAndSections(dataBlob, sectionIds, rowIds);

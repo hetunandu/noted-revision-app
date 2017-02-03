@@ -32,29 +32,31 @@ class SubjectScreen extends React.Component {
     tracker.trackScreenView('Subjects');
   }
 
-  _handleChangeTab = (index) => {
+  handleChangeTab = (index) => {
     this.setState({ index });
   };
 
-  _renderHeader = (props) => {
+  renderHeader = (props) => {
     return <TabBar
       {...props}
       scrollEnabled
+      labelStyle={{padding: 0}}
       indicatorStyle={{backgroundColor: Colors.snow}}
       style={{backgroundColor: Colors.notedBlue}}
     />;
   };
 
-  _renderScene = ({ route }) => {
+  renderScene = ({ route }) => {
 
     const subject = route
 
     return (
       <SubjectTab
         subject={subject}
+        concept_data={this.props.concepts.data}
         pro={this.props.pro}
-        index={this.props.index[subject.key]}
 
+        onSingleConceptSelected={(concept_key) => this.handleSingleConceptSelection(concept_key) }
         onSubjectActionPress={(mode) => this.handleSubjectActionPress(subject.key, mode)}
         onSubjectIndexPress={() => this.handleSubjectIndexPress(subject)}
         onIndexDownload={() => this.handleIndexDownload(subject.key)}
@@ -68,7 +70,11 @@ class SubjectScreen extends React.Component {
   render () {
     const { subjects, session, coins, pro} = this.props
 
+    // Set title for all subject tabs
     const routes = subjects.list.map(subject => {
+
+      //const complete = Math.round(subject.read_concepts / subject.total_concepts  * 100, 2)
+
       return Object.assign({}, subject, {
         title: subject.name
       })
@@ -85,15 +91,15 @@ class SubjectScreen extends React.Component {
             onCooldownComplete={() => this.handleCoolDownComplete()}
           />
           ): (
-          subjects.fetching || this.props.index.fetching ? (
+          subjects.fetching ?(
               <Loading />
             ):(
               <TabViewAnimated
                 style={[styles.container, {paddingTop: 0}]}
                 navigationState={{index: this.state.index, routes}}
-                renderScene={this._renderScene}
-                renderHeader={this._renderHeader}
-                onRequestChangeTab={this._handleChangeTab}
+                renderScene={this.renderScene}
+                renderHeader={this.renderHeader}
+                onRequestChangeTab={this.handleChangeTab}
               />
             )
         )}
@@ -148,6 +154,10 @@ class SubjectScreen extends React.Component {
   handleIndexDownload(key) {
     this.props.indexDownload(key)
   }
+
+  handleSingleConceptSelection(concept_key) {
+    this.props.reviseSingleConcept(concept_key)
+  }
 }
 
 const mapStateToProps = (state) => {
@@ -156,12 +166,13 @@ const mapStateToProps = (state) => {
     session: state.session,
     coins: state.coins,
     subjects: state.subjects,
-    index: state.index
+    concepts: state.concepts
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    reviseSingleConcept: (key) => dispatch(ConceptActions.singleRequest(key)),
     fetchConcepts: (subject_key, mode) => {dispatch(ConceptActions.conceptRequest(subject_key, mode))},
     fetchIndex: (subject) => {dispatch(IndexActions.indexRequest(subject))},
     skipCooldown: () => dispatch(SessionActions.skipRequest()),

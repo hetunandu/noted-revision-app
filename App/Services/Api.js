@@ -1,5 +1,6 @@
 // a library to wrap and simplify api calls
 import apisauce from 'apisauce'
+import DeviceInfo from 'react-native-device-info'
 
 // our "constructor"
 const create = (baseURL = 'https://4-dot-noted-api.appspot.com/study') => {
@@ -15,15 +16,12 @@ const create = (baseURL = 'https://4-dot-noted-api.appspot.com/study') => {
     // here are some default headers
     headers: {
       'Cache-Control': 'no-cache',
-      'Content-type': 'application/json'
+      'Content-type': 'application/json',
+      'User-Agent': `Revision App v.${DeviceInfo.getVersion()}`
     },
     // 15 second timeout...
     timeout: 15000
   })
-
-  // const token = AsyncStorage.getItem('login_token', (token) => {
-  //   api.setHeader('Authorization', token)
-  // })
 
   // Force OpenWeather API Key on all requests
   //api.addRequestTransform((request) => {
@@ -66,8 +64,8 @@ const create = (baseURL = 'https://4-dot-noted-api.appspot.com/study') => {
   const getSingleConcept = (token, concept_key) =>
     api.get(`concepts/${concept_key}`, {}, { headers: { 'Authorization': token } })
 
-  const submitResult = (token, subject_key, mode, result) =>
-    api.post(`subjects/${subject_key}/${mode}/result`, {result}, {headers: {'Authorization': token}})
+  const submitResult = (token, result) =>
+    api.post(`concepts/result`, {result}, {headers: {'Authorization': token}})
 
   const getIndex = (token, subject_key) =>
     api.get(`subjects/${subject_key}/index`, {}, { headers: { 'Authorization': token } })
@@ -85,7 +83,7 @@ const create = (baseURL = 'https://4-dot-noted-api.appspot.com/study') => {
 
   const activatePro = (token, device) => api.post('/users/pro', { device }, { headers: {'Authorization': token} })
 
-  const downloadIndex = (token, key) => api.get(`/subjects/${key}/download`, {}, {headers: {'Authorization': token}} )
+  const downloadIndex = (token, key) => api.get(`/subjects/${key}/download`, {}, {headers: {'Authorization': token}})
 
   // ------
   // STEP 3

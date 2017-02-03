@@ -14,53 +14,11 @@ export default class SubjectTab extends React.Component {
   render () {
     return (
       <View style={styles.container}>
-        <View style={styles.statusContainer}>
-          <StatusCounter
-            label="Total"
-            value={this.props.subject.total_concepts}
-          />
-          <StatusCounter
-            label="Read"
-            value={this.props.subject.read_concepts}
-          />
-        </View>
-        {this.props.pro ? (
-          <View style={styles.actionsContainer}>
-            {this.props.index ? (
-              <Index
-                index={this.props.index}
-                onConceptSelected={() => this.handleConceptSelected()}
-              />
-            ) : (
-              <SubjectActionButton
-                btnText="Download"
-                bgColor={Colors.yellow}
-                onBtnPress={() => this.handleDownloadPress()}
-              />
-            )}
-          </View>
-        ): (
-          <View style={styles.actionsContainer}>
-            <SubjectActionButton
-              btnText="Quick Revise"
-              infoText="Got 5 minutes? Revise top 5 unread concepts"
-              cost="5"
-              bgColor={Colors.yellow}
-              onBtnPress={() => this.handleRevision()}
-            />
-            {/*<SubjectActionButton*/}
-            {/*btnText="Test"*/}
-            {/*onBtnPress={() => this.handleTest()}*/}
-            {/*/>*/}
-            <SubjectActionButton
-              btnText="Index"
-              infoText="Check out all the concepts and select what you want to study"
-              cost="1"
-              onBtnPress={() => this.handleIndex()}
-            />
-          </View>
-        )}
-
+        <Index
+          index={this.props.subject.index}
+          concept_data={this.props.concept_data}
+          onConceptSelected={(concept_key) => this.handleConceptSelected(concept_key)}
+        />
       </View>
     )
   }
@@ -79,8 +37,8 @@ export default class SubjectTab extends React.Component {
     this.props.onSubjectIndexPress()
   }
 
-  handleConceptSelected() {
-
+  handleConceptSelected(concept_key) {
+    this.props.onSingleConceptSelected(concept_key)
   }
 
   handleDownloadPress() {
@@ -93,10 +51,11 @@ SubjectTab.propTypes = {
   subject: React.PropTypes.shape({
     name: React.PropTypes.string,
     key: React.PropTypes.string,
-    total_concepts: React.PropTypes.number,
-    read_concepts: React.PropTypes.number
+    index: React.PropTypes.array
   }),
+  concept_data: React.PropTypes.object,
   pro: React.PropTypes.bool,
+  onSingleConceptSelected: React.PropTypes.func,
   onSubjectActionPress: React.PropTypes.func,
   onSubjectIndexPress: React.PropTypes.func,
   onIndexDownload: React.PropTypes.func,
