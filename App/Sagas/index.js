@@ -17,12 +17,12 @@ import { PaymentTypes } from '../Redux/PaymentRedux'
 /* ------------- Sagas ------------- */
 
 import { startup } from './StartupSagas'
-import { login, loginInit, subscribeCourse, activatePro } from './LoginSagas'
+import { login, loginInit, subscribeCourse,  } from './LoginSagas'
 import { getSubjects } from './SubjectSagas'
 import { getConcepts, getSingleConcept } from './ConceptSagas'
 import { submitResult} from './ResultSagas'
 import { getIndex, starConcept, downloadIndex } from './IndexSagas'
-import { skipCooldown } from './SessionSagas'
+import { skipCooldown, activatePro } from './SessionSagas'
 import { redeemCode } from './CoinsSagas'
 import { requestPayment, paymentStatus } from './PaymentSagas'
 
@@ -50,7 +50,7 @@ export default function * root () {
     takeLatest(PaymentTypes.PAYMENT_REQUEST, requestPayment, api),
     takeLatest(PaymentTypes.STATUS_REQUEST, paymentStatus, api),
     takeLatest(IndexTypes.STAR_CONCEPT, starConcept, api),
-    takeLatest(LoginTypes.PRO_REQUEST, activatePro, api),
+    takeLatest(SessionTypes.PRO_REQUEST, activatePro, api),
     takeLatest(IndexTypes.DOWNLOAD_REQUEST, downloadIndex, api)
   ]
 }

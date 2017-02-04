@@ -7,7 +7,6 @@ import { Actions as NavigationActions } from 'react-native-router-flux'
 import {GoogleSignin} from 'react-native-google-signin';
 import {AsyncStorage, ToastAndroid, NetInfo} from 'react-native';
 import { tracker } from '../Lib/googleAnalytics'
-import DeviceInfo from 'react-native-device-info'
 
 
 
@@ -166,29 +165,4 @@ export function * subscribeCourse(api, action) {
 
 }
 
-export function * activatePro(api, action){
 
-  try{
-    yield call(NavigationActions.login)
-
-    const token = yield call(AsyncStorage.getItem, 'login_token')
-
-    const deviceId =  yield call(DeviceInfo.getUniqueID)
-
-    const response = yield call(api.activatePro, token, deviceId)
-
-    if(response.ok && response.data.success){
-      yield put(LoginActions.proSuccess())
-
-      yield call(NavigationActions.subjects)
-    }else{
-      yield put(LoginActions.proFailure(response.data.error))
-    }
-
-  }catch (err){
-    console.tron.err(err)
-  }
-
-
-
-}

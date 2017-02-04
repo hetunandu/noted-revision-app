@@ -7,7 +7,11 @@ const { Types, Creators } = createActions({
   updateSession: ['session'],
   skipRequest: null,
   skipSuccess: ['session'],
-  skipFailure: ['error']
+  skipFailure: ['error'],
+  proRequest: null,
+  proSuccess: null,
+  proFailure: ['error'],
+
 })
 
 export const SessionTypes = Types
@@ -36,6 +40,12 @@ export const success = (state, {session}) => state.merge({ fetching: false, ...s
 
 export const failure = (state, {error}) => state.merge({ fetching: false, error })
 
+export const proRequest = (state) => state.merge({fetching: true})
+
+export const proSuccess = state => state.merge({ fetching: false})
+
+export const proFailure = (state, {error}) => state.merge({ fetching: false, error })
+
 
 /* ------------- Hookup Reducers To Types ------------- */
 
@@ -43,5 +53,8 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.UPDATE_SESSION]: updateSession,
   [Types.SKIP_REQUEST]: request,
   [Types.SKIP_SUCCESS]: success,
-  [Types.SKIP_FAILURE]: failure
+  [Types.SKIP_FAILURE]: failure,
+  [Types.PRO_REQUEST]: proRequest,
+  [Types.PRO_SUCCESS]: proSuccess,
+  [Types.PRO_FAILURE]: proFailure
 })

@@ -15,9 +15,8 @@ const { Types, Creators } = createActions({
   subscribeRequest: ['college'],
   subscribeSuccess: null,
   subscribeFailure: ['error'],
-  proRequest: null,
-  proSuccess: null,
-  proFailure: ['error']
+  proSuccess: null
+
 })
 
 export const LoginTypes = Types
@@ -59,11 +58,9 @@ export const subscribeSuccess = (state) => state.merge({fetching: false})
 
 export const subscribeFailure = (state, {error}) => state.merge({ fetching: false, error })
 
-export const proRequest = (state) => state.merge({fetching: true})
+export const proSuccess = (state) => state.merge({user: {pro: true}}, {deep: true})
 
-export const proSuccess = state => state.merge({ fetching: false, user: {pro: true} }, {deep: true})
 
-export const proFailure = (state, {error}) => state.merge({ fetching: false, error })
 
 /* ------------- Hookup Reducers To Types ------------- */
 
@@ -77,7 +74,6 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.SUBSCRIBE_REQUEST]: subscribeRequest,
   [Types.SUBSCRIBE_SUCCESS]: subscribeSuccess,
   [Types.SUBSCRIBE_FAILURE]: subscribeFailure,
-  [Types.PRO_REQUEST]: proRequest,
-  [Types.PRO_SUCCESS]: proSuccess,
-  [Types.PRO_FAILURE]: proFailure
+  [Types.PRO_SUCCESS]: proSuccess
+
 })

@@ -180,7 +180,7 @@ const mapDispatchToProps = (dispatch) => {
     fetchConcepts: (subject_key, mode) => {dispatch(ConceptActions.conceptRequest(subject_key, mode))},
     fetchIndex: (subject) => {dispatch(IndexActions.indexRequest(subject))},
     skipCooldown: () => dispatch(SessionActions.skipRequest()),
-    activatePro: () => dispatch(LoginActions.proRequest()),
+    activatePro: () => dispatch(SessionActions.proRequest()),
     indexDownload: (key) => dispatch(IndexActions.downloadRequest(key))
   }
 }
