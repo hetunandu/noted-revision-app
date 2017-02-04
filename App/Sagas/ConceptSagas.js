@@ -8,6 +8,7 @@ import { Actions as NavigationActions } from 'react-native-router-flux'
 
 const getConceptData = state => state.concepts.data;
 const getViews = state => state.session.views;
+const getUserPro = state => state.login.user.pro
 const getSubjects = state => state.subjects.list
 
 export function * getConcepts (api, action) {
@@ -17,18 +18,22 @@ export function * getConcepts (api, action) {
   try{
     const views = yield select(getViews)
     const subjects = yield select(getSubjects)
+    const isPro = yield select(getUserPro)
 
     const unRead = yield call(getUnreadConcepts, subject, subjects)
 
     if (unRead.length == 0){
+
       yield put(ConceptActions.conceptFailure('No unread concepts left'))
       yield call(ToastAndroid.show, "No unread concepts left to revise", ToastAndroid.LONG)
+
     }else{
+
       // Set Maximum 5 concepts only
       unRead.length = 5
 
       // If views are limited then limit concepts to views
-      if (unRead.length > views){
+      if (unRead.length > views && !isPro){
         unRead.length = views
       }
 

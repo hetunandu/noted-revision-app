@@ -7,6 +7,7 @@ import { Actions as NavigationActions } from 'react-native-router-flux'
 import {GoogleSignin} from 'react-native-google-signin';
 import {AsyncStorage, ToastAndroid, NetInfo} from 'react-native';
 import { tracker } from '../Lib/googleAnalytics'
+import DeviceInfo from 'react-native-device-info'
 
 
 
@@ -98,28 +99,44 @@ export function * login (api, action) {
     const data = response.data
     // was the server able to login the user
     if(response.ok && data.success){
+
       // Save the token for next time use
       yield call(AsyncStorage.setItem, 'login_token', data.message.token)
       // run the success action
+
       yield put(LoginActions.loginSuccess(data.message.user))
 
-      // yield put(tracker.setUser(data.message.user.key))
+      yield call(tracker.setUser, data.message.user.key)
 
-      yield put(SessionActions.updateSession(data.message.user.session))
+      if(response.data.message.user.pro) {
+        const deviceID = yield call(DeviceInfo.getUniqueID)
 
-      yield put(CoinsActions.updateBalance(data.message.user.points))
+        if (response.data.message.user.device !== deviceID) {
+          yield put(LoginActions.loginFailure('Pro Account activated on another device. Please login from the same device'))
+        }
 
-      if(data.message.user.course == null){
-
-        yield call(NavigationActions.subscribe)
-
-      }else{
         // navigate the welcome screen
         yield put(SubjectActions.subjectRequest())
 
         yield call(NavigationActions.subjects)
-      }
 
+      }else{
+
+        yield put(SessionActions.updateSession(data.message.user.session))
+
+        yield put(CoinsActions.updateBalance(data.message.user.points))
+
+        if(data.message.user.course == null){
+
+          yield call(NavigationActions.subscribe)
+
+        }else{
+          // navigate the welcome screen
+          yield put(SubjectActions.subjectRequest())
+
+          yield call(NavigationActions.subjects)
+        }
+      }
     }else{
       // Error in login
       yield put(LoginActions.loginFailure(data.error))

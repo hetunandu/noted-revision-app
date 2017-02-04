@@ -18,10 +18,15 @@ class ConceptScreen extends React.Component {
 
     tracker.trackScreenView('Concept');
 
-    const {concepts, result} = this.props
+    const {concepts, result, user} = this.props
 
     if(concepts.list.length === 0 && result.data.length > 0 ){
-      NavigationActions.result()
+
+      if(user.pro){
+       NavigationActions.subjects()
+      }else{
+        NavigationActions.result()
+      }
     }
   }
 
@@ -78,7 +83,8 @@ class ConceptScreen extends React.Component {
 const mapStateToProps = (state) => {
   return {
     concepts: state.concepts,
-    result: state.result
+    result: state.result,
+    user: state.login.user
   }
 }
 
