@@ -9,4 +9,5 @@ if (__DEV__) {
   GoogleAnalyticsSettings.setDryRun(true);
 }
 
-export let tracker = new GoogleAnalyticsTracker('UA-73405679-1');
+
+export let tracker = new GoogleAnalyticsTracker('UA-88471116-2');

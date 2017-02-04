@@ -15,6 +15,9 @@ import DeviceInfo from 'react-native-device-info'
 export function * loginInit(api){
 
   try{
+
+    // yield put(LoginActions.loginRequest())
+
     yield call(googleLoginConfigure)
 
     // Check if internet is there
