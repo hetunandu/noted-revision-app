@@ -8,6 +8,7 @@ import createStore from '../Redux'
 import applyConfigSettings from '../Config'
 import '../Lib/googleAnalytics'
 import '../Lib/notifications'
+import codePush from "react-native-code-push";
 
 
 // Apply config overrides
@@ -35,4 +36,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default codePush(App)
