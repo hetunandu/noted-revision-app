@@ -53,7 +53,6 @@ class SubjectScreen extends React.Component {
     return (
       <SubjectTab
         subject={subject}
-        concept_data={this.props.concepts.data}
         pro={this.props.pro}
 
         onSingleConceptSelected={(concept_key) => this.handleSingleConceptSelection(concept_key) }
@@ -72,18 +71,27 @@ class SubjectScreen extends React.Component {
 
     // Set title for all subject tabs
     const routes = subjects.list.map(subject => {
+      let total = 0
+      let read = 0
 
-      //const complete = Math.round(subject.read_concepts / subject.total_concepts  * 100, 2)
+      subject.index.map(chapter => {
+        chapter.concepts.map(concept => {
+          total ++
+          if(concept.read) read ++
+        })
+      })
+
+      const complete = Math.round(read / total  * 100, 3)
 
       return Object.assign({}, subject, {
-        title: subject.name
+        title: `${subject.name} (${complete}%)`
       })
     })
 
     return (
       <View style={[styles.container, {paddingTop: 0}]}>
         <StatusBar coins={coins} session={session} pro={pro} />
-        {session.views === 0 && !pro ? (
+        {session.views <= 0 && !pro ? (
           <Cooldown
             session={session}
             onCooldownSkipPress={() => this.handleCooldownSkip()}
@@ -108,12 +116,8 @@ class SubjectScreen extends React.Component {
   }
 
   handleSubjectActionPress(subject_key, mode) {
-    if(this.props.session.views < 5){
-      ToastAndroid.show(`You need minimum 5 views to ${mode}`, ToastAndroid.SHORT)
-    }else{
-      this.props.fetchConcepts(subject_key, mode)
-      tracker.trackEvent('Subject', mode)
-    }
+    this.props.fetchConcepts(subject_key, mode)
+    tracker.trackEvent('Subject', mode)
   }
 
   handleSubjectIndexPress(subject) {

@@ -9,7 +9,7 @@ export default class Index extends React.Component {
 
 
 
-  formatData(index, concept_data){
+  formatData(index){
 
     // Need somewhere to store our data
     const dataBlob = {};
@@ -109,7 +109,7 @@ export default class Index extends React.Component {
     });
 
     // Formatting the index data for the listview
-    const { dataBlob, sectionIds, rowIds } = this.formatData(this.props.index, this.props.concept_data);
+    const { dataBlob, sectionIds, rowIds } = this.formatData(this.props.index);
 
     // finally cloning the data with all the formatted data
     const index = ds.cloneWithRowsAndSections(dataBlob, sectionIds, rowIds);

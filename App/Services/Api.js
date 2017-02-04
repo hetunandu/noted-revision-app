@@ -64,6 +64,9 @@ const create = (baseURL = 'https://4-dot-noted-api.appspot.com/study') => {
   const getSingleConcept = (token, concept_key) =>
     api.get(`concepts/${concept_key}`, {}, { headers: { 'Authorization': token } })
 
+  const getBatchConcepts = (token, concepts) =>
+    api.post(`concepts/batch`, {concepts}, { headers: { 'Authorization': token } })
+
   const submitResult = (token, result) =>
     api.post(`concepts/result`, {result}, {headers: {'Authorization': token}})
 
@@ -105,6 +108,7 @@ const create = (baseURL = 'https://4-dot-noted-api.appspot.com/study') => {
     getSubjects,
     getConcepts,
     getSingleConcept,
+    getBatchConcepts,
     submitResult,
     getIndex,
     skipCooldown,

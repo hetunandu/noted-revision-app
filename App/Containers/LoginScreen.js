@@ -21,6 +21,8 @@ class LoginScreen extends React.Component {
 
   componentDidMount(){
     tracker.trackScreenView('Login');
+
+    this.props.loginInit()
   }
 
   signInWithGoogle(){
@@ -62,6 +64,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     loginRequest: (accessToken) => dispatch(LoginActions.loginRequest(accessToken)),
+    loginInit: () => dispatch(LoginActions.loginInit())
   }
 }
 

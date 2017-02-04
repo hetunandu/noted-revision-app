@@ -8,19 +8,17 @@ export default StyleSheet.create({
     flex: 1,
     paddingTop: Metrics.titlePadding
   },
-  statusContainer: {
-    padding: 10,
-    flex: 1,
-    backgroundColor: Colors.frost,
-    flexDirection: 'row',
+  FAB: {
+    elevation: 3,
+    position: 'absolute',
+    right: 30,
+    bottom: 30,
+    width: 56,
+    height: 56,
+    backgroundColor: Colors.notedRed,
+    borderRadius: 50,
     alignItems: 'center',
-    justifyContent: 'space-around'
-  },
-  actionsContainer: {
-    flex: 5
-  },
-  readStatus: {
-    fontSize: 30
+    justifyContent: 'center'
   }
 
 

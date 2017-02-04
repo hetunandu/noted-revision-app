@@ -11,6 +11,7 @@ const { Types, Creators } = createActions({
   toggleReference: ['error'],
   singleRequest: ['key'],
   saveConcept: ['concept'],
+  saveConcepts: ['concepts'],
   starRequest: ['subject_key', 'concept_key'],
   starSuccess: ['subject_key', 'concept_key'],
   starFailure: ['error'],
@@ -58,6 +59,17 @@ export const failure = (state, {error}) => state.merge({ fetching: false, error 
 
 export const saveConcept = (state, {concept}) => {
   return state.merge({ data: state.data.setIn([`${concept.key}`], concept)})
+}
+
+export const saveConcepts = (state, {concepts}) => {
+
+  let batch = {}
+
+  concepts.map(con => {
+    batch[`${con.key}`] = con
+  })
+
+  return state.merge({ data: state.data.merge(batch) })
 
 }
 
@@ -85,6 +97,7 @@ export const speakConcept = (state) => state.merge({isSpeaking: !state.isSpeakin
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.SAVE_CONCEPT]: saveConcept,
+  [Types.SAVE_CONCEPTS]: saveConcepts,
   [Types.CONCEPT_REQUEST]: request,
   [Types.SINGLE_REQUEST]: request,
   [Types.CONCEPT_SUCCESS]: success,

@@ -1,11 +1,12 @@
 // @flow
 
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, TouchableHighlight } from 'react-native'
 import styles from './Styles/SubjectTabStyle'
-import SubjectActionButton from '../Components/SubjectActionButton'
-import StatusCounter from '../Components/StatusCounter'
+// import SubjectActionButton from '../Components/SubjectActionButton'
+// import StatusCounter from '../Components/StatusCounter'
 import { Colors } from '../Themes'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 import Index from '../Components/Index'
 
 
@@ -16,9 +17,15 @@ export default class SubjectTab extends React.Component {
       <View style={styles.container}>
         <Index
           index={this.props.subject.index}
-          concept_data={this.props.concept_data}
           onConceptSelected={(concept_key) => this.handleConceptSelected(concept_key)}
         />
+        <TouchableHighlight
+          style={styles.FAB}
+          underlayColor={Colors.notedRedDarker}
+          onPress={() => this.handleRevision()}
+        >
+          <Icon name="play-arrow" size={30} color="#fff"/>
+        </TouchableHighlight>
       </View>
     )
   }
