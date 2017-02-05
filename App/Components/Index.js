@@ -121,6 +121,8 @@ export default class Index extends React.Component {
           renderRow={(rowData) => this.renderRow(rowData)}
           renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
           renderSectionHeader={(sectionData) => this.renderSectionHeader(sectionData)}
+          initialListSize={5}
+          pageSize={5}
         />
       </View>
     )
