@@ -108,12 +108,12 @@ export function * getSingleConcept(api, action){
 
 
 
-function getUnreadConcepts(subject, subjects) {
+function getUnreadConcepts(subject_key, subjects) {
 
   let concepts = []
 
   subjects.map(s => {
-    if(s.key == subject){
+    if(s.key == subject_key){
       s.index.map(ch => {
         ch.concepts.map(con => {
           if(!con.read){
