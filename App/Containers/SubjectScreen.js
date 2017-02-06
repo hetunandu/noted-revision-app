@@ -9,8 +9,9 @@ import { connect } from 'react-redux'
 import ConceptActions from '../Redux/ConceptRedux'
 import IndexActions from '../Redux/IndexRedux'
 import SessionActions from '../Redux/SessionRedux'
+import SubjectActions from '../Redux/SubjectRedux'
 import Cooldown from '../Components/Cooldown'
-import { Colors } from '../Themes'
+import { Colors, Metrics } from '../Themes'
 import styles from './Styles/SubjectScreenStyle'
 import { tracker } from '../Lib/googleAnalytics'
 import { Actions as NavigationActions } from 'react-native-router-flux'
@@ -39,7 +40,7 @@ class SubjectScreen extends React.Component {
     return <TabBar
       {...props}
       scrollEnabled
-      labelStyle={{padding: 0}}
+      labelStyle={{padding: 0, fontSize: 13}}
       indicatorStyle={{backgroundColor: Colors.snow}}
       style={{backgroundColor: Colors.notedBlue}}
     />;
@@ -55,6 +56,7 @@ class SubjectScreen extends React.Component {
         pro={this.props.pro}
 
         onSingleConceptSelected={(concept_key) => this.handleSingleConceptSelection(concept_key) }
+        onConceptStar={(concept_key) => this.handleConceptStarToggle(concept_key)}
         onSubjectActionPress={(mode) => this.handleSubjectActionPress(subject.key, mode)}
         onSubjectIndexPress={() => this.handleSubjectIndexPress(subject)}
         onIndexDownload={() => this.handleIndexDownload(subject.key)}
@@ -139,6 +141,11 @@ class SubjectScreen extends React.Component {
 
   }
 
+  handleConceptStarToggle(concept_key){
+    this.props.conceptStarToggle(concept_key)
+  }
+
+
   handleBuyPro() {
     if(this.props.coins.balance >= this.props.session.pro_cost){
       this.props.activatePro()
@@ -151,7 +158,7 @@ class SubjectScreen extends React.Component {
   }
 
   handleCoolDownComplete() {
-    // TODO Refresh the session
+    NavigationActions.login()
   }
 
   handleIndexDownload(key) {
@@ -180,7 +187,8 @@ const mapDispatchToProps = (dispatch) => {
     fetchIndex: (subject) => {dispatch(IndexActions.indexRequest(subject))},
     skipCooldown: () => dispatch(SessionActions.skipRequest()),
     activatePro: () => dispatch(SessionActions.proRequest()),
-    indexDownload: (key) => dispatch(IndexActions.downloadRequest(key))
+    indexDownload: (key) => dispatch(IndexActions.downloadRequest(key)),
+    conceptStarToggle: (key) => dispatch(SubjectActions.markConcept(null, key, 'star'))
   }
 }
 

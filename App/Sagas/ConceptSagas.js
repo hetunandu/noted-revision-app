@@ -36,13 +36,12 @@ export function * getConcepts (api, action) {
       if (unRead.length > views && !isPro){
         unRead.length = views
       }
-
-
-      const token = yield call(AsyncStorage.getItem, 'login_token')
-
+      
       yield put(ResultActions.clearResult())
 
       yield call(NavigationActions.concepts)
+
+      const token = yield call(AsyncStorage.getItem, 'login_token')
 
       const response = yield call(api.getBatchConcepts, token, unRead)
 

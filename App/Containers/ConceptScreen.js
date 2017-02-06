@@ -23,7 +23,7 @@ class ConceptScreen extends React.Component {
     if(concepts.list.length === 0 && result.data.length > 0 ){
 
       if(user.pro){
-       NavigationActions.subjects()
+       NavigationActions.pop()
       }else{
         NavigationActions.result()
       }

@@ -18,6 +18,7 @@ export default class SubjectTab extends React.Component {
         <Index
           index={this.props.subject.index}
           onConceptSelected={(concept_key) => this.handleConceptSelected(concept_key)}
+          onConceptStar={(concept_key) => this.handleConceptStar(concept_key)}
         />
         <TouchableHighlight
           style={styles.FAB}
@@ -48,6 +49,10 @@ export default class SubjectTab extends React.Component {
     this.props.onSingleConceptSelected(concept_key)
   }
 
+  handleConceptStar(concept_key){
+    this.props.onConceptStar(concept_key)
+  }
+
   handleDownloadPress() {
     this.props.onIndexDownload()
   }
@@ -63,6 +68,7 @@ SubjectTab.propTypes = {
   concept_data: React.PropTypes.object,
   pro: React.PropTypes.bool,
   onSingleConceptSelected: React.PropTypes.func,
+  onConceptStar: React.PropTypes.func,
   onSubjectActionPress: React.PropTypes.func,
   onSubjectIndexPress: React.PropTypes.func,
   onIndexDownload: React.PropTypes.func,

@@ -32,6 +32,7 @@
     "react": "~15.4.0-rc.4",
     "react-mixin": "^3.0.5",
     "react-native": "0.38.0",
+    "react-native-accordion": "^1.0.1",
     "react-native-android-speech": "0.0.6",
     "react-native-animatable": "^0.6.0",
     "react-native-code-push": "^1.17.0-beta",

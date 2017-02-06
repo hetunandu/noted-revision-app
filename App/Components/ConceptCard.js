@@ -40,17 +40,6 @@ export default class ConceptCard extends React.Component {
           >
             <Icon name="info" size={35} color="white" />
           </TouchableHighlight>
-          {this.props.concept.important ? (
-              <Icon name="star" size={35} color="gold" />
-            ): (
-              <TouchableHighlight
-                style={styles.actionBtn}
-                underlayColor="#444"
-                onPress={() => this.handleStarConcept()}
-              >
-                <Icon name="star-border" size={35} color="white" />
-              </TouchableHighlight>
-          )}
           <TouchableHighlight
             underlayColor="#444"
             style={styles.actionBtn}
@@ -134,7 +123,7 @@ export default class ConceptCard extends React.Component {
 
 
   handleReadConcept() {
-    this.refs.card.slideOutUp(400)
+    this.refs.card.fadeOutUp(400)
       .then((endState) => {
         this.props.markConcept(this.props.concept.key, 'read')
       })

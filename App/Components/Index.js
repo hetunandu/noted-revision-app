@@ -4,6 +4,7 @@ import React from 'react'
 import { View, Text, TouchableHighlight, ListView } from 'react-native'
 import styles from './Styles/IndexStyle'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import Accordion from 'react-native-accordion'
 
 export default class Index extends React.Component {
 
@@ -52,8 +53,12 @@ export default class Index extends React.Component {
     return { dataBlob, sectionIds, rowIds };
   }
 
-  handleConceptPressed(concept){
+  handleConceptRead(concept){
     this.props.onConceptSelected(concept.key)
+  }
+
+  handleConceptStar(concept){
+    this.props.onConceptStar(concept.key)
   }
 
 
@@ -67,28 +72,69 @@ export default class Index extends React.Component {
 
 
   renderRow(concept){
-    return (
-      <TouchableHighlight
-        underlayColor="grey"
-        onPress={() => this.handleConceptPressed(concept)}
-      >
-        <View style={styles.conceptContainer}>
-          <View style={styles.conceptDataContainer}>
-            {concept.read ? (
-                <View style={styles.readCount}>
-                  <Icon name="done" size={25} color="green" />
-                  {concept.read > 1 && <Text> x {concept.read}</Text>}
-                </View>
-              ):
-              (<Icon name="lens" size={20} color="gray" />)
-            }
-          </View>
-          <Text style={styles.conceptName}>{concept.name}</Text>
-          <View style={styles.conceptDataContainer}>
-            {concept.important && (<Icon name="star" size={25} color="gold" />)}
-          </View>
+
+    const conceptListItem = (
+      <View style={styles.conceptContainer}>
+        <View style={styles.conceptDataContainer}>
+          {concept.read ? (
+              <View style={styles.readCount}>
+                <Icon name="done" size={25} color="green" />
+              </View>
+            ):
+            (<Icon name="lens" size={15} color="gray" />)
+          }
         </View>
-      </TouchableHighlight>
+        <Text style={styles.conceptName}>{concept.name}</Text>
+        {concept.important && (
+          <View style={styles.conceptDataContainer}>
+            <Icon name="star" size={25} color="gold" />
+          </View>
+        )}
+      </View>
+    );
+
+    const conceptListActions = (
+      <View style={styles.conceptActions}>
+        {concept.read && (
+          <View style={styles.conceptActionContainer}>
+            <Icon name="done" size={25} color="green" />
+            <Text style={styles.conceptActionText} >x {concept.read}</Text>
+          </View>
+        )}
+        <TouchableHighlight
+          underlayColor="#f1f1f1"
+          onPress={() => this.handleConceptStar(concept)}
+        >
+          <View style={styles.conceptActionContainer}>
+            {concept.important ? (
+              <Icon name="star" size={25} color="gold" />
+            ) : (
+              <Icon name="star-border" size={25} color="#333" />
+            )}
+            <Text style={styles.conceptActionText}>Imp</Text>
+          </View>
+        
+        </TouchableHighlight>
+        <TouchableHighlight
+          underlayColor="#f1f1f1"
+          onPress={() => this.handleConceptRead(concept)}
+        >
+          <View style={styles.conceptActionContainer}>
+            <Icon name="visibility" size={25} color="#333"/>
+            <Text style={styles.conceptActionText}>Read</Text>
+          </View>
+        </TouchableHighlight>
+
+      </View>
+    )
+
+
+    return (
+      <Accordion
+        header={conceptListItem}
+        content={conceptListActions}
+        easing="easeOutCubic"
+      />
     )
   }
 
@@ -121,8 +167,8 @@ export default class Index extends React.Component {
           renderRow={(rowData) => this.renderRow(rowData)}
           renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
           renderSectionHeader={(sectionData) => this.renderSectionHeader(sectionData)}
-          initialListSize={5}
-          pageSize={5}
+          initialListSize={10}
+          pageSize={10}
         />
       </View>
     )
@@ -132,7 +178,8 @@ export default class Index extends React.Component {
 // Prop type warnings
 Index.propTypes = {
   index: React.PropTypes.array.isRequired,
-  onConceptSelected: React.PropTypes.func
+  onConceptSelected: React.PropTypes.func,
+  onConceptStar: React.PropTypes.func
 }
 
 //

@@ -34,11 +34,26 @@ export default StyleSheet.create({
     flex: 1
   },
   readCount:{
-    alignItems:'center'
+    alignItems:'center',
+    justifyContent: 'center'
   },
   conceptName: {
-    flex:6,
+    flex:7,
     fontSize: 20
+  },
+  conceptActions: {
+    backgroundColor: Colors.frost,
+    padding: 5,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    flexDirection: 'row'
+  },
+  conceptActionContainer: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  conceptActionText: {
+    fontSize: 10
   },
   separator: {
     flex: 1,

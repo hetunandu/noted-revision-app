@@ -32,41 +32,31 @@ export const success = (state, { subjects }) => state.merge({ fetching: false, e
 // Something went wrong somewhere.
 export const failure = (state, {error}) => state.merge({ fetching: false, error })
 
-export const addReadCounter = (state, {subject_key, status}) =>
-  state.merge({list: state.list.map(subject => {
-    if(subject.key == subject_key){
-      if(status == 'read') {
-        return subject.merge({read_concepts: subject.read_concepts + 1})
-      }else {
-        return subject
-      }
-    }else{
-      return subject
-    }
-  })})
-
 export const markConcept = (state, {concept_key, status}) => {
-  if (status == 'read'){
-    return state.merge({
-      list: state.list.map(subject => {
-        return subject.merge({
-          index: subject.index.map(chapter => {
-            return chapter.merge({
-              concepts: chapter.concepts.map(concept => {
-                if (concept.key == concept_key) {
+  return state.merge({
+    list: state.list.map(subject => {
+      return subject.merge({
+        index: subject.index.map(chapter => {
+          return chapter.merge({
+            concepts: chapter.concepts.map(concept => {
+              if (concept.key == concept_key) {
+
+                if(status == 'read'){
                   return concept.merge({read: concept.read ? concept.read + 1 : 1})
-                } else {
+                }else if(status == 'star'){
+                  return concept.merge({important: !concept.important})
+                }else{
                   return concept
                 }
-              })
+              } else {
+                return concept
+              }
             })
           })
         })
       })
     })
-  }else{
-    return state
-  }
+  })
 }
 
 

@@ -105,8 +105,8 @@ export default class Cooldown extends React.Component {
           <View style={styles.point}>
             <Icon name="info" size={20} color="#333"/>
             <Text style={styles.pointText}>
-              Pro usage is activated on per device basis. You wont be able to access Noted on any other
-              device once pro is activated.
+              Pro usage is activated on per device basis. 
+              You wont be able to access Noted on any other device once pro is activated.
             </Text>
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
@@ -138,9 +138,9 @@ export default class Cooldown extends React.Component {
           <Text style={styles.moreViewsText}>More views in</Text>
           <Text style={styles.timeLeftText}>{this.state.timeLeft}</Text>
         </View>
-        <View style={{flex: 3, alignItems: 'center', justifyContent:'center'}}>
+        <View style={{flex: 3}}>
           {this.props.session.fetching ? <Loading /> : (
-            <View>
+            <View style={{alignItems: 'center', justifyContent:'center'}}>
               <View style={styles.notifyContainer}>
                 <Text style={styles.notifyText}>
                   Notify when cooldown completes?
